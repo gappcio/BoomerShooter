@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://bfkci22hbofmg"]
+
+[ext_resource type="Texture2D" uid="uid://dtlid6a70028x" path="res://Assets/Sprites/FX/hole_basic.png" id="1_ff6sq"]
+[ext_resource type="Script" path="res://Assets/Scripts/World/Script_BulletHole.gd" id="1_ufny3"]
+[ext_resource type="PackedScene" uid="uid://du12rfq3bg2p6" path="res://Assets/Composition/Texture.tscn" id="2_preab"]
+
+[node name="BulletHole" type="Decal"]
+size = Vector3(0.1, 1, 0.1)
+texture_albedo = ExtResource("1_ff6sq")
+upper_fade = 0.0106011
+lower_fade = 83.3768
+script = ExtResource("1_ufny3")
+
+[node name="Texture" parent="." instance=ExtResource("2_preab")]
+texture = ExtResource("1_ff6sq")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+autostart = true

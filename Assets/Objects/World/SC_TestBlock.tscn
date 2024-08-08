@@ -1,0 +1,34 @@
+[gd_scene load_steps=7 format=3 uid="uid://blhii3tmmhh2d"]
+
+[ext_resource type="Script" path="res://Assets/Scripts/Script_Wall.gd" id="1_1e13w"]
+[ext_resource type="Texture2D" uid="uid://yeyqiq3adxqj" path="res://Assets/Images/Textures/Block/block.png" id="1_f5xx7"]
+[ext_resource type="Script" path="res://Assets/Scripts/World/Script_SetTexture.gd" id="2_w61qp"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8vpoo"]
+albedo_texture = ExtResource("1_f5xx7")
+heightmap_scale = -5.901
+uv1_scale = Vector3(3, 2, 1)
+texture_filter = 0
+
+[sub_resource type="BoxMesh" id="BoxMesh_7j10b"]
+material = SubResource("StandardMaterial3D_8vpoo")
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_i65j1"]
+data = PackedVector3Array(-0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, -0.5)
+
+[node name="TestBlock" type="StaticBody3D" groups=["wall"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+script = ExtResource("1_1e13w")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_7j10b")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("ConcavePolygonShape3D_i65j1")
+
+[node name="GPUParticlesCollisionBox3D" type="GPUParticlesCollisionBox3D" parent="."]
+size = Vector3(1, 1, 1)
+
+[node name="Texture" type="Node" parent="."]
+script = ExtResource("2_w61qp")
+texture = ExtResource("1_f5xx7")
