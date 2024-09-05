@@ -6,6 +6,7 @@ class_name player_weapon_pistol
 @onready var sprite_anim: AnimatedSprite2D = $CanvasLayer/Control/AnimatedSprite2D;
 @onready var shoot_timer: Timer = $ShootTimer;
 @onready var raycast: RayCast3D = $"../../../../Raycast";
+@onready var audio: AudioStreamPlayer3D = $Audio;
 
 enum STATE {
 	idle,
@@ -42,6 +43,8 @@ func shoot():
 
 	state = STATE.shoot;
 	shoot_timer.start();
+	
+	audio.play();
 	
 	if is_instance_valid(player_instance):
 		player_instance.camera_shake();

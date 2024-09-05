@@ -31,6 +31,16 @@ window/stretch/aspect="keep_width"
 version_control/plugin_name="GitPlugin"
 version_control/autoload_on_startup=true
 
+[file_customization]
+
+folder_colors={
+"res://Assets/Audio/": "blue",
+"res://Assets/Objects/": "purple",
+"res://Assets/Rooms/": "orange",
+"res://Assets/Scripts/": "red",
+"res://Assets/Sprites/": "green"
+}
+
 [input]
 
 forward={
