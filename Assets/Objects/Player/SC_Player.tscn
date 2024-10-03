@@ -53,6 +53,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0163806, 0.532704, 0.091506
 [node name="WeaponControl" type="Node" parent="Head/Camera/WeaponAttach/ViewmodelControl"]
 script = ExtResource("4_7lj4b")
 
+[node name="ChangeWeaponTimer" type="Timer" parent="Head/Camera/WeaponAttach/ViewmodelControl/WeaponControl"]
+wait_time = 0.1
+one_shot = true
+
 [node name="MuzzlePoint" type="Node3D" parent="Head/Camera/WeaponAttach"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0163806, 0.0672958, -0.770245)
 
@@ -74,5 +78,7 @@ modulate = Color(1, 0, 0.95, 1)
 axis = 0
 texture_filter = 0
 texture = ExtResource("3_qcniq")
+
+[connection signal="timeout" from="Head/Camera/WeaponAttach/ViewmodelControl/WeaponControl/ChangeWeaponTimer" to="Head/Camera/WeaponAttach/ViewmodelControl/WeaponControl" method="_on_change_weapon_timer_timeout"]
 
 [editable path="Head/Camera/WeaponAttach/ViewmodelControl"]

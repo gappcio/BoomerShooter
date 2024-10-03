@@ -1,0 +1,192 @@
+[gd_scene load_steps=23 format=3 uid="uid://f5hpsiraixyc"]
+
+[ext_resource type="Script" path="res://Assets/Scripts/Player/Weapon/Script_PlayerWeaponPistol.gd" id="1_yipg3"]
+[ext_resource type="Texture2D" uid="uid://i0ttpo7m2g2k" path="res://Assets/Sprites/Viewmodel/Pistol/viewmodel_pistol.png" id="2_km8xj"]
+[ext_resource type="AudioStream" uid="uid://dnpm23ly1dahd" path="res://Assets/Audio/SFX/Weapons/Pistol/sound_pistol_shoot.wav" id="3_sw7tm"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fr2ls"]
+atlas = ExtResource("2_km8xj")
+region = Rect2(0, 0, 132, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7nawg"]
+atlas = ExtResource("2_km8xj")
+region = Rect2(132, 0, 132, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7wj82"]
+atlas = ExtResource("2_km8xj")
+region = Rect2(264, 0, 132, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i1j8g"]
+atlas = ExtResource("2_km8xj")
+region = Rect2(396, 0, 132, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ddaqh"]
+atlas = ExtResource("2_km8xj")
+region = Rect2(528, 0, 132, 128)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_qf7pw"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fr2ls")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7nawg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7wj82")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_i1j8g")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ddaqh")
+}],
+"loop": false,
+"name": &"shoot",
+"speed": 20.0
+}]
+
+[sub_resource type="Animation" id="Animation_arf0o"]
+resource_name = "idle"
+loop_mode = 1
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3, 0.65),
+"transitions": PackedFloat32Array(1, 1.18921, 1),
+"update": 0,
+"values": [Vector2(365, 215), Vector2(365, 220), Vector2(365, 220)]
+}
+
+[sub_resource type="Animation" id="Animation_v5clp"]
+resource_name = "walk"
+loop_mode = 1
+step = 0.25
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.5, 0.75),
+"transitions": PackedFloat32Array(1, 1, 1, 0.933032),
+"update": 0,
+"values": [Vector2(365, 215), Vector2(345, 225), Vector2(365, 215), Vector2(375, 225)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_7pbj2"]
+_data = {
+"idle": SubResource("Animation_arf0o"),
+"walk": SubResource("Animation_v5clp")
+}
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_pd6fl"]
+animation = &"idle"
+
+[sub_resource type="AnimationNodeTimeScale" id="AnimationNodeTimeScale_brbsg"]
+
+[sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_ylndd"]
+graph_offset = Vector2(-2, 0)
+nodes/Animation/node = SubResource("AnimationNodeAnimation_pd6fl")
+nodes/Animation/position = Vector2(0, 140)
+nodes/TimeScale/node = SubResource("AnimationNodeTimeScale_brbsg")
+nodes/TimeScale/position = Vector2(220, 120)
+nodes/output/position = Vector2(500, 140)
+node_connections = [&"TimeScale", 0, &"Animation", &"output", 0, &"TimeScale"]
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_6dufk"]
+animation = &"walk"
+
+[sub_resource type="AnimationNodeTimeScale" id="AnimationNodeTimeScale_oq2la"]
+
+[sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_vmxjw"]
+nodes/Animation/node = SubResource("AnimationNodeAnimation_6dufk")
+nodes/Animation/position = Vector2(300, 80)
+nodes/TimeScale/node = SubResource("AnimationNodeTimeScale_oq2la")
+nodes/TimeScale/position = Vector2(529, 72)
+nodes/output/position = Vector2(760, 80)
+node_connections = [&"TimeScale", 0, &"Animation", &"output", 0, &"TimeScale"]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_nm0n8"]
+advance_mode = 2
+advance_condition = &"idle"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_jg6kq"]
+xfade_time = 0.25
+switch_mode = 1
+advance_mode = 2
+advance_condition = &"walk"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_pwvog"]
+xfade_time = 0.35
+switch_mode = 1
+advance_mode = 2
+advance_condition = &"idle"
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_yq7fb"]
+states/Start/position = Vector2(205, 94)
+states/idle/node = SubResource("AnimationNodeBlendTree_ylndd")
+states/idle/position = Vector2(414, 94)
+states/walk/node = SubResource("AnimationNodeBlendTree_vmxjw")
+states/walk/position = Vector2(692, 94)
+transitions = ["Start", "idle", SubResource("AnimationNodeStateMachineTransition_nm0n8"), "idle", "walk", SubResource("AnimationNodeStateMachineTransition_jg6kq"), "walk", "idle", SubResource("AnimationNodeStateMachineTransition_pwvog")]
+graph_offset = Vector2(-14, 14)
+
+[node name="VIEWMODEL_Pistol" type="Node3D"]
+script = ExtResource("1_yipg3")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Control" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 480.0
+offset_bottom = 270.0
+mouse_filter = 2
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CanvasLayer/Control"]
+position = Vector2(365, 215)
+sprite_frames = SubResource("SpriteFrames_qf7pw")
+animation = &"shoot"
+autoplay = "idle"
+frame = 3
+frame_progress = 1.0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer/Control/AnimatedSprite2D"]
+root_node = NodePath("../..")
+libraries = {
+"": SubResource("AnimationLibrary_7pbj2")
+}
+
+[node name="AnimationTree" type="AnimationTree" parent="CanvasLayer/Control/AnimatedSprite2D"]
+active = false
+root_node = NodePath("../..")
+tree_root = SubResource("AnimationNodeStateMachine_yq7fb")
+anim_player = NodePath("../AnimationPlayer")
+parameters/conditions/idle = false
+parameters/conditions/walk = false
+parameters/idle/TimeScale/scale = 0.25
+parameters/walk/TimeScale/scale = 1.0
+
+[node name="ShootTimer" type="Timer" parent="."]
+wait_time = 0.1
+
+[node name="Audio" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("3_sw7tm")
+max_distance = 20.0
+max_polyphony = 3
+
+[connection signal="animation_finished" from="CanvasLayer/Control/AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
+[connection signal="timeout" from="ShootTimer" to="." method="_on_shoot_timer_timeout"]

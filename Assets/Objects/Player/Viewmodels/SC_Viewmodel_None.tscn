@@ -1,3 +1,12 @@
 [gd_scene format=3 uid="uid://dn3xfbukde1fv"]
 
 [node name="VIEWMODEL_None" type="Node3D"]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Control" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 480.0
+offset_bottom = 270.0
+mouse_filter = 2
