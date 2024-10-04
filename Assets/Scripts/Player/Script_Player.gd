@@ -43,6 +43,9 @@ var material;
 
 var input_dir = 0;
 
+var step_up_top: bool = false;
+var step_up_middle: bool = false;
+var step_up_bottom: bool = false;
 
 
 func _ready():
@@ -118,6 +121,7 @@ func _physics_process(delta: float) -> void:
 	var key_crouch = Input.is_action_pressed("crouch");
 	
 	is_crouched = true if key_crouch else false;
+
 	
 	if is_crouched:
 		$Collision.disabled = true;
@@ -130,6 +134,8 @@ func _physics_process(delta: float) -> void:
 			$CollisionCrouch.disabled = true;
 			head.position.y = lerp(head.position.y, 0.6, 0.3);
 			weapon_viewmodel_node.position.y = lerp(weapon_viewmodel_node.position.y, 0.0, 0.1);
+		
+
 		
 	if velocity.y > 0:
 		is_falling = true;
@@ -235,3 +241,34 @@ func camera_shake():
 		tween.tween_property(camera, "fov", fov_change, time).as_relative();
 		tween.chain().tween_property(camera, "fov", -fov_change, time).as_relative();
 	
+
+
+func _on_area_step_up_bottom_body_entered(body):
+	
+	if body.is_in_group("wall"):
+		step_up_bottom = true;
+		
+		#if velocity.x != 0 || velocity.z != 0:
+		var i = 0.0;
+		var direction = (head.transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized();
+		
+		print(direction)
+		
+		# try using raycast
+		
+		while test_move(global_transform, Vector3(direction.x / 10, i, direction.z / 10)):
+			#print(str(global_position.y) + "/" + str(global_position.y + i))
+			
+			if (i > 1.0):
+				i = 0.0;
+				break;
+			else:
+				i += 0.05;
+				
+		if velocity.y <= 0.0:
+			global_position.y += i
+			
+func _on_area_step_up_bottom_body_exited(body):
+	
+	if body.is_in_group("wall"):
+		step_up_bottom = false;

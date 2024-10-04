@@ -1,0 +1,48 @@
+[gd_scene load_steps=7 format=3 uid="uid://p6w3l25xcjdh"]
+
+[ext_resource type="Texture2D" uid="uid://dbxshhpkslca0" path="res://Assets/Sprites/Enemy/Testificate/testificate_front.png" id="1_fp8vt"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_nftqm"]
+radius = 0.2
+height = 1.7
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3i56f"]
+atlas = ExtResource("1_fp8vt")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_jtag7"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3i56f")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[sub_resource type="Animation" id="Animation_xyb87"]
+resource_name = "idle"
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_yes4l"]
+_data = {
+"idle": SubResource("Animation_xyb87")
+}
+
+[node name="EnemyTest" type="CharacterBody3D"]
+
+[node name="Collision" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_nftqm")
+
+[node name="Sprite" type="AnimatedSprite3D" parent="."]
+offset = Vector2(0, 4)
+pixel_size = 0.03
+billboard = 2
+texture_filter = 0
+sprite_frames = SubResource("SpriteFrames_jtag7")
+animation = &"idle"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite"]
+libraries = {
+"": SubResource("AnimationLibrary_yes4l")
+}

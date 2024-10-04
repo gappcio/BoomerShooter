@@ -15,10 +15,18 @@ func _process(delta):
 	#pistol = $"../Player/Head/Camera/WeaponAttach/ViewmodelControl/Weapon/VIEWMODEL_Pistol";
 	
 	if is_instance_valid(player):
-		
-		
-		
-		label.text = "state: " + str(player.camera_bob_time);
+		label.text = \
+			"velocity.x: " + str("%.2f" % float(player.velocity.x))\
+			+ "\n" + \
+			"velocity.y: " + str("%.2f" % float(player.velocity.y))\
+			+ "\n" + \
+			"velocity.z: " + str("%.2f" % float(player.velocity.z))\
+			+ "\n" + \
+			"global_position.x: " + str("%.2f" % float(player.global_position.x))\
+			+ "\n" + \
+			"global_position.y: " + str("%.2f" % float(player.global_position.y))\
+			+ "\n" + \
+			"global_position.z: " + str("%.2f" % float(player.global_position.z))
 	
 	#if is_instance_valid(player):
 		#var player_speed: float = Vector2(player.velocity.x, player.velocity.z).length();

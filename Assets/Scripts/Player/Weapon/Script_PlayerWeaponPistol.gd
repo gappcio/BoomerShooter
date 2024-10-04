@@ -8,6 +8,8 @@ class_name player_weapon_pistol
 @onready var raycast: RayCast3D = $"../../../../Raycast";
 @onready var audio: AudioStreamPlayer3D = $Audio;
 
+@onready var control: Control = $CanvasLayer/Control;
+
 enum STATE {
 	idle,
 	shoot
@@ -116,3 +118,6 @@ func _on_animated_sprite_2d_animation_finished():
 	state = STATE.idle;
 	shoot_timer.stop();
 	shoot_timer.wait_time = shoot_period;
+	
+func set_canvas_position(pos: Vector2):
+	control.position = pos;
