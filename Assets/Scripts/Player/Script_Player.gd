@@ -7,6 +7,7 @@ class_name player
 @onready var weapon_attach := $Head/Camera/WeaponAttach;
 @onready var weapon_viewmodel_node := $Head/Camera/WeaponAttach/ViewmodelControl/Weapon;
 
+
 const BASE_SPEED: float = 6.0;
 const JUMP_VELOCITY: float = 4.5;
 
@@ -28,6 +29,8 @@ var deccel: float = 0.0;
 var is_falling: bool = false;
 var is_jumping: bool = false;
 var is_crouched: bool = false;
+
+var direction: Vector3;
 
 var jump_force: float = JUMP_VELOCITY;
 var jump_trigger: bool = false;
@@ -175,7 +178,7 @@ func _physics_process(delta: float) -> void:
 			jump_trigger = true;
 	
 	
-	var direction = (head.transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized();
+	direction = (head.transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized();
 
 	if direction:
 		var vel = accelerate(velocity, direction, delta);

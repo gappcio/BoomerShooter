@@ -3,17 +3,16 @@ class_name wall
 
 @onready var texture_node = $Texture;
 
-var fx_particle = preload("res://Assets/Objects/World/Particles/SC_HitParticles.tscn");
-var fx_decal = preload("res://Assets/Objects/World/SC_BulletHole.tscn");
+
 
 func on_hit(collision_point, collision_normal):
 	
 	var texture = texture_node.texture;
 	
-	var fx = fx_particle.instantiate();
+	var fx = Autoload.FX_HITPARTICLE.instantiate();
 	get_tree().current_scene.add_child(fx);
 	
-	var decal = fx_decal.instantiate();
+	var decal = Autoload.FX_BULLETHOLE.instantiate();
 	get_tree().current_scene.add_child(decal);
 	
 	fx.global_position = collision_point + (collision_normal / 10);

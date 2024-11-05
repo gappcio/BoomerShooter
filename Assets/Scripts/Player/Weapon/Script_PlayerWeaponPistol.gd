@@ -91,6 +91,10 @@ func shoot():
 					target = _target;
 					target.on_hit(col_point_list[_i], col_normal_list[_i]);
 					break;
+				if _target.is_in_group("hitbox") && _target.has_method("hurt"):
+					target = _target;
+					target.hurt(col_point_list[_i], col_normal_list[_i], 1);
+					break;
 			
 			_i += 1;
 	

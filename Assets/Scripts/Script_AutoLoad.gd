@@ -1,5 +1,8 @@
 extends Node
 
+var FX_HITPARTICLE = preload("res://Assets/Objects/World/Particles/SC_HitParticles.tscn");
+var FX_BULLETHOLE = preload("res://Assets/Objects/World/SC_BulletHole.tscn");
+
 var random = RandomNumberGenerator.new();
 var random_texture_offset: float = 0.0;
 var random_dir: int = 1;

@@ -1,6 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://p6w3l25xcjdh"]
+[gd_scene load_steps=11 format=3 uid="uid://p6w3l25xcjdh"]
 
+[ext_resource type="Script" path="res://Assets/Scripts/Enemy/TestEnemy/Script_TestEnemy.gd" id="1_0pf1t"]
 [ext_resource type="Texture2D" uid="uid://dbxshhpkslca0" path="res://Assets/Sprites/Enemy/Testificate/testificate_front.png" id="1_fp8vt"]
+[ext_resource type="PackedScene" uid="uid://b2pmo5llggqsa" path="res://Assets/Composition/ComponentHealth.tscn" id="3_qb61q"]
+[ext_resource type="PackedScene" uid="uid://cch1gmlni7xgu" path="res://Assets/Composition/ComponentHitbox.tscn" id="4_bepkx"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_nftqm"]
 radius = 0.2
@@ -29,7 +32,14 @@ _data = {
 "idle": SubResource("Animation_xyb87")
 }
 
-[node name="EnemyTest" type="CharacterBody3D"]
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_s1efa"]
+height = 1.7
+
+[node name="EnemyTest" type="CharacterBody3D" node_paths=PackedStringArray("health", "hitbox") groups=["enemy"]]
+collision_layer = 4
+script = ExtResource("1_0pf1t")
+health = NodePath("ComponentHealth")
+hitbox = NodePath("ComponentHitbox")
 
 [node name="Collision" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_nftqm")
@@ -46,3 +56,27 @@ animation = &"idle"
 libraries = {
 "": SubResource("AnimationLibrary_yes4l")
 }
+
+[node name="ComponentHealth" parent="." instance=ExtResource("3_qb61q")]
+max_health = 100
+
+[node name="ComponentHitbox" parent="." node_paths=PackedStringArray("health") groups=["hitbox"] instance=ExtResource("4_bepkx")]
+collision_layer = 4
+collision_mask = 0
+health = NodePath("../ComponentHealth")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ComponentHitbox" groups=["hitbox"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.00512236, 0)
+shape = SubResource("CapsuleShape3D_s1efa")
+
+[node name="Label3D" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
+avoidance_enabled = true
+
+[node name="TimerHurt" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="has_died" from="ComponentHealth" to="." method="_on_component_health_has_died"]
+[connection signal="been_hit" from="ComponentHitbox" to="." method="_on_component_hitbox_been_hit"]

@@ -26,8 +26,19 @@ func _process(delta):
 			+ "\n" + \
 			"global_position.y: " + str("%.2f" % float(player.global_position.y))\
 			+ "\n" + \
-			"global_position.z: " + str("%.2f" % float(player.global_position.z))
-	
+			"global_position.z: " + str("%.2f" % float(player.global_position.z))\
+			+ "\n" + \
+			"head.rot.x: " + str("%.2f" % float(player.head.rotation.x))\
+			+ "\n" + \
+			"head.rot.y: " + str("%.2f" % float(player.head.rotation.y))\
+			+ "\n" + \
+			"head.rot.z: " + str("%.2f" % float(player.head.rotation.z))\
+			+ "\n" + \
+			"camera.rot.x: " + str("%.2f" % float(player.camera.rotation.x))\
+			+ "\n" + \
+			"camera.rot.y: " + str("%.2f" % float(player.camera.rotation.y))\
+			+ "\n" + \
+			"camera.rot.z: " + str("%.2f" % float(player.camera.rotation.z))
 	#if is_instance_valid(player):
 		#var player_speed: float = Vector2(player.velocity.x, player.velocity.z).length();
 		#label.text = "camera.y: " + str(player_speed);
