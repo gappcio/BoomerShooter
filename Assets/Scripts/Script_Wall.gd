@@ -9,7 +9,7 @@ func on_hit(collision_point, collision_normal):
 	
 	var texture = texture_node.texture;
 	
-	var fx = Autoload.FX_HITPARTICLE.instantiate();
+	var fx = Autoload.FX_HITPARTICLE2.instantiate();
 	get_tree().current_scene.add_child(fx);
 	
 	var decal = Autoload.FX_BULLETHOLE.instantiate();

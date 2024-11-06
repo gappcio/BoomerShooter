@@ -15,7 +15,7 @@ enum STATE {
 	holster
 }
 
-var weapon_stack: Array = [WEAPON.none, WEAPON.pistol];
+var weapon_stack: Array = [WEAPON.none, WEAPON.pistol, WEAPON.shotgun];
 var weapon_variation: int = 0;
 
 var current_weapon: int = WEAPON.none;
@@ -27,7 +27,8 @@ var state = STATE.ready;
 
 var assets = [
 	preload("res://Assets/Objects/Player/Viewmodels/SC_Viewmodel_None.tscn"),
-	preload("res://Assets/Objects/Player/Viewmodels/SC_Viewmodel_Pistol.tscn")
+	preload("res://Assets/Objects/Player/Viewmodels/SC_Viewmodel_Pistol.tscn"),
+	preload("res://Assets/Objects/Player/Viewmodels/SC_Viewmodel_SShotgun.tscn")
 ];
 
 var node_name = [

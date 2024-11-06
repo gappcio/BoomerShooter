@@ -1,34 +1,74 @@
-[gd_scene load_steps=23 format=3 uid="uid://f5hpsiraixyc"]
+[gd_scene load_steps=33 format=3 uid="uid://f5hpsiraixyc"]
 
-[ext_resource type="Script" path="res://Assets/Scripts/Player/Weapon/Script_PlayerWeaponPistol.gd" id="1_yipg3"]
-[ext_resource type="Texture2D" uid="uid://i0ttpo7m2g2k" path="res://Assets/Sprites/Viewmodel/Pistol/viewmodel_pistol.png" id="2_km8xj"]
+[ext_resource type="Script" path="res://Assets/Scripts/Player/Weapon/Script_PlayerWeaponSShotgun.gd" id="1_8ygde"]
+[ext_resource type="Texture2D" uid="uid://c0koyeie60jrl" path="res://Assets/Sprites/Viewmodel/Shotgun/viewmodel_shtogun.png" id="2_m5dl7"]
 [ext_resource type="AudioStream" uid="uid://dnpm23ly1dahd" path="res://Assets/Audio/SFX/Weapons/Pistol/sound_pistol_shoot.wav" id="3_sw7tm"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_fr2ls"]
-atlas = ExtResource("2_km8xj")
-region = Rect2(0, 0, 132, 128)
+[sub_resource type="AtlasTexture" id="AtlasTexture_r6sbb"]
+atlas = ExtResource("2_m5dl7")
+region = Rect2(0, 0, 164, 164)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_7nawg"]
-atlas = ExtResource("2_km8xj")
-region = Rect2(132, 0, 132, 128)
+[sub_resource type="AtlasTexture" id="AtlasTexture_gp81d"]
+atlas = ExtResource("2_m5dl7")
+region = Rect2(0, 0, 164, 164)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_7wj82"]
-atlas = ExtResource("2_km8xj")
-region = Rect2(264, 0, 132, 128)
+[sub_resource type="AtlasTexture" id="AtlasTexture_k4w4e"]
+atlas = ExtResource("2_m5dl7")
+region = Rect2(164, 0, 164, 164)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_i1j8g"]
-atlas = ExtResource("2_km8xj")
-region = Rect2(396, 0, 132, 128)
+[sub_resource type="AtlasTexture" id="AtlasTexture_hmv6n"]
+atlas = ExtResource("2_m5dl7")
+region = Rect2(328, 0, 164, 164)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_ddaqh"]
-atlas = ExtResource("2_km8xj")
-region = Rect2(528, 0, 132, 128)
+[sub_resource type="AtlasTexture" id="AtlasTexture_3jaoh"]
+atlas = ExtResource("2_m5dl7")
+region = Rect2(492, 0, 164, 164)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xwq62"]
+atlas = ExtResource("2_m5dl7")
+region = Rect2(656, 0, 164, 164)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mxs8g"]
+atlas = ExtResource("2_m5dl7")
+region = Rect2(820, 0, 164, 164)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_847mc"]
+atlas = ExtResource("2_m5dl7")
+region = Rect2(984, 0, 164, 164)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s6uhx"]
+atlas = ExtResource("2_m5dl7")
+region = Rect2(1148, 0, 164, 164)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rytpv"]
+atlas = ExtResource("2_m5dl7")
+region = Rect2(1312, 0, 164, 164)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ewc22"]
+atlas = ExtResource("2_m5dl7")
+region = Rect2(1476, 0, 164, 164)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i562b"]
+atlas = ExtResource("2_m5dl7")
+region = Rect2(1640, 0, 164, 164)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8748s"]
+atlas = ExtResource("2_m5dl7")
+region = Rect2(1804, 0, 164, 164)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qokdt"]
+atlas = ExtResource("2_m5dl7")
+region = Rect2(1968, 0, 164, 164)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5orwq"]
+atlas = ExtResource("2_m5dl7")
+region = Rect2(2132, 0, 164, 164)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_qf7pw"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_fr2ls")
+"texture": SubResource("AtlasTexture_r6sbb")
 }],
 "loop": true,
 "name": &"idle",
@@ -36,16 +76,46 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_7nawg")
+"texture": SubResource("AtlasTexture_gp81d")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_7wj82")
+"texture": SubResource("AtlasTexture_k4w4e")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_i1j8g")
+"texture": SubResource("AtlasTexture_hmv6n")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_ddaqh")
+"texture": SubResource("AtlasTexture_3jaoh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xwq62")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mxs8g")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_847mc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s6uhx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rytpv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ewc22")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_i562b")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8748s")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qokdt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5orwq")
 }],
 "loop": false,
 "name": &"shoot",
@@ -66,7 +136,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.3, 0.65),
 "transitions": PackedFloat32Array(1, 1.18921, 1),
 "update": 0,
-"values": [Vector2(365, 215), Vector2(365, 220), Vector2(365, 220)]
+"values": [Vector2(330, 190), Vector2(330, 195), Vector2(330, 195)]
 }
 
 [sub_resource type="Animation" id="Animation_v5clp"]
@@ -83,7 +153,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.25, 0.5, 0.75),
 "transitions": PackedFloat32Array(1, 1, 1, 0.933032),
 "update": 0,
-"values": [Vector2(365, 215), Vector2(345, 225), Vector2(365, 215), Vector2(375, 225)]
+"values": [Vector2(330, 190), Vector2(310, 205), Vector2(330, 190), Vector2(355, 205)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_7pbj2"]
@@ -144,8 +214,8 @@ states/walk/position = Vector2(692, 94)
 transitions = ["Start", "idle", SubResource("AnimationNodeStateMachineTransition_nm0n8"), "idle", "walk", SubResource("AnimationNodeStateMachineTransition_jg6kq"), "walk", "idle", SubResource("AnimationNodeStateMachineTransition_pwvog")]
 graph_offset = Vector2(-14, 14)
 
-[node name="VIEWMODEL_Pistol" type="Node3D"]
-script = ExtResource("1_yipg3")
+[node name="VIEWMODEL_SShotgun" type="Node3D"]
+script = ExtResource("1_8ygde")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -157,12 +227,10 @@ offset_bottom = 270.0
 mouse_filter = 2
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CanvasLayer/Control"]
-position = Vector2(365, 215)
+position = Vector2(330, 190)
 sprite_frames = SubResource("SpriteFrames_qf7pw")
 animation = &"shoot"
 autoplay = "idle"
-frame = 3
-frame_progress = 1.0
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer/Control/AnimatedSprite2D"]
 root_node = NodePath("../..")
@@ -181,7 +249,6 @@ parameters/idle/TimeScale/scale = 0.25
 parameters/walk/TimeScale/scale = 1.0
 
 [node name="ShootTimer" type="Timer" parent="."]
-wait_time = 0.1
 
 [node name="Audio" type="AudioStreamPlayer3D" parent="."]
 stream = ExtResource("3_sw7tm")
