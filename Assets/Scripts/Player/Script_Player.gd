@@ -256,9 +256,7 @@ func _on_area_step_up_bottom_body_entered(body):
 		var direction = (head.transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized();
 		
 		print(direction)
-		
-		# try using raycast
-		
+
 		while test_move(global_transform, Vector3(direction.x / 10, i, direction.z / 10)):
 			#print(str(global_position.y) + "/" + str(global_position.y + i))
 			
