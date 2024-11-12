@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://ddv5xshw0olb6"]
+
+[ext_resource type="Script" path="res://Assets/Composition/Script_CompWeapon.gd" id="1_ua4r0"]
+
+[node name="ComponentWeapon" type="Node3D"]
+script = ExtResource("1_ua4r0")
+always_hit_center = true
+shooting_speed = 0.1
+
+[node name="ShootTimer" type="Timer" parent="."]
+wait_time = 0.1

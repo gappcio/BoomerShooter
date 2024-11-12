@@ -1,8 +1,9 @@
-[gd_scene load_steps=23 format=3 uid="uid://degs01nlfjrpy"]
+[gd_scene load_steps=24 format=3 uid="uid://degs01nlfjrpy"]
 
 [ext_resource type="Script" path="res://Assets/Scripts/Player/Weapon/Script_PlayerWeaponPistol.gd" id="1_y0mra"]
 [ext_resource type="Texture2D" uid="uid://i0ttpo7m2g2k" path="res://Assets/Sprites/Viewmodel/Pistol/viewmodel_pistol.png" id="2_4mlt7"]
 [ext_resource type="AudioStream" uid="uid://dnpm23ly1dahd" path="res://Assets/Audio/SFX/Weapons/Pistol/sound_pistol_shoot.wav" id="3_ajb11"]
+[ext_resource type="PackedScene" uid="uid://ddv5xshw0olb6" path="res://Assets/Composition/ComponentWeapon.tscn" id="4_764sq"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_fr2ls"]
 atlas = ExtResource("2_4mlt7")
@@ -186,5 +187,14 @@ stream = ExtResource("3_ajb11")
 max_distance = 20.0
 max_polyphony = 3
 
-[connection signal="animation_finished" from="CanvasLayer/Control/AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
+[node name="ComponentWeapon" parent="." node_paths=PackedStringArray("animated_sprite", "animation_tree", "audio", "control") instance=ExtResource("4_764sq")]
+accuracy = 1.0
+bullet_amount = 1
+damage = 1.0
+animated_sprite = NodePath("../CanvasLayer/Control/AnimatedSprite2D")
+animation_tree = NodePath("../CanvasLayer/Control/AnimatedSprite2D/AnimationTree")
+audio = NodePath("../Audio")
+control = NodePath("../CanvasLayer/Control")
+
+[connection signal="animation_finished" from="CanvasLayer/Control/AnimatedSprite2D" to="ComponentWeapon" method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="timeout" from="ShootTimer" to="." method="_on_shoot_timer_timeout"]

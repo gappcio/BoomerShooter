@@ -58,7 +58,7 @@ libraries = {
 }
 
 [node name="ComponentHealth" parent="." instance=ExtResource("3_qb61q")]
-max_health = 100
+max_health = 10.0
 
 [node name="ComponentHitbox" parent="." node_paths=PackedStringArray("health") groups=["hitbox"] instance=ExtResource("4_bepkx")]
 collision_layer = 4

@@ -1,0 +1,48 @@
+[gd_scene load_steps=6 format=3 uid="uid://cyjxr55vqeao2"]
+
+[ext_resource type="Texture2D" uid="uid://0ff5d7riedaq" path="res://Assets/Sprites/FX/gore1.png" id="1_14anj"]
+[ext_resource type="Script" path="res://Assets/Scripts/World/Particles/Script_HitParticles.gd" id="2_5haq3"]
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_3tf0o"]
+emission_shape_scale = Vector3(0.5, 0.5, 0.5)
+emission_shape = 1
+emission_sphere_radius = 0.2
+angle_max = 6.0
+spread = 5.0
+flatness = 0.225
+initial_velocity_min = 0.2
+initial_velocity_max = 2.0
+scale_min = 0.5
+scale_max = 2.0
+anim_speed_max = 1.0
+collision_mode = 1
+collision_friction = 0.02
+collision_bounce = 0.05
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_v6i12"]
+transparency = 4
+albedo_texture = ExtResource("1_14anj")
+metallic = 0.27
+roughness = 0.38
+texture_filter = 4
+billboard_mode = 3
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="QuadMesh" id="QuadMesh_6sbhu"]
+material = SubResource("StandardMaterial3D_v6i12")
+size = Vector2(0.1, 0.1)
+
+[node name="ScGoreParticles" type="GPUParticles3D"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
+emitting = false
+lifetime = 2.0
+one_shot = true
+explosiveness = 0.93
+randomness = 1.0
+process_material = SubResource("ParticleProcessMaterial_3tf0o")
+draw_pass_1 = SubResource("QuadMesh_6sbhu")
+script = ExtResource("2_5haq3")
+
+[connection signal="finished" from="." to="." method="_on_finished"]

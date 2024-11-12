@@ -1,7 +1,7 @@
 extends Node
 
-@export var max_health: int;
-var health: int;
+@export var max_health: float;
+var health: float;
 
 signal has_died;
 

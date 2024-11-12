@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://c0jd3cujvbmlc"]
+[gd_scene load_steps=15 format=3 uid="uid://c0jd3cujvbmlc"]
 
 [ext_resource type="Script" path="res://Assets/Scripts/Player/Script_Player.gd" id="1_5ffuh"]
 [ext_resource type="PackedScene" uid="uid://1hxrf7rm1jbt" path="res://Assets/Objects/Player/SC_Camera.tscn" id="1_xqu0b"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://bq04hxdqqem1b" path="res://Assets/Images/Debug/arrow.png" id="3_qcniq"]
 [ext_resource type="Script" path="res://Assets/Scripts/Player/Weapon/Script_Control_PlayerWeapon.gd" id="4_7lj4b"]
 [ext_resource type="PackedScene" uid="uid://dn3xfbukde1fv" path="res://Assets/Objects/Player/Viewmodels/SC_Viewmodel_None.tscn" id="4_hkojv"]
+[ext_resource type="PackedScene" uid="uid://04d8wgl8ry6b" path="res://Assets/Objects/Player/Viewmodels/SC_Viewmodel_Fists.tscn" id="6_hbj6a"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_c23eb"]
 margin = 0.5
@@ -16,6 +17,9 @@ height = 1.75
 margin = 0.5
 radius = 0.4
 height = 0.95
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_xd2rw"]
+size = Vector3(1.4, 0.75, 1.5)
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_qsvxe"]
 radius = 0.4
@@ -69,6 +73,8 @@ script = ExtResource("4_7lj4b")
 wait_time = 0.1
 one_shot = true
 
+[node name="VIEWMODEL_Fists" parent="Head/Camera/WeaponAttach/ViewmodelControl" instance=ExtResource("6_hbj6a")]
+
 [node name="MuzzlePoint" type="Node3D" parent="Head/Camera/WeaponAttach"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0163806, 0.0672958, -0.770245)
 
@@ -77,6 +83,14 @@ target_position = Vector3(0, 0, -100)
 collision_mask = 5
 collide_with_areas = true
 debug_shape_custom_color = Color(1, 0, 0, 1)
+
+[node name="FistsArea" type="Area3D" parent="Head/Camera"]
+monitoring = false
+monitorable = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Head/Camera/FistsArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.75)
+shape = SubResource("BoxShape3D_xd2rw")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 visible = false

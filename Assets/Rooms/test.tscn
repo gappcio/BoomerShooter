@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://2b6bnvn3bw57"]
+[gd_scene load_steps=16 format=3 uid="uid://2b6bnvn3bw57"]
 
 [ext_resource type="PackedScene" uid="uid://dnqgxo3b1pv42" path="res://Assets/Objects/Player/SC_HUD.tscn" id="1_2plu5"]
 [ext_resource type="Material" uid="uid://b4dca13i4mt11" path="res://Assets/Materials/MAT_SkyCloudy.tres" id="1_13yq0"]
@@ -6,6 +6,10 @@
 [ext_resource type="PackedScene" uid="uid://c0jd3cujvbmlc" path="res://Assets/Objects/Player/SC_Player.tscn" id="3_1ldba"]
 [ext_resource type="PackedScene" uid="uid://blhii3tmmhh2d" path="res://Assets/Objects/World/SC_TestBlock.tscn" id="4_oyxf5"]
 [ext_resource type="PackedScene" uid="uid://p6w3l25xcjdh" path="res://Assets/Objects/Enemy/TestEnemy/SC_Enemy_Test.tscn" id="6_es8qg"]
+[ext_resource type="PackedScene" uid="uid://cyjxr55vqeao2" path="res://Assets/Objects/World/Particles/SC_GoreParticles.tscn" id="7_3db6d"]
+[ext_resource type="PackedScene" uid="uid://bl0dd1hnr0rpv" path="res://Assets/Objects/World/Particles/SC_HitParticles2.tscn" id="8_5iv77"]
+[ext_resource type="PackedScene" uid="uid://c7vneg0tkuj6n" path="res://Assets/Objects/World/Particles/SC_HitParticles.tscn" id="9_p50b6"]
+[ext_resource type="Texture2D" uid="uid://yeyqiq3adxqj" path="res://Assets/Images/Textures/Block/block.png" id="10_celxg"]
 
 [sub_resource type="Sky" id="Sky_vj82v"]
 sky_material = ExtResource("1_13yq0")
@@ -27,6 +31,23 @@ volumetric_fog_sky_affect = 0.621
 vertices = PackedVector3Array(-49.5, 0.5, -4.25, -9.75, 0.5, -4.25, -9.75, 0.5, -5.25, -49.5, 0.5, -4.25, -9.75, 0.5, -5.25, -8.75, 0.5, -5.5, -8.75, 0.5, -49.5, -49.5, 0.5, -49.5, -0.5, 0.5, -3.5, -0.25, 0.5, -3, 0.25, 0.5, -3.25, 0.25, 0.75, -4.25, -8.75, 0.5, -5.5, 1, 0.5, -5.25, 1.5, 0.5, -5.25, 1.5, 0.5, -49.5, -8.75, 0.5, -49.5, 0.25, 0.75, -4.25, 1, 1, -4.25, 1, 0.5, -5.25, -0.5, 0.5, -3.5, 0.25, 0.75, -4.25, 1, 0.5, -5.25, -2.25, 0.5, -3.5, -8.75, 0.5, -5.5, -7.5, 0.5, -5.25, 1, 0.5, -5.25, -7.5, 0.5, -3.5, -2.5, 0.5, -3, -2.25, 0.5, -3.5, -7.5, 0.5, -5.25, -7.5, 0.5, -3.5, -2.25, 0.5, -3.5, 1, 0.5, -5.25, 1.5, 0.5, -49.5, 1.5, 0.5, -5.25, 2, 0.75, -4.5, 49.5, 0.5, -4.5, 49.5, 0.5, -49.5, 2, 0.75, -4, 1.25, 1, -4, 1.25, 0.5, -3, 1.25, 0.5, -3, 0.25, 0.5, -3.25, -0.25, 0.5, -3, -0.5, 0.5, 0.5, 49.5, 0.5, -4.5, 2, 0.75, -4.5, 2, 0.75, -4, 2, 0.75, -4, 1.25, 0.5, -3, -0.5, 0.5, 0.5, -0.5, 0.5, 49.5, 49.5, 0.5, 49.5, 49.5, 0.5, -4.5, -2.25, 0.5, 0.5, -2.5, 0.5, -3, -7.5, 0.5, -3.5, -9.5, 0.5, -3.25, -2.25, 0.5, 0.5, -9.5, 0.5, -3.25, -49.5, 0.5, -4.25, -49.5, 0.5, 49.5, -2.25, 0.5, 49.5, -9.5, 0.5, -3.25, -9.75, 0.5, -4.25, -49.5, 0.5, -4.25, -1.25, 0.75, 0.5, -1.5, 1.5, -2.5, -1.5, 0.75, 0.5, -0.5, 0.5, 49.5, -0.5, 0.5, 0.5, -1.25, 0.75, 0.5, -1.5, 0.75, 0.5, -2.25, 0.5, 0.5, -2.25, 0.5, 49.5, -2.25, 0.5, 49.5, -0.5, 0.5, 49.5, -1.25, 0.75, 0.5, -1.5, 0.75, 0.5)
 polygons = [PackedInt32Array(2, 1, 0), PackedInt32Array(4, 3, 5), PackedInt32Array(5, 3, 6), PackedInt32Array(6, 3, 7), PackedInt32Array(9, 8, 10), PackedInt32Array(10, 8, 11), PackedInt32Array(13, 12, 14), PackedInt32Array(14, 12, 16), PackedInt32Array(14, 16, 15), PackedInt32Array(19, 18, 17), PackedInt32Array(21, 20, 22), PackedInt32Array(22, 20, 23), PackedInt32Array(24, 26, 25), PackedInt32Array(29, 28, 27), PackedInt32Array(31, 30, 32), PackedInt32Array(32, 30, 33), PackedInt32Array(35, 34, 36), PackedInt32Array(36, 34, 37), PackedInt32Array(37, 34, 38), PackedInt32Array(41, 40, 39), PackedInt32Array(43, 42, 44), PackedInt32Array(44, 42, 45), PackedInt32Array(48, 47, 46), PackedInt32Array(50, 49, 51), PackedInt32Array(51, 49, 54), PackedInt32Array(51, 54, 52), PackedInt32Array(52, 54, 53), PackedInt32Array(57, 56, 58), PackedInt32Array(58, 56, 55), PackedInt32Array(60, 59, 61), PackedInt32Array(61, 59, 63), PackedInt32Array(61, 63, 62), PackedInt32Array(66, 65, 64), PackedInt32Array(69, 68, 67), PackedInt32Array(72, 71, 70), PackedInt32Array(75, 74, 73), PackedInt32Array(79, 78, 76), PackedInt32Array(76, 78, 77)]
 agent_max_slope = 60.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_smqro"]
+albedo_texture = ExtResource("10_celxg")
+uv1_scale = Vector3(0.05, 0.05, 0.05)
+uv1_offset = Vector3(1, 1, 0)
+texture_filter = 0
+billboard_mode = 3
+billboard_keep_scale = true
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+grow_amount = 1.402
+
+[sub_resource type="QuadMesh" id="QuadMesh_ymaa5"]
+resource_local_to_scene = true
+material = SubResource("StandardMaterial3D_smqro")
+size = Vector2(0.1, 0.1)
 
 [node name="Node3D" type="Node3D"]
 
@@ -77,3 +98,13 @@ text = "z+>"
 
 [node name="EnemyTest" parent="." instance=ExtResource("6_es8qg")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0.880656, -6)
+
+[node name="ScGoreParticles" parent="." instance=ExtResource("7_3db6d")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 2.25478, 0, -10.9401)
+
+[node name="ScHitParticles2" parent="." instance=ExtResource("8_5iv77")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.25478, 0, -10.9401)
+
+[node name="ScHitParticles" parent="." instance=ExtResource("9_p50b6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.25478, 0, -10.9401)
+draw_pass_1 = SubResource("QuadMesh_ymaa5")

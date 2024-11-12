@@ -76,7 +76,7 @@ func hurt(collision_point, collision_normal):
 		
 	#var texture = texture_node.texture;
 	
-	var fx = Autoload.FX_HITPARTICLE.instantiate();
+	var fx = Autoload.FX_GORE1.instantiate();
 	get_tree().current_scene.add_child(fx);
 	
 	fx.global_position = collision_point + (collision_normal / 10);

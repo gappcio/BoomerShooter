@@ -10,149 +10,15 @@ class_name player_weapon_sshotgun
 
 @onready var control: Control = $CanvasLayer/Control;
 
+@onready var weapon: Node3D = $"ComponentWeapon";
+
 enum STATE {
 	idle,
 	shoot
 }
 
-var state = STATE.idle;
-
-var shoot_period: float = 1.0;
-
-func _ready():
-	
-	player_instance = $"../../../../../../";
-	anim["parameters/playback"].travel("idle");
-	anim.active = true;
-	shoot_timer.wait_time = shoot_period;
-
-func _process(delta):
-	
-	var player_speed: float = Vector2(player_instance.velocity.x, player_instance.velocity.z).length();
-	
-	if player_speed > 1:
-		anim["parameters/playback"].travel("walk");
-		anim["parameters/walk/TimeScale/scale"] = player_speed / 10;
-	elif player_speed < 1:
-		anim["parameters/playback"].travel("idle");
-		
-	if Input.is_action_pressed("mouse_left") && state == STATE.idle:
-		shoot();
-		
-	sprite_animation();
-
-func shoot():
-
-	state = STATE.shoot;
-	shoot_timer.start();
-	
-	audio.play();
-	
-	if is_instance_valid(player_instance):
-		player_instance.camera_shake();
-	
-	var shot_count = 9;
-	
-	for i in shot_count:
-	
-		var random = RandomNumberGenerator.new();
-		var random_bullet_spread: Array = [
-			random.randf_range(-0.18, 0.18),
-			random.randf_range(-0.18, 0.18),
-			random.randf_range(-0.18, 0.18)
-		];
-	
-		if i > 0:
-			raycast.position = Vector3(
-				cos(raycast.rotation.y) * random_bullet_spread[0],
-				cos(raycast.rotation.x) * random_bullet_spread[1],
-				cos(raycast.rotation.z) * random_bullet_spread[2]
-			);
-			raycast.rotation = Vector3(
-				random_bullet_spread[0] / 4,
-				random_bullet_spread[1] / 4,
-				random_bullet_spread[2] / 4
-			);
-			
-		print(raycast.position);
-	
-		if raycast.is_colliding():
-			
-			var target = null;
-			var collision_point = null;
-			var collision_normal = null;
-			
-			var target_list = [];
-			var col_point_list = [];
-			var col_normal_list = [];
-			
-			while raycast.is_colliding():
-				
-				var _target = raycast.get_collider();
-				
-				target_list.append(_target);
-				
-				raycast.add_exception(_target);
-				
-				collision_point = raycast.get_collision_point();
-				collision_normal = raycast.get_collision_normal();
-				
-				col_point_list.append(collision_point);
-				col_normal_list.append(collision_normal);
-				
-				print(col_point_list);
-				
-				raycast.force_raycast_update();
-						
-				
-			for _target in target_list:
-				
-				raycast.remove_exception(_target);
-			
-			var _i = 0;
-			
-			for _target in target_list:
-				
-				if _target != null:
-					if _target.is_in_group("wall") && _target.has_method("on_hit"):
-						target = _target;
-						target.on_hit(col_point_list[_i], col_normal_list[_i]);
-						break;
-					if _target.is_in_group("hitbox") && _target.has_method("hurt"):
-						target = _target;
-						target.hurt(col_point_list[_i], col_normal_list[_i], 1);
-						break;
-				
-				_i += 1;
-		
-			target_list.clear();
-			col_point_list.clear();
-			col_normal_list.clear();
-			
-		#random.free();
-		raycast.force_raycast_update();
-		
-	raycast.position = Vector3(0.0, 0.0, 0.0);
-
-func _on_shoot_timer_timeout():
-	pass
-	#state = STATE.idle;
-	#shoot_timer.stop();
-	#shoot_timer.wait_time = shoot_period;
-
-func sprite_animation():
-	
-	match(state):
-		STATE.idle:
-			sprite_anim.play("idle");
-		STATE.shoot:
-			sprite_anim.play("shoot");
-
-
 func _on_animated_sprite_2d_animation_finished():
-	state = STATE.idle;
-	shoot_timer.stop();
-	shoot_timer.wait_time = shoot_period;
+	pass
 	
 func set_canvas_position(pos: Vector2):
-	control.position = pos;
+	weapon.set_canvas_position(pos);

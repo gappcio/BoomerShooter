@@ -1,0 +1,121 @@
+[gd_scene load_steps=15 format=3 uid="uid://04d8wgl8ry6b"]
+
+[ext_resource type="Texture2D" uid="uid://drdpj7q5hj0h1" path="res://Assets/Sprites/Viewmodel/Fists/viewmodel_fists.png" id="1_5gb83"]
+[ext_resource type="Script" path="res://Assets/Scripts/Player/Weapon/Script_PlayerWeaponFists.gd" id="1_p00lp"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4dgdd"]
+atlas = ExtResource("1_5gb83")
+region = Rect2(0, 0, 180, 160)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xfsi8"]
+atlas = ExtResource("1_5gb83")
+region = Rect2(180, 0, 180, 160)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_883nd"]
+atlas = ExtResource("1_5gb83")
+region = Rect2(360, 0, 180, 160)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x01q6"]
+atlas = ExtResource("1_5gb83")
+region = Rect2(540, 0, 180, 160)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nwkue"]
+atlas = ExtResource("1_5gb83")
+region = Rect2(720, 0, 180, 160)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e45ah"]
+atlas = ExtResource("1_5gb83")
+region = Rect2(900, 0, 180, 160)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dtry8"]
+atlas = ExtResource("1_5gb83")
+region = Rect2(1080, 0, 180, 160)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_opqrk"]
+atlas = ExtResource("1_5gb83")
+region = Rect2(1080, 0, 180, 160)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1ci65"]
+atlas = ExtResource("1_5gb83")
+region = Rect2(1260, 0, 180, 160)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dg8d2"]
+atlas = ExtResource("1_5gb83")
+region = Rect2(1440, 0, 180, 160)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_udhmu"]
+atlas = ExtResource("1_5gb83")
+region = Rect2(0, 0, 180, 160)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ybug2"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4dgdd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xfsi8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_883nd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_x01q6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nwkue")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e45ah")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dtry8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e45ah")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_opqrk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1ci65")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dg8d2")
+}],
+"loop": false,
+"name": &"attack",
+"speed": 15.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_udhmu")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[node name="VIEWMODEL_Fists" type="Node3D"]
+script = ExtResource("1_p00lp")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Control" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 480.0
+offset_bottom = 270.0
+mouse_filter = 2
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CanvasLayer/Control"]
+texture_filter = 1
+position = Vector2(156, 190)
+sprite_frames = SubResource("SpriteFrames_ybug2")
+animation = &"attack"
+speed_scale = 2.0
+
+[node name="ShootTimer" type="Timer" parent="."]
+
+[connection signal="animation_finished" from="CanvasLayer/Control/AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
+[connection signal="timeout" from="ShootTimer" to="." method="_on_shoot_timer_timeout"]

@@ -236,9 +236,10 @@ func camera_shake():
 	var tween = create_tween().set_parallel();
 	var fov_change = 2.0;
 	var time = 0.0125;
+	var rotation_amount = 0.05;
 
-	tween.tween_property(head, "rotation", Vector3(0, 0, time * Autoload.random_dir), 0.025).as_relative();
-	tween.chain().tween_property(head, "rotation", Vector3(0, 0, -time * Autoload.random_dir), 0.025).as_relative();
+	tween.tween_property(head, "rotation", Vector3(0, 0, time * Autoload.random_dir), rotation_amount).as_relative();
+	tween.chain().tween_property(head, "rotation", Vector3(0, 0, -time * Autoload.random_dir), rotation_amount).as_relative();
 	
 	if camera.fov > 1.0 && camera.fov < 179.0:
 		tween.tween_property(camera, "fov", fov_change, time).as_relative();
@@ -255,7 +256,7 @@ func _on_area_step_up_bottom_body_entered(body):
 		var i = 0.0;
 		var direction = (head.transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized();
 		
-		print(direction)
+		#print(direction)
 
 		while test_move(global_transform, Vector3(direction.x / 10, i, direction.z / 10)):
 			#print(str(global_position.y) + "/" + str(global_position.y + i))
