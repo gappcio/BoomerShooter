@@ -1,0 +1,31 @@
+[gd_scene load_steps=3 format=3 uid="uid://bdcrrhdm6vkv6"]
+
+[ext_resource type="Texture2D" uid="uid://dkr2hrjsxcwfc" path="res://Assets/Sprites/World/pine1.png" id="1_tmavm"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_anbtv"]
+radius = 0.3
+height = 3.88047
+
+[node name="ScPineTree1" type="Node3D" groups=["wall"]]
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.36, 6.82, 0)
+pixel_size = 0.0315
+shaded = true
+texture_filter = 2
+render_priority = 1
+texture = ExtResource("1_tmavm")
+
+[node name="Sprite3D2" type="Sprite3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.82, -0.315)
+pixel_size = 0.0315
+axis = 0
+shaded = true
+texture_filter = 2
+texture = ExtResource("1_tmavm")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.84275, 0)
+shape = SubResource("CapsuleShape3D_anbtv")
