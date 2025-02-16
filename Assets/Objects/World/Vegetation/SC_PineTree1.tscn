@@ -1,6 +1,20 @@
-[gd_scene load_steps=3 format=3 uid="uid://bdcrrhdm6vkv6"]
+[gd_scene load_steps=5 format=3 uid="uid://bdcrrhdm6vkv6"]
 
 [ext_resource type="Texture2D" uid="uid://dkr2hrjsxcwfc" path="res://Assets/Sprites/World/pine1.png" id="1_tmavm"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bc10x"]
+transparency = 1
+cull_mode = 2
+albedo_texture = ExtResource("1_tmavm")
+backlight_enabled = true
+texture_filter = 0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ogbva"]
+transparency = 1
+cull_mode = 2
+albedo_texture = ExtResource("1_tmavm")
+backlight_enabled = true
+texture_filter = 0
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_anbtv"]
 radius = 0.3
@@ -10,6 +24,8 @@ height = 3.88047
 
 [node name="Sprite3D" type="Sprite3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.36, 6.82, 0)
+sorting_offset = -6.835
+material_override = SubResource("StandardMaterial3D_bc10x")
 pixel_size = 0.0315
 shaded = true
 texture_filter = 2
@@ -17,11 +33,13 @@ render_priority = 1
 texture = ExtResource("1_tmavm")
 
 [node name="Sprite3D2" type="Sprite3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.82, -0.315)
+transform = Transform3D(0.000954457, -0.00153454, -0.999998, -0.00145615, 0.999998, -0.00153592, 0.999999, 0.0014576, 0.00095223, -0.025, 6.82, 0.345)
+sorting_offset = -6.575
+material_override = SubResource("StandardMaterial3D_ogbva")
 pixel_size = 0.0315
-axis = 0
 shaded = true
 texture_filter = 2
+render_priority = 1
 texture = ExtResource("1_tmavm")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="."]

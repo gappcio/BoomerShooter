@@ -26,6 +26,10 @@ window/size/viewport_height=270
 window/stretch/mode="canvas_items"
 window/stretch/aspect="keep_width"
 
+[dotnet]
+
+project/assembly_name="BoomerShooter"
+
 [editor]
 
 version_control/plugin_name="GitPlugin"

@@ -99,7 +99,7 @@ func clamp_pitch() -> void:
 	if camera.rotation.x > deg_to_rad(-90) and camera.rotation.x < deg_to_rad(90):
 		return
 	
-	camera.rotation.x = clamp(camera.rotation.x, deg_to_rad(-90), deg_to_rad(90))
+	#camera.rotation.x = clamp(camera.rotation.x, deg_to_rad(-90), deg_to_rad(90))
 	camera.orthonormalize()
 
 func _process(delta):
