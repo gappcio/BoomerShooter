@@ -64,10 +64,10 @@ func _unhandled_input(event: InputEvent) -> void:
 
 	if Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
 		if event is InputEventMouseMotion:
-			look(event);
-			#head.rotate_y(-event.relative.x * .0025);
-			#camera.rotate_x(-event.relative.y * .0025);
-			#camera.rotation.x = clamp(camera.rotation.x, deg_to_rad(-90), deg_to_rad(90));
+			#look(event);
+			head.rotate_y(-event.relative.x * .0025);
+			camera.rotate_x(-event.relative.y * .0025);
+			camera.rotation.x = clamp(camera.rotation.x, deg_to_rad(-90), deg_to_rad(90));
 
 func look(event: InputEventMouseMotion) -> void:
 	var viewport_transform: Transform2D = get_tree().root.get_final_transform();

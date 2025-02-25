@@ -185,7 +185,8 @@ entity_fgd = SubResource("Resource_ihmsf")
 texture_file_extensions = PackedStringArray("png", "jpg", "jpeg", "bmp")
 default_material = SubResource("StandardMaterial3D_d3hhk")
 
-[node name="entity_0_worldspawn" type="StaticBody3D" parent="QodotMap"]
+[node name="entity_0_worldspawn" type="StaticBody3D" parent="QodotMap" groups=["wall"]]
+script = ExtResource("21_uvjlx")
 
 [node name="entity_0_mesh_instance" type="MeshInstance3D" parent="QodotMap/entity_0_worldspawn"]
 mesh = SubResource("ArrayMesh_m16x7")
@@ -195,6 +196,9 @@ occluder = SubResource("ArrayOccluder3D_2gor4")
 
 [node name="entity_0_brush_0_collision_shape" type="CollisionShape3D" parent="QodotMap/entity_0_worldspawn"]
 shape = SubResource("ConvexPolygonShape3D_5413i")
+
+[node name="Texture" parent="QodotMap/entity_0_worldspawn" instance=ExtResource("23_sep45")]
+texture = ExtResource("22_ai0p7")
 
 [node name="entity_1_func_group" type="StaticBody3D" parent="QodotMap" groups=["wall"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, -1, 3.5)
