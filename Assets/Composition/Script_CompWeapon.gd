@@ -23,6 +23,10 @@ enum BULLET_TYPE {
 @export var audio: AudioStreamPlayer3D;
 @export var control: Control;
 
+@onready var anim_model_hands: AnimationPlayer = $"../rig/hands/AnimModelHands";
+@onready var anim_model_pistol: AnimationPlayer = $"../rig/pistol/AnimModelPistol";
+@onready var anim_base_pistol: AnimationPlayer = $"../rig/AnimBasePistol";
+
 enum STATE {
 	idle,
 	shoot
@@ -33,7 +37,10 @@ var state = STATE.idle;
 func _ready():
 	shoot_timer.wait_time = shooting_speed;
 	player_instance = $"../../../../../../../";
-	animation_tree["parameters/playback"].travel("idle");
+	#animation_tree["parameters/playback"].travel("idle");
+	anim_model_hands.play("ref_pose");
+	anim_model_pistol.play("gun_idle_pose");
+	anim_base_pistol.play("idle");
 	animation_tree.active = true;
 
 func _process(delta):
@@ -147,8 +154,20 @@ func sprite_animation():
 	match(state):
 		STATE.idle:
 			animated_sprite.play("idle");
+			anim_model_hands.play("ref_pose");
+			anim_model_pistol.play("gun_idle_pose");
+			anim_base_pistol.play("idle");
+			anim_model_hands.speed_scale = 1.0;
+			anim_model_pistol.speed_scale = 1.0;
+			anim_base_pistol.speed_scale = 1.0;
 		STATE.shoot:
 			animated_sprite.play("shoot");
+			anim_model_hands.play("shoot");
+			anim_model_pistol.play("gun_shoot");
+			anim_base_pistol.play("shoot");
+			anim_model_hands.speed_scale = 2.2;
+			anim_model_pistol.speed_scale = 2.2;
+			anim_base_pistol.speed_scale = 2.2;
 
 func _on_animated_sprite_2d_animation_finished():
 	state = STATE.idle;

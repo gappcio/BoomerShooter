@@ -15,7 +15,7 @@ enum STATE {
 	holster
 }
 
-var weapon_stack: Array = [WEAPON.none, WEAPON.pistol, WEAPON.shotgun];
+var weapon_stack: Array = [WEAPON.none, WEAPON.pistol];
 var weapon_variation: int = 0;
 
 var current_weapon: int = WEAPON.none;
