@@ -3,7 +3,7 @@ class_name hud;
 
 @onready var label = $Label;
 @onready var player = $"../Player";
-#@onready var pistol = $"../Player/Head/Camera/WeaponAttach/ViewmodelControl/Weapon/VIEWMODEL_Pistol";
+@onready var pistol = $"../Player/Head/Camera/WeaponAttach/ViewmodelControl/Weapon/VIEWMODEL_Pistol/ComponentWeapon";
 
 func _ready():
 	pass
@@ -12,12 +12,13 @@ func _process(delta):
 	pass
 	#var viewmodel = player.get_node("Head/Camera/WeaponAttach/ViewmodelControl/Weapon/VIEWMODEL_Pistol");
 	
-	#pistol = $"../Player/Head/Camera/WeaponAttach/ViewmodelControl/Weapon/VIEWMODEL_Pistol";
+	pistol = $"../Player/Head/Camera/WeaponAttach/ViewmodelControl/Weapon/VIEWMODEL_Pistol/ComponentWeapon";
 	
-	
-	
-	label.text = "fps: " + str(Engine.get_frames_per_second());
-	
+	if is_instance_valid(pistol):
+		label.text = "buffer: " + str(pistol.shoot_buffer)\
+		+ "\n"\
+		+ "buffer: " + str(pistol.is_shooting);
+
 	#if is_instance_valid(player):
 		#label.text = \
 			#"velocity.x: " + str("%.2f" % float(player.velocity.x))\

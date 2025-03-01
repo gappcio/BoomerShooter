@@ -30,7 +30,7 @@
 [ext_resource type="Texture2D" uid="uid://cs10j8ceed48u" path="res://textures/new/asphalt1.png" id="23_cy2lw"]
 [ext_resource type="PackedScene" uid="uid://du12rfq3bg2p6" path="res://Assets/Composition/Texture.tscn" id="23_sep45"]
 [ext_resource type="Texture2D" uid="uid://d1exu8ly7vt8k" path="res://textures/new/asphalt_lines.png" id="24_43hds"]
-[ext_resource type="PackedScene" uid="uid://bdcrrhdm6vkv6" path="res://Assets/Objects/World/Vegetation/SC_PineTree1.tscn" id="29_1m1fx"]
+[ext_resource type="PackedScene" uid="uid://bdcrrhdm6vkv6" path="res://Assets/Objects/World/Vegetation/PineTree/SC_PineTree1.tscn" id="29_1m1fx"]
 [ext_resource type="PackedScene" uid="uid://p6w3l25xcjdh" path="res://Assets/Objects/Enemy/TestEnemy/SC_Enemy_Test.tscn" id="32_bx4fq"]
 
 [sub_resource type="Resource" id="Resource_ihmsf"]

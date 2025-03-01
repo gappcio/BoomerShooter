@@ -1,0 +1,25 @@
+[gd_scene load_steps=6 format=3 uid="uid://bdcrrhdm6vkv6"]
+
+[ext_resource type="PackedScene" uid="uid://c2tcawkr201k2" path="res://Assets/Objects/World/Vegetation/PineTree/pinetree.gltf" id="1_116ec"]
+[ext_resource type="Script" path="res://Assets/Scripts/Script_Wall.gd" id="1_pi6x5"]
+[ext_resource type="PackedScene" uid="uid://du12rfq3bg2p6" path="res://Assets/Composition/Texture.tscn" id="1_vpb1v"]
+[ext_resource type="Texture2D" uid="uid://dryuuwk6vlsu5" path="res://Assets/Objects/World/Vegetation/PineTree/bark.png" id="2_suocq"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_anbtv"]
+radius = 0.715
+height = 12.8
+
+[node name="ScPineTree1" type="Node3D"]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="." groups=["wall"]]
+script = ExtResource("1_pi6x5")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0214844, 5.67389, 0.0429649)
+shape = SubResource("CapsuleShape3D_anbtv")
+
+[node name="Texture" parent="StaticBody3D" instance=ExtResource("1_vpb1v")]
+texture = ExtResource("2_suocq")
+
+[node name="pinetree" parent="." instance=ExtResource("1_116ec")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00506067, 0, 0.0591049)

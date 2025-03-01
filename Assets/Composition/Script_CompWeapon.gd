@@ -26,6 +26,10 @@ enum BULLET_TYPE {
 
 var is_shooting: bool = false;
 var shooting_anim_finished: bool = false;
+var can_shoot: bool = true;
+
+var shoot_buffer_max: float = 10.0;
+var shoot_buffer: float = 0.0;
 
 enum STATE {
 	idle,
@@ -59,11 +63,16 @@ func _physics_process(delta: float) -> void:
 		else:
 			state = STATE.walk
 	else:
-		if !shooting_anim_finished:
-			state = STATE.shoot
+		state = STATE.shoot
 		
-	if Input.is_action_pressed("mouse_left") && !is_shooting:
-		shoot();
+	if Input.is_action_pressed("mouse_left"):
+		shoot_buffer = shoot_buffer_max;
+	
+	if shoot_buffer > 0.0:
+		shoot_buffer -= 1.0;
+		
+		if !is_shooting:
+			shoot();
 
 func shoot():
 
