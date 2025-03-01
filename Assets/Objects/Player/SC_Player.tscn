@@ -61,7 +61,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0163806, -0.0672958, -0.908
 [node name="ViewmodelControl" parent="Head/Camera/WeaponAttach" instance=ExtResource("3_5jqs6")]
 
 [node name="Weapon" parent="Head/Camera/WeaponAttach/ViewmodelControl" index="0"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.23517e-08)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.072, -0.073, 0.843124)
 
 [node name="VIEWMODEL_None" parent="Head/Camera/WeaponAttach/ViewmodelControl/Weapon" index="0" instance=ExtResource("4_hkojv")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0163806, 0.532704, 0.0915061)

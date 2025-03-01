@@ -31,6 +31,7 @@ func _process(delta):
 		STATE.attack:
 			sprite_anim.play("attack");
 
+
 func shoot():
 	
 	state = STATE.attack;

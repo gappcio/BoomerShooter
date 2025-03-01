@@ -2,20 +2,17 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://beqnvphh3stmk"
-path.s3tc="res://.godot/imported/viewmodel_pistol_metal.png-f269ef2ecb035eec7aee4a3480391a4c.s3tc.ctex"
+uid="uid://bv50uxoe8l2dd"
+path.s3tc="res://.godot/imported/hand_grip.png-55ee2abe188e83b1f76c79e851578f44.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
-generator_parameters={
-"md5": "59fae1c604582ea3d20d584b62a926ef"
-}
 
 [deps]
 
-source_file="res://Assets/Objects/Player/Viewmodels/Pistol/viewmodel_pistol_metal.png"
-dest_files=["res://.godot/imported/viewmodel_pistol_metal.png-f269ef2ecb035eec7aee4a3480391a4c.s3tc.ctex"]
+source_file="res://Assets/Objects/Player/Viewmodels/Blender/hand_grip.png"
+dest_files=["res://.godot/imported/hand_grip.png-55ee2abe188e83b1f76c79e851578f44.s3tc.ctex"]
 
 [params]
 

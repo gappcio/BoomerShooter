@@ -75,22 +75,21 @@ func set_new_weapon():
 	
 	var vw = $"../Weapon".call_deferred("add_child", viewmodel);
 	
-	if viewmodel.has_method("set_canvas_position"):
-		viewmodel.call_deferred("set_canvas_position", Vector2(0.0, 128.0));
+	viewmodel.position = Vector3(0.036, -0.508, 0.984);
 	
 	current_weapon = new_weapon;
 	
 	call_deferred("change_weapon_anim", true);
-	
+
 
 func get_weapon():
 	return current_weapon;
 
 func change_weapon_anim(up: bool):
 	var tween = create_tween();
-	var weapon_canvas = $"../Weapon".get_node(node_name[current_weapon]).get_node("CanvasLayer").get_node("Control");
+	var weapon = $"../Weapon".get_node(node_name[current_weapon]);
 	
-	tween.tween_property(weapon_canvas, "position", Vector2(0.0, 128.0 if up == false else -128.0), 0.05).as_relative();
+	tween.tween_property(weapon, "position", Vector3(0.0, -0.4 if up == false else 0.4, 0.0), 0.05).as_relative();
 
 func _on_change_weapon_timer_timeout():
 	state = STATE.draw;

@@ -18,17 +18,18 @@ enum BULLET_TYPE {
 @export_range(0, 100) var damage: float;
 
 @export_group("Nodes")
-@export var animated_sprite: AnimatedSprite2D;
-@export var animation_tree: AnimationTree;
 @export var audio: AudioStreamPlayer3D;
-@export var control: Control;
+@export var anim_weapon: AnimationPlayer;
+@export var anim_arms: AnimationPlayer;
+@export var anim_tree: AnimationTree;
+@export var anim_fx: AnimationPlayer;
 
-@onready var anim_model_hands: AnimationPlayer = $"../rig/hands/AnimModelHands";
-@onready var anim_model_pistol: AnimationPlayer = $"../rig/pistol/AnimModelPistol";
-@onready var anim_base_pistol: AnimationPlayer = $"../rig/AnimBasePistol";
+var is_shooting: bool = false;
+var shooting_anim_finished: bool = false;
 
 enum STATE {
 	idle,
+	walk,
 	shoot
 }
 
@@ -36,32 +37,39 @@ var state = STATE.idle;
 
 func _ready():
 	shoot_timer.wait_time = shooting_speed;
+	shoot_timer.paused = false;
 	player_instance = $"../../../../../../../";
 	#animation_tree["parameters/playback"].travel("idle");
-	anim_model_hands.play("ref_pose");
-	anim_model_pistol.play("gun_idle_pose");
-	anim_base_pistol.play("idle");
-	animation_tree.active = true;
+	anim_weapon.play("idle");
+	anim_arms.play("idle");
+	anim_tree["parameters/playback"].travel("idle");
+	anim_fx.play("none");
 
 func _process(delta):
+	
+	sprite_animation();
+
+func _physics_process(delta: float) -> void:
+	
 	var player_speed: float = Vector2(player_instance.velocity.x, player_instance.velocity.z).length();
 	
-	if player_speed > 1:
-		animation_tree["parameters/playback"].travel("walk");
-		animation_tree["parameters/walk/TimeScale/scale"] = player_speed / 10;
-	elif player_speed < 1:
-		animation_tree["parameters/playback"].travel("idle");
+	if !is_shooting:
+		if player_speed < 1.0:
+			state = STATE.idle
+		else:
+			state = STATE.walk
+	else:
+		if !shooting_anim_finished:
+			state = STATE.shoot
 		
-	if Input.is_action_pressed("mouse_left") && state == STATE.idle:
+	if Input.is_action_pressed("mouse_left") && !is_shooting:
 		shoot();
-		
-	sprite_animation();
 
 func shoot():
 
-	state = STATE.shoot;
+	is_shooting = true;
+	shooting_anim_finished = false;
 	shoot_timer.start();
-	
 	audio.play();
 	
 	if is_instance_valid(player_instance):
@@ -153,26 +161,37 @@ func sprite_animation():
 	
 	match(state):
 		STATE.idle:
-			animated_sprite.play("idle");
-			anim_model_hands.play("ref_pose");
-			anim_model_pistol.play("gun_idle_pose");
-			anim_base_pistol.play("idle");
-			anim_model_hands.speed_scale = 1.0;
-			anim_model_pistol.speed_scale = 1.0;
-			anim_base_pistol.speed_scale = 1.0;
+			anim_weapon.play("idle");
+			#anim_arms.play("idle");
+			anim_tree["parameters/playback"].travel("idle");
+			anim_tree.set("parameters/shoot/TimeScale/scale", 1.0);
+			anim_weapon.speed_scale = 1.0;
+			anim_fx.play("none");
+		STATE.walk:
+			var player_speed: float = Vector2(player_instance.velocity.x, player_instance.velocity.z).length();
+			
+			anim_weapon.play("idle");
+			#anim_arms.play("walk");
+			anim_tree["parameters/playback"].travel("walk");
+			anim_tree.set("parameters/shoot/TimeScale/scale", player_speed / 10.0);
+			anim_weapon.speed_scale = 1.0;
+			anim_fx.play("none");
+			
 		STATE.shoot:
-			animated_sprite.play("shoot");
-			anim_model_hands.play("shoot");
-			anim_model_pistol.play("gun_shoot");
-			anim_base_pistol.play("shoot");
-			anim_model_hands.speed_scale = 2.2;
-			anim_model_pistol.speed_scale = 2.2;
-			anim_base_pistol.speed_scale = 2.2;
+			anim_weapon.play("shoot1");
+			#anim_arms.play("shoot");
+			anim_tree["parameters/playback"].travel("shoot");
+			anim_tree.set("parameters/shoot/TimeScale/scale", 3.5);
+			anim_weapon.speed_scale = 3.5;
+			anim_fx.play("fire");
 
-func _on_animated_sprite_2d_animation_finished():
-	state = STATE.idle;
+func _on_shoot_timer_timeout() -> void:
+	is_shooting = false;
 	shoot_timer.stop();
 	shoot_timer.wait_time = shooting_speed;
-	
-func set_canvas_position(pos: Vector2):
-	control.position = pos;
+
+
+func _on_anim_pistol_animation_finished(anim_name: StringName) -> void:
+	if anim_name == "shoot1":
+		shooting_anim_finished = true;
+		is_shooting = false;

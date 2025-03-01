@@ -9,7 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://cyjxr55vqeao2" path="res://Assets/Objects/World/Particles/SC_GoreParticles.tscn" id="7_3db6d"]
 [ext_resource type="PackedScene" uid="uid://bl0dd1hnr0rpv" path="res://Assets/Objects/World/Particles/SC_HitParticles2.tscn" id="8_5iv77"]
 [ext_resource type="PackedScene" uid="uid://c7vneg0tkuj6n" path="res://Assets/Objects/World/Particles/SC_HitParticles.tscn" id="9_p50b6"]
-[ext_resource type="Texture2D" uid="uid://yeyqiq3adxqj" path="res://Assets/Images/Textures/Block/block.png" id="10_celxg"]
+[ext_resource type="Texture2D" uid="uid://yeyqiq3adxqj" path="res://Assets/Images/textures/Block/block.png" id="10_celxg"]
 
 [sub_resource type="Sky" id="Sky_ojvla"]
 sky_material = ExtResource("1_13yq0")

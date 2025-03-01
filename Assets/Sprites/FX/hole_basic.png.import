@@ -3,20 +3,19 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dtlid6a70028x"
-path.s3tc="res://.godot/imported/hole_basic.png-d556f315b151d2c8b8ea46392ce6837e.s3tc.ctex"
+path="res://.godot/imported/hole_basic.png-d556f315b151d2c8b8ea46392ce6837e.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
-"vram_texture": true
+"vram_texture": false
 }
 
 [deps]
 
 source_file="res://Assets/Sprites/FX/hole_basic.png"
-dest_files=["res://.godot/imported/hole_basic.png-d556f315b151d2c8b8ea46392ce6837e.s3tc.ctex"]
+dest_files=["res://.godot/imported/hole_basic.png-d556f315b151d2c8b8ea46392ce6837e.ctex"]
 
 [params]
 
-compress/mode=2
+compress/mode=3
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1

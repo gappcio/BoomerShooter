@@ -2,20 +2,17 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bkcletkdtnm70"
-path.s3tc="res://.godot/imported/viewmodel_pistol_hand_texture.png-ff3c035477276c8fb1a86bde59bf8634.s3tc.ctex"
+uid="uid://dm84727acwau"
+path.s3tc="res://.godot/imported/hand_bullet.png-f656e93a640ab6d7f1e56dbe446dc443.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
-generator_parameters={
-"md5": "9cf719ef946e85229e9cdbf3758b08e5"
-}
 
 [deps]
 
-source_file="res://Assets/Objects/Player/Viewmodels/Pistol/viewmodel_pistol_hand_texture.png"
-dest_files=["res://.godot/imported/viewmodel_pistol_hand_texture.png-ff3c035477276c8fb1a86bde59bf8634.s3tc.ctex"]
+source_file="res://Assets/Objects/Player/Viewmodels/Blender/hand_bullet.png"
+dest_files=["res://.godot/imported/hand_bullet.png-f656e93a640ab6d7f1e56dbe446dc443.s3tc.ctex"]
 
 [params]
 

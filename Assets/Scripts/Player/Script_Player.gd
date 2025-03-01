@@ -64,10 +64,10 @@ func _unhandled_input(event: InputEvent) -> void:
 
 	if Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
 		if event is InputEventMouseMotion:
-			#look(event);
-			head.rotate_y(-event.relative.x * .0025);
-			camera.rotate_x(-event.relative.y * .0025);
-			camera.rotation.x = clamp(camera.rotation.x, deg_to_rad(-90), deg_to_rad(90));
+			look(event);
+			#head.rotate_y(-event.relative.x * .0025);
+			#camera.rotate_x(-event.relative.y * .0025);
+			#camera.rotation.x = clamp(camera.rotation.x, deg_to_rad(-90), deg_to_rad(90));
 
 func look(event: InputEventMouseMotion) -> void:
 	var viewport_transform: Transform2D = get_tree().root.get_final_transform();
@@ -96,10 +96,10 @@ func add_pitch(amount) -> void:
 	camera.orthonormalize()
 	
 func clamp_pitch() -> void:
-	if camera.rotation.x > deg_to_rad(-90) and camera.rotation.x < deg_to_rad(90):
+	if camera.rotation.x > deg_to_rad(-89) and camera.rotation.x < deg_to_rad(89):
 		return
 	
-	#camera.rotation.x = clamp(camera.rotation.x, deg_to_rad(-90), deg_to_rad(90))
+	camera.rotation.x = clamp(camera.rotation.x, deg_to_rad(-89), deg_to_rad(89))
 	camera.orthonormalize()
 
 func _process(delta):
@@ -235,11 +235,11 @@ func camera_shake():
 	
 	var tween = create_tween().set_parallel();
 	var fov_change = 2.0;
-	var time = 0.0125;
+	var time = 0.02;
 	var rotation_amount = 0.05;
 
-	tween.tween_property(head, "rotation", Vector3(0, 0, time * Autoload.random_dir), rotation_amount).as_relative();
-	tween.chain().tween_property(head, "rotation", Vector3(0, 0, -time * Autoload.random_dir), rotation_amount).as_relative();
+	#tween.tween_property(head, "rotation", Vector3(0, 0, time * Autoload.random_dir), rotation_amount).as_relative();
+	#tween.chain().tween_property(head, "rotation", Vector3(0, 0, -time * Autoload.random_dir), rotation_amount).as_relative();
 	
 	if camera.fov > 1.0 && camera.fov < 179.0:
 		tween.tween_property(camera, "fov", fov_change, time).as_relative();
