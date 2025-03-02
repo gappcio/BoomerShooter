@@ -13,7 +13,7 @@ enum BULLET_TYPE {
 @export var bullet_type: BULLET_TYPE;
 @export_range(0, 1) var accuracy: float;
 @export var always_hit_center: bool;
-@export_range(0.01, 4, 0.01) var shooting_speed: float;
+@export_range(0.01, 100, 0.01) var shooting_speed: float;
 @export_range(0, 9) var bullet_amount: int;
 @export_range(0, 100) var damage: float;
 
@@ -24,11 +24,18 @@ enum BULLET_TYPE {
 @export var anim_tree: AnimationTree;
 @export var anim_fx: AnimationPlayer;
 
+@export_group("Animation Variables")
+@export var anim_hands_idle: String;
+@export var anim_hands_walk: String;
+@export var anim_hands_shoot: String;
+@export var anim_weapon_idle: String;
+@export var anim_weapon_shoot: String;
+
 var is_shooting: bool = false;
 var shooting_anim_finished: bool = false;
 var can_shoot: bool = true;
 
-var shoot_buffer_max: float = 10.0;
+var shoot_buffer_max: float = 8.0;
 var shoot_buffer: float = 0.0;
 
 enum STATE {
@@ -44,8 +51,8 @@ func _ready():
 	shoot_timer.paused = false;
 	player_instance = $"../../../../../../../";
 	#animation_tree["parameters/playback"].travel("idle");
-	anim_weapon.play("idle");
-	anim_arms.play("idle");
+	anim_weapon.play(anim_weapon_idle);
+	anim_arms.play(anim_hands_idle);
 	anim_tree["parameters/playback"].travel("idle");
 	anim_fx.play("none");
 
@@ -170,7 +177,7 @@ func sprite_animation():
 	
 	match(state):
 		STATE.idle:
-			anim_weapon.play("idle");
+			anim_weapon.play(anim_weapon_idle);
 			#anim_arms.play("idle");
 			anim_tree["parameters/playback"].travel("idle");
 			anim_tree.set("parameters/shoot/TimeScale/scale", 1.0);
@@ -179,7 +186,7 @@ func sprite_animation():
 		STATE.walk:
 			var player_speed: float = Vector2(player_instance.velocity.x, player_instance.velocity.z).length();
 			
-			anim_weapon.play("idle");
+			anim_weapon.play(anim_weapon_idle);
 			#anim_arms.play("walk");
 			anim_tree["parameters/playback"].travel("walk");
 			anim_tree.set("parameters/shoot/TimeScale/scale", player_speed / 10.0);
@@ -187,11 +194,11 @@ func sprite_animation():
 			anim_fx.play("none");
 			
 		STATE.shoot:
-			anim_weapon.play("shoot1");
+			anim_weapon.play(anim_weapon_shoot);
 			#anim_arms.play("shoot");
 			anim_tree["parameters/playback"].travel("shoot");
-			anim_tree.set("parameters/shoot/TimeScale/scale", 3.5);
-			anim_weapon.speed_scale = 3.5;
+			anim_tree.set("parameters/shoot/TimeScale/scale", shooting_speed);
+			anim_weapon.speed_scale = shooting_speed;
 			anim_fx.play("fire");
 
 func _on_shoot_timer_timeout() -> void:
@@ -201,6 +208,12 @@ func _on_shoot_timer_timeout() -> void:
 
 
 func _on_anim_pistol_animation_finished(anim_name: StringName) -> void:
-	if anim_name == "shoot1":
+	if anim_name == anim_weapon_shoot:
+		shooting_anim_finished = true;
+		is_shooting = false;
+
+
+func _on_anim_shotgun_animation_finished(anim_name: StringName) -> void:
+	if anim_name == anim_weapon_shoot:
 		shooting_anim_finished = true;
 		is_shooting = false;

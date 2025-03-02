@@ -15,7 +15,7 @@ enum STATE {
 	holster
 }
 
-var weapon_stack: Array = [WEAPON.none, WEAPON.pistol];
+var weapon_stack: Array = [WEAPON.none, WEAPON.pistol, WEAPON.shotgun];
 var weapon_variation: int = 0;
 
 var current_weapon: int = WEAPON.none;
@@ -75,7 +75,11 @@ func set_new_weapon():
 	
 	var vw = $"../Weapon".call_deferred("add_child", viewmodel);
 	
-	viewmodel.position = Vector3(0.036, -0.508, 0.984);
+	match(new_weapon):
+		WEAPON.pistol:
+			viewmodel.position = Vector3(0.036, -0.508, 0.984);
+		WEAPON.shotgun:
+			viewmodel.position = Vector3(0.036, -0.508, -0.036);
 	
 	current_weapon = new_weapon;
 	
@@ -89,7 +93,13 @@ func change_weapon_anim(up: bool):
 	var tween = create_tween();
 	var weapon = $"../Weapon".get_node(node_name[current_weapon]);
 	
-	tween.tween_property(weapon, "position", Vector3(0.0, -0.4 if up == false else 0.4, 0.0), 0.05).as_relative();
+	match(current_weapon):
+		WEAPON.pistol:
+			tween.tween_property(weapon, "position", Vector3(0.0, -0.4 if up == false else 0.4, 0.0), 0.05).as_relative();
+		WEAPON.shotgun:
+			tween.tween_property(weapon, "position", Vector3(0.0, -0.4 if up == false else 0.4, 0.0), 0.05).as_relative();
+	
+	
 
 func _on_change_weapon_timer_timeout():
 	state = STATE.draw;

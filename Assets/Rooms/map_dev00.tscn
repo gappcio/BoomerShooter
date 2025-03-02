@@ -251,8 +251,6 @@ directional_shadow_mode = 1
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_j55ur")
 
-[node name="HUD" parent="." instance=ExtResource("6_abwja")]
-
 [node name="Player" parent="." instance=ExtResource("7_gqrsq")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5, 0.889884, 1.55093)
 
@@ -267,3 +265,5 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.939)
 
 [node name="EnemyTest" parent="." instance=ExtResource("32_bx4fq")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 1, 1)
+
+[node name="HUD" parent="." instance=ExtResource("6_abwja")]
