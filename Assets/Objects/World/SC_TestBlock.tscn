@@ -1,8 +1,8 @@
 [gd_scene load_steps=7 format=3 uid="uid://blhii3tmmhh2d"]
 
-[ext_resource type="Script" path="res://Assets/Scripts/Script_Wall.gd" id="1_1e13w"]
-[ext_resource type="Texture2D" uid="uid://yeyqiq3adxqj" path="res://Assets/Images/textures/Block/block.png" id="1_f5xx7"]
-[ext_resource type="Script" path="res://Assets/Scripts/World/Script_SetTexture.gd" id="2_w61qp"]
+[ext_resource type="Script" uid="uid://bvx6lf5rp62m3" path="res://Assets/Scripts/Script_Wall.gd" id="1_1e13w"]
+[ext_resource type="Texture2D" uid="uid://yeyqiq3adxqj" path="res://Assets/Images/Textures/Block/block.png" id="1_f5xx7"]
+[ext_resource type="Script" uid="uid://blxoj5n76gs7s" path="res://Assets/Scripts/World/Script_SetTexture.gd" id="2_w61qp"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8vpoo"]
 albedo_texture = ExtResource("1_f5xx7")

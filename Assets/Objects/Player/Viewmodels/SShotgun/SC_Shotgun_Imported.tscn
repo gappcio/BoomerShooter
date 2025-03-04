@@ -820,15 +820,15 @@ tracks/9/keys = PackedFloat32Array(0, 1, -0.999958, -8.98504e-09, 1.07183e-07, 0
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_jn8ws"]
 _data = {
-"idle": SubResource("Animation_sxnvv"),
-"idle1_shotgun": SubResource("Animation_mowbx"),
-"idle_shotgun": SubResource("Animation_vlnc3"),
-"ref": SubResource("Animation_uroev"),
-"shoot1": SubResource("Animation_2lfkq"),
-"shoot1_shotgun": SubResource("Animation_1fkd4"),
-"shoot_shotgun": SubResource("Animation_8pds1"),
-"walk": SubResource("Animation_5up1j"),
-"walk_shotgun": SubResource("Animation_ltwdp")
+&"idle": SubResource("Animation_sxnvv"),
+&"idle1_shotgun": SubResource("Animation_mowbx"),
+&"idle_shotgun": SubResource("Animation_vlnc3"),
+&"ref": SubResource("Animation_uroev"),
+&"shoot1": SubResource("Animation_2lfkq"),
+&"shoot1_shotgun": SubResource("Animation_1fkd4"),
+&"shoot_shotgun": SubResource("Animation_8pds1"),
+&"walk": SubResource("Animation_5up1j"),
+&"walk_shotgun": SubResource("Animation_ltwdp")
 }
 
 [node name="ScShotgunImported" type="Node3D"]

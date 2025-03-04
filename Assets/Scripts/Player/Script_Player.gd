@@ -6,6 +6,7 @@ class_name player
 @onready var debug_arrow_velocity := $ArrowVelocityPivot;
 @onready var weapon_attach := $Head/Camera/WeaponAttach;
 @onready var weapon_viewmodel_node := $Head/Camera/WeaponAttach/ViewmodelControl/Weapon;
+@onready var ceiling_detection: ShapeCast3D = $CeilingDetection
 
 
 const BASE_SPEED: float = 6.0;
@@ -45,6 +46,7 @@ var im_mesh;
 var material;
 
 var input_dir = 0;
+var mouse_input: Vector2;
 
 var step_up_top: bool = false;
 var step_up_middle: bool = false;
@@ -65,6 +67,8 @@ func _unhandled_input(event: InputEvent) -> void:
 	if Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
 		if event is InputEventMouseMotion:
 			look(event);
+			mouse_input.x += event.relative.x;
+			mouse_input.y += event.relative.y;
 			#head.rotate_y(-event.relative.x * .0025);
 			#camera.rotate_x(-event.relative.y * .0025);
 			#camera.rotation.x = clamp(camera.rotation.x, deg_to_rad(-90), deg_to_rad(90));
@@ -110,7 +114,7 @@ func _process(delta):
 	debug_arrow_velocity.scale = Vector3(l, 1, l);
 	debug_arrow_velocity.rotation = Vector3(0, r, 0);
 	
-	_camera_tilt(input_dir);
+	#_camera_tilt(input_dir);
 	
 	#camera.rotation.x = clamp(camera.rotation.x, deg_to_rad(-90), deg_to_rad(90));
 	#camera.rotation.y = 0.0;
@@ -124,7 +128,8 @@ func _physics_process(delta: float) -> void:
 	var key_crouch = Input.is_action_pressed("crouch");
 	
 	is_crouched = true if key_crouch else false;
-
+	
+	
 	
 	if is_crouched:
 		$Collision.disabled = true;
@@ -132,7 +137,7 @@ func _physics_process(delta: float) -> void:
 		head.position.y = lerp(head.position.y, -0.1, 0.3);
 		weapon_viewmodel_node.position.y = lerp(weapon_viewmodel_node.position.y, 0.05, 0.1);
 	else:
-		if !test_move(global_transform, Vector3(0, .2, 0)):
+		if !ceiling_detection.is_colliding():
 			$Collision.disabled = false;
 			$CollisionCrouch.disabled = true;
 			head.position.y = lerp(head.position.y, 0.6, 0.3);
@@ -194,14 +199,17 @@ func _physics_process(delta: float) -> void:
 		camera_bobbing_reset();
 
 	move_and_slide();
+	
+	tilt_camera(input_dir);
 
-func _camera_tilt(input_dir):
+func tilt_camera(input_dir):
 	
 	var value: float = input_dir[0] / MAX_SPEED;
 	camera_tilt = lerp(camera_tilt, value, 0.1);
 	if abs(camera_tilt) < 0.001:
 		camera_tilt = 0;
-	head.rotation.z = camera_tilt;
+	#head.rotation.z = camera_tilt;
+	camera.rotate_z(deg_to_rad(camera_tilt));
 	
 
 func accelerate(velocity: Vector3, move_direction: Vector3, delta: float) -> Vector3:

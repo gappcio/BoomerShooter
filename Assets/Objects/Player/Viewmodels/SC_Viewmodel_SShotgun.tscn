@@ -1,6 +1,6 @@
 [gd_scene load_steps=40 format=4 uid="uid://f5hpsiraixyc"]
 
-[ext_resource type="Script" path="res://Assets/Scripts/Player/Weapon/Script_PlayerWeaponSShotgun.gd" id="1_8ygde"]
+[ext_resource type="Script" uid="uid://b7vf55c74fl3p" path="res://Assets/Scripts/Player/Weapon/Script_PlayerWeaponSShotgun.gd" id="1_8ygde"]
 [ext_resource type="AudioStream" uid="uid://dnpm23ly1dahd" path="res://Assets/Audio/SFX/Weapons/Pistol/sound_pistol_shoot.wav" id="3_sw7tm"]
 [ext_resource type="Texture2D" uid="uid://bnhbewux38s42" path="res://Assets/Objects/Player/Viewmodels/SShotgun/hand_hand_texture.png" id="4_765gf"]
 [ext_resource type="PackedScene" uid="uid://ddv5xshw0olb6" path="res://Assets/Composition/ComponentWeapon.tscn" id="4_tqsti"]
@@ -1700,9 +1700,9 @@ tracks/6/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_hka3t"]
 _data = {
-"RESET": SubResource("Animation_mf5c1"),
-"fire": SubResource("Animation_y1mws"),
-"none": SubResource("Animation_41o8v")
+&"RESET": SubResource("Animation_mf5c1"),
+&"fire": SubResource("Animation_y1mws"),
+&"none": SubResource("Animation_41o8v")
 }
 
 [sub_resource type="Animation" id="Animation_x60c4"]
@@ -16971,14 +16971,14 @@ tracks/271/keys = PackedFloat32Array(0, 1, 0.245941, -0.211601, 0.121826)
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_g6err"]
 _data = {
-"idle": SubResource("Animation_x60c4"),
-"idle_shotgun": SubResource("Animation_s0cuw"),
-"ref": SubResource("Animation_yabqy"),
-"shoot": SubResource("Animation_ff1id"),
-"shoot1_shotgun": SubResource("Animation_2tg5b"),
-"shoot_shotgun": SubResource("Animation_w87n0"),
-"walk": SubResource("Animation_phire"),
-"walk_shotgun": SubResource("Animation_cjahg")
+&"idle": SubResource("Animation_x60c4"),
+&"idle_shotgun": SubResource("Animation_s0cuw"),
+&"ref": SubResource("Animation_yabqy"),
+&"shoot": SubResource("Animation_ff1id"),
+&"shoot1_shotgun": SubResource("Animation_2tg5b"),
+&"shoot_shotgun": SubResource("Animation_w87n0"),
+&"walk": SubResource("Animation_phire"),
+&"walk_shotgun": SubResource("Animation_cjahg")
 }
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_37qhl"]

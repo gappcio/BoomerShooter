@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://dnqgxo3b1pv42"]
 
-[ext_resource type="Script" path="res://Assets/Scripts/Player/Script_HUD.gd" id="1_fnajq"]
+[ext_resource type="Script" uid="uid://drh84xq6o6e6k" path="res://Assets/Scripts/Player/Script_HUD.gd" id="1_fnajq"]
 [ext_resource type="Texture2D" uid="uid://xclr71jctcvi" path="res://Assets/Sprites/Viewmodel/crosshair.png" id="2_am1fw"]
 
 [node name="HUD" type="CanvasLayer"]

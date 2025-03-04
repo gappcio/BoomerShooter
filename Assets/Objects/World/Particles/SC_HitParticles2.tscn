@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://bl0dd1hnr0rpv"]
 
-[ext_resource type="Script" path="res://Assets/Scripts/World/Particles/Script_HitParticles.gd" id="1_cglgt"]
+[ext_resource type="Script" uid="uid://dbfge28ghxm5e" path="res://Assets/Scripts/World/Particles/Script_HitParticles.gd" id="1_cglgt"]
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_q65ve"]
 

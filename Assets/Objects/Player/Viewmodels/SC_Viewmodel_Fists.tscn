@@ -1,7 +1,7 @@
 [gd_scene load_steps=15 format=3 uid="uid://04d8wgl8ry6b"]
 
 [ext_resource type="Texture2D" uid="uid://drdpj7q5hj0h1" path="res://Assets/Sprites/Viewmodel/Fists/viewmodel_fists.png" id="1_5gb83"]
-[ext_resource type="Script" path="res://Assets/Scripts/Player/Weapon/Script_PlayerWeaponFists.gd" id="1_p00lp"]
+[ext_resource type="Script" uid="uid://c8uvcniqt4c00" path="res://Assets/Scripts/Player/Weapon/Script_PlayerWeaponFists.gd" id="1_p00lp"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_4dgdd"]
 atlas = ExtResource("1_5gb83")

@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://ddv5xshw0olb6"]
 
-[ext_resource type="Script" path="res://Assets/Composition/Script_CompWeapon.gd" id="1_ua4r0"]
+[ext_resource type="Script" uid="uid://cd3e77ansocxx" path="res://Assets/Composition/Script_CompWeapon.gd" id="1_ua4r0"]
 
 [node name="ComponentWeapon" type="Node3D"]
 script = ExtResource("1_ua4r0")

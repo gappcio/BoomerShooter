@@ -1,6 +1,6 @@
 [gd_scene load_steps=53 format=4 uid="uid://7itgyyfxj4ga"]
 
-[ext_resource type="Script" path="res://addons/qodot/src/nodes/qodot_map.gd" id="1_5g4pq"]
+[ext_resource type="Script" uid="uid://c11xq6o4831nj" path="res://addons/qodot/src/nodes/qodot_map.gd" id="1_5g4pq"]
 [ext_resource type="Resource" uid="uid://dgm276g7bw8q5" path="res://addons/qodot/game_definitions/fgd/base_classes/target_base_class.tres" id="2_wr6du"]
 [ext_resource type="Resource" uid="uid://ccdjpf5j25aua" path="res://addons/qodot/game_definitions/fgd/base_classes/targetname_base_class.tres" id="3_ro43b"]
 [ext_resource type="Resource" uid="uid://c5o31v30rw7v5" path="res://addons/qodot/game_definitions/fgd/base_classes/light_base_class.tres" id="4_poo5i"]
@@ -22,10 +22,10 @@
 [ext_resource type="Resource" uid="uid://de6w02sa4ckl5" path="res://addons/qodot/game_definitions/fgd/solid_classes/rotate_solid_class.tres" id="16_e3v8y"]
 [ext_resource type="Resource" uid="uid://b70dbh5v15xno" path="res://addons/qodot/game_definitions/fgd/solid_classes/trigger_solid_class.tres" id="17_bav43"]
 [ext_resource type="Resource" uid="uid://bu2f3lupsjhfp" path="res://addons/qodot/game_definitions/fgd/solid_classes/wall_solid_class.tres" id="18_egf2k"]
-[ext_resource type="Script" path="res://addons/qodot/src/resources/game-definitions/fgd/qodot_fgd_file.gd" id="19_jnt08"]
+[ext_resource type="Script" uid="uid://dnk8vswinurd0" path="res://addons/qodot/src/resources/game-definitions/fgd/qodot_fgd_file.gd" id="19_jnt08"]
 [ext_resource type="Texture2D" uid="uid://buxpa6c64omdf" path="res://textures/new/dirt1.png" id="20_fh43b"]
 [ext_resource type="Texture2D" uid="uid://c03i4xilvovvm" path="res://textures/new/grass1.png" id="21_a86l7"]
-[ext_resource type="Script" path="res://Assets/Scripts/Script_Wall.gd" id="21_uvjlx"]
+[ext_resource type="Script" uid="uid://bvx6lf5rp62m3" path="res://Assets/Scripts/Script_Wall.gd" id="21_uvjlx"]
 [ext_resource type="Texture2D" uid="uid://dgieunbrthsik" path="res://textures/new/block.png" id="22_ai0p7"]
 [ext_resource type="Texture2D" uid="uid://cs10j8ceed48u" path="res://textures/new/asphalt1.png" id="23_cy2lw"]
 [ext_resource type="PackedScene" uid="uid://du12rfq3bg2p6" path="res://Assets/Composition/Texture.tscn" id="23_sep45"]
@@ -252,7 +252,7 @@ directional_shadow_mode = 1
 environment = SubResource("Environment_j55ur")
 
 [node name="Player" parent="." instance=ExtResource("7_gqrsq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5, 0.889884, 1.55093)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.88019, 0.889884, 1.55093)
 
 [node name="TestBlock" parent="." instance=ExtResource("6_jaj7b")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0.5, 1.5)
@@ -264,6 +264,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 1.5, 1.5)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.939)
 
 [node name="EnemyTest" parent="." instance=ExtResource("32_bx4fq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 1, 1)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.13914, 1, 1.39635)
 
 [node name="HUD" parent="." instance=ExtResource("6_abwja")]

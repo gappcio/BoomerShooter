@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=3 uid="uid://c7vneg0tkuj6n"]
 
 [ext_resource type="Texture2D" uid="uid://yeyqiq3adxqj" path="res://Assets/Images/Textures/Block/block.png" id="1_2mxgs"]
-[ext_resource type="Script" path="res://Assets/Scripts/World/Particles/Script_HitParticles.gd" id="1_gvmef"]
+[ext_resource type="Script" uid="uid://dbfge28ghxm5e" path="res://Assets/Scripts/World/Particles/Script_HitParticles.gd" id="1_gvmef"]
 
 [sub_resource type="Curve" id="Curve_1hnpm"]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.5, 0.901), -0.708361, -0.708361, 0, 0, Vector2(1, 0), -0.64191, 0.0, 0, 0]
