@@ -8,9 +8,8 @@ class_name player
 @onready var weapon_viewmodel_node := $Head/Camera/WeaponAttach/ViewmodelControl/Weapon;
 @onready var ceiling_detection: ShapeCast3D = $CeilingDetection
 
-
 const BASE_SPEED: float = 6.0;
-const JUMP_VELOCITY: float = 4.5;
+const JUMP_VELOCITY: float = 4.75;
 
 const MAX_SPEED: float = 20.0;
 const MAX_ACCEL: float = 4 * MAX_SPEED;
@@ -24,14 +23,15 @@ var GRAVITY_BASE: float = ProjectSettings.get_setting("physics/3d/default_gravit
 var gravity: float = GRAVITY_BASE;
 var speed: float = BASE_SPEED;
 
+var mouse_sensitivity = 0.45;
+
 var accel: float = 0.0;
 var deccel: float = 0.0;
 
 var is_falling: bool = false;
 var is_jumping: bool = false;
 var is_crouched: bool = false;
-
-var direction: Vector3;
+var is_sprinting: bool = false;
 
 var jump_force: float = JUMP_VELOCITY;
 var jump_trigger: bool = false;
@@ -66,24 +66,30 @@ func _unhandled_input(event: InputEvent) -> void:
 
 	if Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
 		if event is InputEventMouseMotion:
-			look(event);
+			#look(event);
 			mouse_input.x += event.relative.x;
 			mouse_input.y += event.relative.y;
 			#head.rotate_y(-event.relative.x * .0025);
 			#camera.rotate_x(-event.relative.y * .0025);
-			#camera.rotation.x = clamp(camera.rotation.x, deg_to_rad(-90), deg_to_rad(90));
+			#camera.rotation.x = clamp(camera.rotation.x, deg_to_rad(-89), deg_to_rad(89));
 
-func look(event: InputEventMouseMotion) -> void:
-	var viewport_transform: Transform2D = get_tree().root.get_final_transform();
-	var motion: Vector2 = event.xformed_by(viewport_transform).relative;
-	var degrees_per_unit: float = 0.001;
+func look() -> void:
+	#var viewport_transform: Transform2D = get_tree().root.get_final_transform();
+	#var motion: Vector2 = event.xformed_by(viewport_transform).relative;
+	#var degrees_per_unit: float = 0.001;
+	#
+	#motion *= 75;
+	#motion *= degrees_per_unit;
+	#
+	#add_yaw(motion.x);
+	#add_pitch(motion.y);
+	#clamp_pitch();
+	head.rotation_degrees.x -= mouse_input.y * mouse_sensitivity;
+	head.rotation_degrees.y -= mouse_input.x * mouse_sensitivity;
 	
-	motion *= 75;
-	motion *= degrees_per_unit;
+	mouse_input = Vector2(0.0, 0.0);
 	
-	add_yaw(motion.x);
-	add_pitch(motion.y);
-	clamp_pitch();
+	head.rotation.x = clamp(head.rotation.x, deg_to_rad(-90), deg_to_rad(90));
 
 func add_yaw(amount) -> void:
 	if is_zero_approx(amount):
@@ -125,11 +131,9 @@ func _physics_process(delta: float) -> void:
 	camera.fov = 90;
 	
 	input_dir = Input.get_vector("left", "right", "forward", "back");
-	var key_crouch = Input.is_action_pressed("crouch");
-	
-	is_crouched = true if key_crouch else false;
-	
-	
+
+	is_crouched = Input.is_action_pressed("crouch");
+	is_sprinting = Input.is_action_pressed("sprint");
 	
 	if is_crouched:
 		$Collision.disabled = true;
@@ -183,7 +187,10 @@ func _physics_process(delta: float) -> void:
 			jump_trigger = true;
 	
 	
-	direction = (head.transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized();
+	#direction = (head.transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized();
+	
+	var direction = input_dir.rotated(-head.rotation.y);
+	direction = Vector3(direction.x, 0.0, direction.y);
 
 	if direction:
 		var vel = accelerate(velocity, direction, delta);
@@ -201,15 +208,19 @@ func _physics_process(delta: float) -> void:
 	move_and_slide();
 	
 	tilt_camera(input_dir);
+	
+	look();
 
 func tilt_camera(input_dir):
 	
-	var value: float = input_dir[0] / MAX_SPEED;
-	camera_tilt = lerp(camera_tilt, value, 0.1);
+	var tilt_strength: float = input_dir.x / MAX_SPEED;
+	camera_tilt = lerp(camera_tilt, tilt_strength, 0.1);
+	
 	if abs(camera_tilt) < 0.001:
-		camera_tilt = 0;
-	#head.rotation.z = camera_tilt;
-	camera.rotate_z(deg_to_rad(camera_tilt));
+		camera_tilt = 0.0;
+		
+	camera.rotation.z = camera_tilt;
+	
 	
 
 func accelerate(velocity: Vector3, move_direction: Vector3, delta: float) -> Vector3:

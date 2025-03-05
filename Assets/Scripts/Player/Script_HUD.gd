@@ -19,6 +19,9 @@ func _process(delta):
 		#+ "\n"\
 		#+ "buffer: " + str(pistol.is_shooting);
 
+	if is_instance_valid(player):
+		label.text = "tilt: " + str(player.input_dir)
+
 	#if is_instance_valid(player):
 		#label.text = \
 			#"velocity.x: " + str("%.2f" % float(player.velocity.x))\
