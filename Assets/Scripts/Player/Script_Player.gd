@@ -23,7 +23,7 @@ var GRAVITY_BASE: float = ProjectSettings.get_setting("physics/3d/default_gravit
 var gravity: float = GRAVITY_BASE;
 var speed: float = BASE_SPEED;
 
-var mouse_sensitivity = 0.45;
+var mouse_sensitivity = 0.17;
 
 var accel: float = 0.0;
 var deccel: float = 0.0;
@@ -52,66 +52,13 @@ var step_up_top: bool = false;
 var step_up_middle: bool = false;
 var step_up_bottom: bool = false;
 
+var crouchjump_buffer_max: float = 12.0;
+var crouchjump_buffer: float = 0.0;
 
 func _ready():
 	Engine.time_scale = 1.0;
+	camera.fov = 90;
 	
-
-
-func _unhandled_input(event: InputEvent) -> void:
-	if event is InputEventMouseButton:
-		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED);
-	elif event.is_action_pressed("ui_cancel"):
-		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE);
-
-	if Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
-		if event is InputEventMouseMotion:
-			#look(event);
-			mouse_input.x += event.relative.x;
-			mouse_input.y += event.relative.y;
-			#head.rotate_y(-event.relative.x * .0025);
-			#camera.rotate_x(-event.relative.y * .0025);
-			#camera.rotation.x = clamp(camera.rotation.x, deg_to_rad(-89), deg_to_rad(89));
-
-func look() -> void:
-	#var viewport_transform: Transform2D = get_tree().root.get_final_transform();
-	#var motion: Vector2 = event.xformed_by(viewport_transform).relative;
-	#var degrees_per_unit: float = 0.001;
-	#
-	#motion *= 75;
-	#motion *= degrees_per_unit;
-	#
-	#add_yaw(motion.x);
-	#add_pitch(motion.y);
-	#clamp_pitch();
-	head.rotation_degrees.x -= mouse_input.y * mouse_sensitivity;
-	head.rotation_degrees.y -= mouse_input.x * mouse_sensitivity;
-	
-	mouse_input = Vector2(0.0, 0.0);
-	
-	head.rotation.x = clamp(head.rotation.x, deg_to_rad(-90), deg_to_rad(90));
-
-func add_yaw(amount) -> void:
-	if is_zero_approx(amount):
-		return
-	
-	head.rotate_object_local(Vector3.DOWN, deg_to_rad(amount));
-	head.orthonormalize();
-	
-func add_pitch(amount) -> void:
-	if is_zero_approx(amount):
-		return
-	
-	camera.rotate_object_local(Vector3.LEFT, deg_to_rad(amount))
-	camera.orthonormalize()
-	
-func clamp_pitch() -> void:
-	if camera.rotation.x > deg_to_rad(-89) and camera.rotation.x < deg_to_rad(89):
-		return
-	
-	camera.rotation.x = clamp(camera.rotation.x, deg_to_rad(-89), deg_to_rad(89))
-	camera.orthonormalize()
-
 func _process(delta):
 	var vec = Vector2(velocity.z, velocity.x);
 	var l = vec.length();
@@ -120,22 +67,26 @@ func _process(delta):
 	debug_arrow_velocity.scale = Vector3(l, 1, l);
 	debug_arrow_velocity.rotation = Vector3(0, r, 0);
 	
-	#_camera_tilt(input_dir);
-	
 	#camera.rotation.x = clamp(camera.rotation.x, deg_to_rad(-90), deg_to_rad(90));
 	#camera.rotation.y = 0.0;
 	#Draw.line(Vector3(position.x, 0, position.z), Vector3(position.x + velocity.x, 0, position.z + velocity.z), Color.BLACK, 1);
 
 func _physics_process(delta: float) -> void:
 	
-	camera.fov = 90;
-	
 	input_dir = Input.get_vector("left", "right", "forward", "back");
 
 	is_crouched = Input.is_action_pressed("crouch");
 	is_sprinting = Input.is_action_pressed("sprint");
 	
+	if Input.is_action_just_pressed("crouch"):
+		crouchjump_buffer = crouchjump_buffer_max;
+	
 	if is_crouched:
+		
+		crouchjump_buffer -= 1.0;
+		if crouchjump_buffer <= 0.0:
+			crouchjump_buffer = 0.0;
+		
 		$Collision.disabled = true;
 		$CollisionCrouch.disabled = false;
 		head.position.y = lerp(head.position.y, -0.1, 0.3);
@@ -146,9 +97,17 @@ func _physics_process(delta: float) -> void:
 			$CollisionCrouch.disabled = true;
 			head.position.y = lerp(head.position.y, 0.6, 0.3);
 			weapon_viewmodel_node.position.y = lerp(weapon_viewmodel_node.position.y, 0.0, 0.1);
+			crouchjump_buffer = 0.0;
 		
+	handle_jumping(delta);
 
-		
+	movement(input_dir, delta);
+	
+	tilt_camera(input_dir);
+	
+	look();
+
+func handle_jumping(delta: float):
 	if velocity.y > 0:
 		is_falling = true;
 	else:
@@ -185,15 +144,24 @@ func _physics_process(delta: float) -> void:
 		if !jump_trigger && is_on_floor():
 			velocity.y = jump_force;
 			jump_trigger = true;
+			
+	if velocity.y > 0.5:
+		crouchjump_buffer = 0.0;
 	
-	
-	#direction = (head.transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized();
-	
+
+func movement(input_dir: Vector2, delta: float) -> void:
+
 	var direction = input_dir.rotated(-head.rotation.y);
 	direction = Vector3(direction.x, 0.0, direction.y);
 
 	if direction:
+		
+		#if crouchjump_buffer > 0.0:
+			#velocity.x *= 1.5;
+			#velocity.z *= 1.5;
+		
 		var vel = accelerate(velocity, direction, delta);
+		
 		velocity.x = lerp(vel[0], direction.x * speed, accel);
 		velocity.z = lerp(vel[2], direction.z * speed, accel);
 		
@@ -206,10 +174,30 @@ func _physics_process(delta: float) -> void:
 		camera_bobbing_reset();
 
 	move_and_slide();
+
+func _unhandled_input(event: InputEvent) -> void:
+	if event is InputEventMouseButton:
+		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED);
+	elif event.is_action_pressed("ui_cancel"):
+		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE);
+
+	if Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
+		if event is InputEventMouseMotion:
+			#mouse_input.x += event.relative.x;
+			#mouse_input.y += event.relative.y;
+			var viewport_transform: Transform2D = get_tree().root.get_final_transform();
+			mouse_input = event.xformed_by(viewport_transform).relative;
+
+func look() -> void:
 	
-	tilt_camera(input_dir);
+	head.rotation_degrees.x -= mouse_input.y * mouse_sensitivity;
+	head.rotation_degrees.y -= mouse_input.x * mouse_sensitivity;
 	
-	look();
+	#motion = Vector2(0.0, 0.0);
+	mouse_input = Vector2(0.0, 0.0);
+	
+	head.rotation.x = clamp(head.rotation.x, deg_to_rad(-89.99), deg_to_rad(89.99));
+
 
 func tilt_camera(input_dir):
 	
@@ -229,6 +217,7 @@ func accelerate(velocity: Vector3, move_direction: Vector3, delta: float) -> Vec
 	
 	var current_speed = velocity.dot(move_direction);
 	var add_speed = clamp(MAX_SPEED - current_speed, 0.0, MAX_ACCEL * delta);
+	
 	
 	return velocity + add_speed * move_direction;
 

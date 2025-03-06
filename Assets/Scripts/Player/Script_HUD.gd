@@ -20,7 +20,7 @@ func _process(delta):
 		#+ "buffer: " + str(pistol.is_shooting);
 
 	if is_instance_valid(player):
-		label.text = "tilt: " + str(player.input_dir)
+		label.text = "tilt: " + str(player.crouchjump_buffer)
 
 	#if is_instance_valid(player):
 		#label.text = \
