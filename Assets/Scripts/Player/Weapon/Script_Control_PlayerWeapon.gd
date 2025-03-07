@@ -94,6 +94,8 @@ func change_weapon_anim(up: bool):
 	var weapon = $"../Weapon".get_node(node_name[current_weapon]);
 	
 	match(current_weapon):
+		WEAPON.none:
+			tween.tween_property(weapon, "position", Vector3(0.0, -0.4 if up == false else 0.4, 0.0), 0.05).as_relative();
 		WEAPON.pistol:
 			tween.tween_property(weapon, "position", Vector3(0.0, -0.4 if up == false else 0.4, 0.0), 0.05).as_relative();
 		WEAPON.shotgun:

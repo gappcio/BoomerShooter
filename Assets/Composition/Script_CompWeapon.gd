@@ -23,6 +23,7 @@ enum BULLET_TYPE {
 @export var anim_arms: AnimationPlayer;
 @export var anim_tree: AnimationTree;
 @export var anim_fx: AnimationPlayer;
+@export var viewmodel: Node3D;
 
 @export_group("Animation Variables")
 @export var anim_hands_idle: String;
@@ -37,6 +38,8 @@ var can_shoot: bool = true;
 
 var shoot_buffer_max: float = 8.0;
 var shoot_buffer: float = 0.0;
+
+var mouse_input: Vector2;
 
 enum STATE {
 	idle,
@@ -72,6 +75,13 @@ func _physics_process(delta: float) -> void:
 	else:
 		state = STATE.shoot
 		
+	if is_instance_valid(player_instance):
+		viewmodel.rotation.z = -player_instance.camera_tilt * 5.0;
+		
+		mouse_input = lerp(mouse_input, Vector2.ZERO, 10.0 * delta);
+		viewmodel.rotation.x = lerp(viewmodel.rotation.x, mouse_input.y * 0.0025, 10.0 * delta);
+		viewmodel.rotation.y = lerp(viewmodel.rotation.y, mouse_input.x * 0.0025, 10.0 * delta);
+		
 	if Input.is_action_pressed("mouse_left"):
 		shoot_buffer = shoot_buffer_max;
 	
@@ -80,6 +90,12 @@ func _physics_process(delta: float) -> void:
 		
 		if !is_shooting:
 			shoot();
+
+func _unhandled_input(event: InputEvent) -> void:
+	if Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
+		if event is InputEventMouseMotion:
+			var viewport_transform: Transform2D = get_tree().root.get_final_transform();
+			mouse_input = event.xformed_by(viewport_transform).relative;
 
 func shoot():
 

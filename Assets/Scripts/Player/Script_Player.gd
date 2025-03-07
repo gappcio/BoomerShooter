@@ -8,6 +8,9 @@ class_name player
 @onready var weapon_viewmodel_node := $Head/Camera/WeaponAttach/ViewmodelControl/Weapon;
 @onready var ceiling_detection: ShapeCast3D = $CeilingDetection
 
+@onready var climb_area_top: Area3D = $Climb/ClimbAreaTop
+@onready var climb_area_bottom: Area3D = $Climb/ClimbAreaBottom
+
 const BASE_SPEED: float = 6.0;
 const JUMP_VELOCITY: float = 4.75;
 
@@ -38,6 +41,10 @@ var jump_trigger: bool = false;
 var jump_buffer_max = 7.0;
 var jump_buffer = 0.0;
 
+var jump_accel: float = 0.4;
+var jump_accel_max: float = 10.0;
+var jump_accel_time: float = jump_accel_max;
+
 var camera_tilt: float;
 var camera_bob_time: float = 0.0;
 
@@ -52,8 +59,11 @@ var step_up_top: bool = false;
 var step_up_middle: bool = false;
 var step_up_bottom: bool = false;
 
-var crouchjump_buffer_max: float = 12.0;
+var crouchjump_buffer_max: float = 16.0;
 var crouchjump_buffer: float = 0.0;
+
+var can_climb_top: bool = false;
+var can_climb_bottom: bool = false;
 
 func _ready():
 	Engine.time_scale = 1.0;
@@ -78,21 +88,21 @@ func _physics_process(delta: float) -> void:
 	is_crouched = Input.is_action_pressed("crouch");
 	is_sprinting = Input.is_action_pressed("sprint");
 	
-	if Input.is_action_just_pressed("crouch"):
+	if Input.is_action_just_pressed("crouch") && is_on_floor():
 		crouchjump_buffer = crouchjump_buffer_max;
 	
 	if is_crouched:
-		
-		crouchjump_buffer -= 1.0;
-		if crouchjump_buffer <= 0.0:
-			crouchjump_buffer = 0.0;
-		
-		$Collision.disabled = true;
-		$CollisionCrouch.disabled = false;
-		head.position.y = lerp(head.position.y, -0.1, 0.3);
-		weapon_viewmodel_node.position.y = lerp(weapon_viewmodel_node.position.y, 0.05, 0.1);
+		if is_on_floor():
+			crouchjump_buffer -= 1.0;
+			if crouchjump_buffer <= 0.0:
+				crouchjump_buffer = 0.0;
+			
+			$Collision.disabled = true;
+			$CollisionCrouch.disabled = false;
+			head.position.y = lerp(head.position.y, -0.1, 0.3);
+			weapon_viewmodel_node.position.y = lerp(weapon_viewmodel_node.position.y, 0.05, 0.1);
 	else:
-		if !ceiling_detection.is_colliding():
+		if !ceiling_detection.is_colliding() && is_on_floor():
 			$Collision.disabled = false;
 			$CollisionCrouch.disabled = true;
 			head.position.y = lerp(head.position.y, 0.6, 0.3);
@@ -106,6 +116,8 @@ func _physics_process(delta: float) -> void:
 	tilt_camera(input_dir);
 	
 	look();
+	
+	
 
 func handle_jumping(delta: float):
 	if velocity.y > 0:
@@ -141,12 +153,36 @@ func handle_jumping(delta: float):
 	if jump_buffer > 0:
 		jump_buffer -= 1;
 		
-		if !jump_trigger && is_on_floor():
-			velocity.y = jump_force;
+		if (!jump_trigger && is_on_floor()):
 			jump_trigger = true;
+			jump_accel_time = jump_accel_max;
 			
-	if velocity.y > 0.5:
-		crouchjump_buffer = 0.0;
+		#if (can_climb_bottom) && (velocity.y <= 0.0):
+			#velocity.y = jump_force * 0.5;
+			#jump_trigger = true;
+			#
+		#if (can_climb_top):
+			#velocity.y = jump_force * 1.25;
+			#jump_trigger = true;
+	
+	if jump_trigger:
+		
+		if jump_accel_time <= 0.0:
+			jump_accel_time = 0.0;
+		else:
+			jump_accel_time -= 1.0;
+			
+	if jump_accel_time > 0.0 && jump_accel_time < jump_accel_max:
+		velocity.y = lerp(velocity.y, jump_force, jump_accel);
+		
+	if Input.is_action_just_released("jump"):
+		if jump_trigger && !is_on_floor():
+			velocity.y *= 0.8;
+			jump_accel_time = 0.0;
+	
+	if velocity.y > 1.0:
+		var _set = func(): crouchjump_buffer = 0.0;
+		_set.call_deferred();
 	
 
 func movement(input_dir: Vector2, delta: float) -> void:
@@ -156,9 +192,13 @@ func movement(input_dir: Vector2, delta: float) -> void:
 
 	if direction:
 		
-		#if crouchjump_buffer > 0.0:
-			#velocity.x *= 1.5;
-			#velocity.z *= 1.5;
+		if crouchjump_buffer > 0.0:
+			velocity.x *= 1.25;
+			velocity.z *= 1.25;
+		elif crouchjump_buffer <= 0.0\
+		&& is_crouched:
+			velocity.x *= 0.25;
+			velocity.z *= 0.25;
 		
 		var vel = accelerate(velocity, direction, delta);
 		
@@ -243,11 +283,11 @@ func camera_shake():
 	
 	var tween = create_tween().set_parallel();
 	var fov_change = 2.0;
-	var time = 0.02;
+	var time = 0.01;
 	var rotation_amount = 0.05;
 
-	#tween.tween_property(head, "rotation", Vector3(0, 0, time * Autoload.random_dir), rotation_amount).as_relative();
-	#tween.chain().tween_property(head, "rotation", Vector3(0, 0, -time * Autoload.random_dir), rotation_amount).as_relative();
+	tween.tween_property(camera, "rotation", Vector3(0, 0, time * Autoload.random_dir), rotation_amount).as_relative();
+	tween.chain().tween_property(camera, "rotation", Vector3(0, 0, -time * Autoload.random_dir), rotation_amount).as_relative();
 	
 	if camera.fov > 1.0 && camera.fov < 179.0:
 		tween.tween_property(camera, "fov", fov_change, time).as_relative();
@@ -256,6 +296,7 @@ func camera_shake():
 
 
 func _on_area_step_up_bottom_body_entered(body):
+	pass
 	
 	if body.is_in_group("wall"):
 		step_up_bottom = true;
@@ -282,3 +323,23 @@ func _on_area_step_up_bottom_body_exited(body):
 	
 	if body.is_in_group("wall"):
 		step_up_bottom = false;
+
+
+func _on_climb_area_top_area_entered(area: Area3D) -> void:
+	if area.is_in_group("climbable"):
+		can_climb_top = true;
+
+
+func _on_climb_area_top_area_exited(area: Area3D) -> void:
+	if area.is_in_group("climbable"):
+		can_climb_top = false;
+
+
+func _on_climb_area_bottom_area_entered(area: Area3D) -> void:
+	if area.is_in_group("climbable"):
+		can_climb_bottom = true;
+
+
+func _on_climb_area_bottom_area_exited(area: Area3D) -> void:
+	if area.is_in_group("climbable"):
+		can_climb_bottom = false;

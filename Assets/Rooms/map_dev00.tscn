@@ -1,4 +1,4 @@
-[gd_scene load_steps=53 format=4 uid="uid://7itgyyfxj4ga"]
+[gd_scene load_steps=54 format=4 uid="uid://7itgyyfxj4ga"]
 
 [ext_resource type="Script" uid="uid://c11xq6o4831nj" path="res://addons/qodot/src/nodes/qodot_map.gd" id="1_5g4pq"]
 [ext_resource type="Resource" uid="uid://dgm276g7bw8q5" path="res://addons/qodot/game_definitions/fgd/base_classes/target_base_class.tres" id="2_wr6du"]
@@ -176,6 +176,9 @@ volumetric_fog_anisotropy = 0.14
 volumetric_fog_length = 161.01
 volumetric_fog_sky_affect = 0.621
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_pdnst"]
+size = Vector3(1.1, 0.25, 1.1)
+
 [node name="UNIVERSE" type="Node3D"]
 
 [node name="QodotMap" type="Node3D" parent="."]
@@ -260,6 +263,15 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0.5, 1.5)
 [node name="TestBlock2" parent="." instance=ExtResource("6_jaj7b")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 1.5, 1.5)
 
+[node name="TestBlock3" parent="." instance=ExtResource("6_jaj7b")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.427, 0.5, 2.393)
+
+[node name="TestBlock4" parent="." instance=ExtResource("6_jaj7b")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.427, 1.5, 2.393)
+
+[node name="TestBlock5" parent="." instance=ExtResource("6_jaj7b")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.427, 2.5, 2.393)
+
 [node name="ScPineTree1" parent="." instance=ExtResource("29_1m1fx")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.939)
 
@@ -267,3 +279,15 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.939)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.13914, 1, 1.39635)
 
 [node name="HUD" parent="." instance=ExtResource("6_abwja")]
+
+[node name="ClimbableArea" type="Area3D" parent="." groups=["climbable"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 1.87158, 1.5)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ClimbableArea"]
+shape = SubResource("BoxShape3D_pdnst")
+
+[node name="ClimbableArea2" type="Area3D" parent="." groups=["climbable"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.427, 2.86363, 2.393)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ClimbableArea2"]
+shape = SubResource("BoxShape3D_pdnst")

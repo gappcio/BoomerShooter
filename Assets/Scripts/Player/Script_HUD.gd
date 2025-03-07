@@ -19,8 +19,8 @@ func _process(delta):
 		#+ "\n"\
 		#+ "buffer: " + str(pistol.is_shooting);
 
-	if is_instance_valid(player):
-		label.text = "tilt: " + str(player.crouchjump_buffer)
+	#if is_instance_valid(player):
+		#label.text = "tilt: " + str(player.crouchjump_buffer)
 
 	#if is_instance_valid(player):
 		#label.text = \
@@ -47,16 +47,17 @@ func _process(delta):
 			#"camera.rot.y: " + str("%.2f" % float(player.camera.rotation.y))\
 			#+ "\n" + \
 			#"camera.rot.z: " + str("%.2f" % float(player.camera.rotation.z))
-	#if is_instance_valid(player):
-		#var player_speed: float = Vector2(player.velocity.x, player.velocity.z).length();
-		#label.text = "camera.y: " + str(player_speed);
-		#if is_instance_valid(viewmodel):
-			#label.text = \
-				#"velocity.x: " + str("%.2f" % float(player.velocity.x))\
-				#+ "\n" + \
-				#"velocity.y: " + str("%.2f" % float(player.velocity.y))\
-				#+ "\n" + \
-				#"velocity.z: " + str("%.2f" % float(player.velocity.z))\
-				#+ "\n" + \
-				#"speed: " + str("%.2f" % float(Vector2(player.velocity.x, player.velocity.z).length()))\
-				#+ "\n";
+	if is_instance_valid(player):
+		var player_speed: float = Vector2(player.velocity.x, player.velocity.z).length();
+		label.text = "camera.y: " + str(player_speed);
+		label.text = \
+			"velocity.x: " + str("%.2f" % float(player.velocity.x))\
+			+ "\n" + \
+			"velocity.y: " + str("%.2f" % float(player.velocity.y))\
+			+ "\n" + \
+			"velocity.z: " + str("%.2f" % float(player.velocity.z))\
+			+ "\n" + \
+			"speed: " + str("%.2f" % float(Vector2(player.velocity.x, player.velocity.z).length()))\
+			+ "\n" + \
+			"crouchjump_buffer: " + str(player.crouchjump_buffer)\
+			+ "\n";

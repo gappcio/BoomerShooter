@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://c0jd3cujvbmlc"]
+[gd_scene load_steps=18 format=3 uid="uid://c0jd3cujvbmlc"]
 
 [ext_resource type="Script" uid="uid://rrxtl6hrf7dr" path="res://Assets/Scripts/Player/Script_Player.gd" id="1_5ffuh"]
 [ext_resource type="PackedScene" uid="uid://1hxrf7rm1jbt" path="res://Assets/Objects/Player/SC_Camera.tscn" id="1_xqu0b"]
@@ -36,6 +36,12 @@ radius = 0.401
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_hxa4n"]
 height = 0.01
 radius = 0.401
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_ogvvi"]
+height = 1.2522
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_er805"]
+height = 0.364395
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_3xvwb"]
 height = 0.025
@@ -137,6 +143,20 @@ collision_layer = 0
 [node name="CollisionStepUpTop" type="CollisionShape3D" parent="StepUp/AreaStepUpTop"]
 shape = SubResource("CylinderShape3D_hxa4n")
 
+[node name="Climb" type="Node3D" parent="."]
+
+[node name="ClimbAreaTop" type="Area3D" parent="Climb"]
+
+[node name="CollisionClimbTop" type="CollisionShape3D" parent="Climb/ClimbAreaTop"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.623901, 0)
+shape = SubResource("CylinderShape3D_ogvvi")
+
+[node name="ClimbAreaBottom" type="Area3D" parent="Climb"]
+
+[node name="CollisionClimbBottom" type="CollisionShape3D" parent="Climb/ClimbAreaBottom"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.687645, 0)
+shape = SubResource("CylinderShape3D_er805")
+
 [node name="CeilingDetection" type="ShapeCast3D" parent="."]
 shape = SubResource("CylinderShape3D_3xvwb")
 target_position = Vector3(0, 0.867, 0)
@@ -144,5 +164,9 @@ target_position = Vector3(0, 0.867, 0)
 [connection signal="timeout" from="Head/Camera/WeaponAttach/ViewmodelControl/WeaponControl/ChangeWeaponTimer" to="Head/Camera/WeaponAttach/ViewmodelControl/WeaponControl" method="_on_change_weapon_timer_timeout"]
 [connection signal="body_entered" from="StepUp/AreaStepUpBottom" to="." method="_on_area_step_up_bottom_body_entered"]
 [connection signal="body_exited" from="StepUp/AreaStepUpBottom" to="." method="_on_area_step_up_bottom_body_exited"]
+[connection signal="area_entered" from="Climb/ClimbAreaTop" to="." method="_on_climb_area_top_area_entered"]
+[connection signal="area_exited" from="Climb/ClimbAreaTop" to="." method="_on_climb_area_top_area_exited"]
+[connection signal="area_entered" from="Climb/ClimbAreaBottom" to="." method="_on_climb_area_bottom_area_entered"]
+[connection signal="area_exited" from="Climb/ClimbAreaBottom" to="." method="_on_climb_area_bottom_area_exited"]
 
 [editable path="Head/Camera/WeaponAttach/ViewmodelControl"]
