@@ -1,0 +1,57 @@
+[gd_resource type="VisualShader" load_steps=5 format=3 uid="uid://ddl4d1mo8m2t"]
+
+[sub_resource type="VisualShaderNodeTexture" id="VisualShaderNodeTexture_wpbvu"]
+source = 5
+
+[sub_resource type="VisualShaderNodeTexture2DParameter" id="VisualShaderNodeTexture2DParameter_c86e1"]
+parameter_name = "texture"
+texture_type = 1
+texture_filter = 1
+
+[sub_resource type="VisualShaderNodeTexture" id="VisualShaderNodeTexture_qms6n"]
+source = 5
+
+[sub_resource type="VisualShaderNodeTexture2DParameter" id="VisualShaderNodeTexture2DParameter_6niix"]
+parameter_name = "alpha_mask"
+texture_filter = 1
+
+[resource]
+code = "shader_type spatial;
+render_mode blend_mix, depth_draw_opaque, cull_disabled, diffuse_lambert, specular_schlick_ggx, depth_prepass_alpha;
+
+uniform sampler2D texture : source_color, filter_nearest;
+uniform sampler2D alpha_mask : filter_nearest;
+
+
+
+void fragment() {
+	vec4 n_out2p0;
+// Texture2D:2
+	n_out2p0 = texture(texture, UV);
+
+
+	vec4 n_out4p0;
+// Texture2D:4
+	n_out4p0 = texture(alpha_mask, UV);
+
+
+// Output:0
+	ALBEDO = vec3(n_out2p0.xyz);
+	ALPHA = n_out4p0.x;
+
+
+}
+"
+graph_offset = Vector2(-668.244, -45.6162)
+modes/cull = 2
+flags/depth_prepass_alpha = true
+nodes/fragment/0/position = Vector2(1360, 140)
+nodes/fragment/2/node = SubResource("VisualShaderNodeTexture_wpbvu")
+nodes/fragment/2/position = Vector2(360, 120)
+nodes/fragment/3/node = SubResource("VisualShaderNodeTexture2DParameter_c86e1")
+nodes/fragment/3/position = Vector2(-200, 300)
+nodes/fragment/4/node = SubResource("VisualShaderNodeTexture_qms6n")
+nodes/fragment/4/position = Vector2(580, 800)
+nodes/fragment/5/node = SubResource("VisualShaderNodeTexture2DParameter_6niix")
+nodes/fragment/5/position = Vector2(-200, 720)
+nodes/fragment/connections = PackedInt32Array(3, 0, 2, 2, 2, 0, 0, 0, 5, 0, 4, 2, 4, 0, 0, 1)
