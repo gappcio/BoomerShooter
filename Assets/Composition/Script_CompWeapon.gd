@@ -187,6 +187,7 @@ func shoot():
 		raycast.force_raycast_update();
 		
 	raycast.position = Vector3(0.0, 0.0, 0.0);
+	raycast.rotation = Vector3(0.0, 0.0, 0.0);
 
 
 func sprite_animation():

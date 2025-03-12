@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cjm1v47d8lo4j"
-path.s3tc="res://.godot/imported/grass2_ao.png-48b632f6b907718f74a613f2e7abad27.s3tc.ctex"
+uid="uid://djjjajoi0hhx"
+path.s3tc="res://.godot/imported/branch2_mask.png-6fe686c03b1482607fb8cff51edf7f30.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://Assets/Images/textures/Grass2/grass2_ao.png"
-dest_files=["res://.godot/imported/grass2_ao.png-48b632f6b907718f74a613f2e7abad27.s3tc.ctex"]
+source_file="res://Assets/Objects/World/Vegetation/PineTree/branch2_mask.png"
+dest_files=["res://.godot/imported/branch2_mask.png-6fe686c03b1482607fb8cff51edf7f30.s3tc.ctex"]
 
 [params]
 

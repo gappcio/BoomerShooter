@@ -172,8 +172,12 @@ sky = SubResource("Sky_vj82v")
 tonemap_mode = 2
 glow_enabled = true
 fog_enabled = true
-fog_sky_affect = 0.0
+fog_mode = 1
+fog_light_color = Color(0.324998, 0.35401, 0.399615, 1)
+fog_density = 1.0
+fog_sky_affect = 0.96
 fog_height = -2.0
+fog_depth_end = 20.0
 volumetric_fog_density = 0.02
 volumetric_fog_anisotropy = 0.14
 volumetric_fog_length = 161.01
@@ -268,11 +272,23 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0.5, 1.5)
 [node name="TestBlock2" parent="." instance=ExtResource("6_jaj7b")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 1.5, 1.5)
 
+[node name="TestBlock6" parent="." instance=ExtResource("6_jaj7b")]
+transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 2.5, 0, 5.5)
+
+[node name="TestBlock7" parent="." instance=ExtResource("6_jaj7b")]
+transform = Transform3D(0.707107, -0.353553, 0.612372, 0, 0.866025, 0.5, -0.707107, -0.353553, 0.612372, 0.5, 0, 6.5)
+
+[node name="TestBlock8" parent="." instance=ExtResource("6_jaj7b")]
+transform = Transform3D(0.704416, -0.427687, 0.566464, 0.0616284, 0.831916, 0.551469, -0.707107, -0.353553, 0.612372, 0.5, -0.2, 9.5)
+
 [node name="TestBlock3" parent="." instance=ExtResource("6_jaj7b")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.427, 0.5, 2.393)
 
 [node name="TestBlock4" parent="." instance=ExtResource("6_jaj7b")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.427, 1.5, 2.393)
+
+[node name="TestBlock9" parent="." instance=ExtResource("6_jaj7b")]
+transform = Transform3D(2, 0, 0, 0, 1.73205, 1, 0, -1, 1.73205, 4.427, -0.4, 8.393)
 
 [node name="TestBlock5" parent="." instance=ExtResource("6_jaj7b")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.427, 2.5, 2.393)

@@ -3,7 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://bsg61bogqiukf" path="res://Assets/Objects/World/Vegetation/Fern/fern1_fern1.png" id="1_3vjg2"]
 [ext_resource type="Shader" uid="uid://ddl4d1mo8m2t" path="res://Assets/Objects/World/Vegetation/Grass/grass_shader.tres" id="2_8mfhu"]
 [ext_resource type="Texture2D" uid="uid://brgbd6dp6g3ty" path="res://Assets/Objects/World/Vegetation/Fern/fern1_mask.png" id="3_erlxv"]
-[ext_resource type="Texture2D" uid="uid://cnyyc480gjos2" path="res://Assets/Objects/World/Vegetation/Grass/grass_wind_noise.tres" id="4_erlxv"]
+[ext_resource type="Texture2D" uid="uid://cnyyc480gjos2" path="res://Assets/Objects/WeatherManager/grass_wind_noise.tres" id="4_erlxv"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3r7a2"]
 resource_name = "fern1"
@@ -55,7 +55,7 @@ shader_parameter/noise_texture = ExtResource("4_erlxv")
 shader_parameter/image_texture = ExtResource("1_3vjg2")
 shader_parameter/alpha_mask = ExtResource("3_erlxv")
 
-[node name="Fern" type="Node3D"]
+[node name="Fern" type="Node3D" groups=["vegetation"]]
 
 [node name="fern1" type="Node3D" parent="."]
 transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, -0.0219889, 0)

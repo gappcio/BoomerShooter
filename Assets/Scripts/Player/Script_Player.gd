@@ -45,6 +45,9 @@ var jump_accel: float = 0.4;
 var jump_accel_max: float = 10.0;
 var jump_accel_time: float = jump_accel_max;
 
+var jump_time: float = 0.0;
+var jump_time_max: float = 100.0;
+
 var camera_tilt: float;
 var camera_bob_time: float = 0.0;
 
@@ -144,7 +147,7 @@ func handle_jumping(delta: float):
 		deccel = DECCEL_AIR;
 		velocity.y -= gravity * delta;
 	
-	if !is_jumping:
+	if !jump_trigger:
 		jump_force = JUMP_VELOCITY * ((abs(velocity.x) * .0015) + 1);
 	
 	if Input.is_action_just_pressed("jump"):
@@ -172,8 +175,9 @@ func handle_jumping(delta: float):
 		else:
 			jump_accel_time -= 1.0;
 			
-	if jump_accel_time > 0.0 && jump_accel_time < jump_accel_max:
-		velocity.y = lerp(velocity.y, jump_force, jump_accel);
+	if jump_trigger:
+		if jump_accel_time > 0.0 && jump_accel_time < jump_accel_max:
+			velocity.y = lerp(velocity.y, jump_force, jump_accel);
 		
 	if Input.is_action_just_released("jump"):
 		if jump_trigger && !is_on_floor():

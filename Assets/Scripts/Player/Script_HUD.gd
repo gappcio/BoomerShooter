@@ -59,5 +59,5 @@ func _process(delta):
 			+ "\n" + \
 			"speed: " + str("%.2f" % float(Vector2(player.velocity.x, player.velocity.z).length()))\
 			+ "\n" + \
-			"crouchjump_buffer: " + str(player.crouchjump_buffer)\
+			"jump_trigger: " + str(player.jump_trigger)\
 			+ "\n";

@@ -50,6 +50,8 @@ radius = 0.4
 [node name="Player" type="CharacterBody3D" groups=["player"]]
 collision_layer = 2
 collision_mask = 5
+floor_constant_speed = true
+floor_max_angle = 1.15192
 script = ExtResource("1_5ffuh")
 
 [node name="Collision" type="CollisionShape3D" parent="."]
