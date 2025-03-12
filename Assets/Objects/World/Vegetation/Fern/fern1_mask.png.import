@@ -2,23 +2,21 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bsg61bogqiukf"
-path="res://.godot/imported/fern1_fern1.png-2a64bfe8a3e04744977692d986d3358f.ctex"
+uid="uid://brgbd6dp6g3ty"
+path.s3tc="res://.godot/imported/fern1_mask.png-e7986f96d1a884ae5de880680e2929e0.s3tc.ctex"
 metadata={
-"vram_texture": false
-}
-generator_parameters={
-"md5": "338abb3114b85c78e0378fdbdebba8d9"
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
-source_file="res://Assets/Objects/World/Vegetation/Fern/fern1_fern1.png"
-dest_files=["res://.godot/imported/fern1_fern1.png-2a64bfe8a3e04744977692d986d3358f.ctex"]
+source_file="res://Assets/Objects/World/Vegetation/Fern/fern1_mask.png"
+dest_files=["res://.godot/imported/fern1_mask.png-e7986f96d1a884ae5de880680e2929e0.s3tc.ctex"]
 
 [params]
 
-compress/mode=0
+compress/mode=2
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1

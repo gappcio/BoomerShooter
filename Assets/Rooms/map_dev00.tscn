@@ -1,6 +1,7 @@
-[gd_scene load_steps=54 format=4 uid="uid://7itgyyfxj4ga"]
+[gd_scene load_steps=57 format=4 uid="uid://7itgyyfxj4ga"]
 
 [ext_resource type="Script" uid="uid://c11xq6o4831nj" path="res://addons/qodot/src/nodes/qodot_map.gd" id="1_5g4pq"]
+[ext_resource type="PackedScene" uid="uid://cwhxdl2jthine" path="res://Assets/Objects/WeatherManager/WeatherManager.tscn" id="1_qdr34"]
 [ext_resource type="Resource" uid="uid://dgm276g7bw8q5" path="res://addons/qodot/game_definitions/fgd/base_classes/target_base_class.tres" id="2_wr6du"]
 [ext_resource type="Resource" uid="uid://ccdjpf5j25aua" path="res://addons/qodot/game_definitions/fgd/base_classes/targetname_base_class.tres" id="3_ro43b"]
 [ext_resource type="Resource" uid="uid://c5o31v30rw7v5" path="res://addons/qodot/game_definitions/fgd/base_classes/light_base_class.tres" id="4_poo5i"]
@@ -32,6 +33,8 @@
 [ext_resource type="Texture2D" uid="uid://d1exu8ly7vt8k" path="res://textures/new/asphalt_lines.png" id="24_43hds"]
 [ext_resource type="PackedScene" uid="uid://bdcrrhdm6vkv6" path="res://Assets/Objects/World/Vegetation/PineTree/SC_PineTree1.tscn" id="29_1m1fx"]
 [ext_resource type="PackedScene" uid="uid://p6w3l25xcjdh" path="res://Assets/Objects/Enemy/TestEnemy/SC_Enemy_Test.tscn" id="32_bx4fq"]
+[ext_resource type="PackedScene" uid="uid://dahqh5iltf71w" path="res://Assets/Objects/World/Vegetation/Grass/Grass1.tscn" id="33_l85pa"]
+[ext_resource type="PackedScene" uid="uid://6blvw1urbt6p" path="res://Assets/Objects/World/Vegetation/Fern/Fern1.tscn" id="34_pru3i"]
 
 [sub_resource type="Resource" id="Resource_ihmsf"]
 script = ExtResource("19_jnt08")
@@ -181,6 +184,8 @@ size = Vector3(1.1, 0.25, 1.1)
 
 [node name="UNIVERSE" type="Node3D"]
 
+[node name="WeatherManager" parent="." instance=ExtResource("1_qdr34")]
+
 [node name="QodotMap" type="Node3D" parent="."]
 script = ExtResource("1_5g4pq")
 map_file = "J:/godot/shooter/maps/map_dev.map"
@@ -291,3 +296,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.427, 2.86363, 2.393)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="ClimbableArea2"]
 shape = SubResource("BoxShape3D_pdnst")
+
+[node name="Grass1" parent="." instance=ExtResource("33_l85pa")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.71574, 0.0606321, -0.67642)
+
+[node name="Grass" parent="." instance=ExtResource("33_l85pa")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.91477, 0.0606321, -1.88823)
+
+[node name="Fern" parent="." instance=ExtResource("34_pru3i")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.87094, 0.0235727, -0.125477)
