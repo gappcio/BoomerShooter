@@ -51,13 +51,15 @@ func _process(delta):
 		var player_speed: float = Vector2(player.velocity.x, player.velocity.z).length();
 		label.text = "camera.y: " + str(player_speed);
 		label.text = \
-			"velocity.x: " + str("%.2f" % float(player.velocity.x))\
+			"velocity.x: " + str("%.2f" % float(player.get_real_velocity().x))\
 			+ "\n" + \
-			"velocity.y: " + str("%.2f" % float(player.velocity.y))\
+			"velocity.y: " + str("%.2f" % float(player.get_real_velocity().y))\
 			+ "\n" + \
-			"velocity.z: " + str("%.2f" % float(player.velocity.z))\
+			"velocity.z: " + str("%.2f" % float(player.get_real_velocity().z))\
 			+ "\n" + \
 			"speed: " + str("%.2f" % float(Vector2(player.velocity.x, player.velocity.z).length()))\
 			+ "\n" + \
 			"jump_trigger: " + str(player.jump_trigger)\
+			+ "\n" + \
+			"grounded: " + str(player.grounded)\
 			+ "\n";

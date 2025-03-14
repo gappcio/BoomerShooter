@@ -14,7 +14,7 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	
-	wind_pos += 0.01;
+	wind_pos += 0.1;
 	
 	noise_offset = Vector3(wind_pos, wind_pos, 0.0);
 	

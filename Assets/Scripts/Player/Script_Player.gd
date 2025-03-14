@@ -17,14 +17,16 @@ const JUMP_VELOCITY: float = 4.75;
 const MAX_SPEED: float = 20.0;
 const MAX_ACCEL: float = 4 * MAX_SPEED;
 
-const ACCEL_GROUND: float = 0.5;
+const ACCEL_GROUND: float = 5.5;
 const ACCEL_AIR: float = 0.2;
-const DECCEL_GROUND: float = 0.3;
+const DECCEL_GROUND: float = 5.5;
 const DECCEL_AIR: float = 0.2;
 var GRAVITY_BASE: float = ProjectSettings.get_setting("physics/3d/default_gravity");
 
 var gravity: float = GRAVITY_BASE;
 var speed: float = BASE_SPEED;
+
+var grounded: bool = true;
 
 var mouse_sensitivity = 0.17;
 
@@ -68,6 +70,9 @@ var crouchjump_buffer: float = 0.0;
 var can_climb_top: bool = false;
 var can_climb_bottom: bool = false;
 
+
+var wish_dir;
+
 func _ready():
 	Engine.time_scale = 1.0;
 	camera.fov = 90;
@@ -86,16 +91,19 @@ func _process(delta):
 
 func _physics_process(delta: float) -> void:
 	
-	input_dir = Input.get_vector("left", "right", "forward", "back");
-
+	input_dir = Input.get_vector("left", "right", "forward", "back").normalized();
+	wish_dir = global_transform.basis * Vector3(input_dir.x, 0.0, input_dir.y);
+	
 	is_crouched = Input.is_action_pressed("crouch");
 	is_sprinting = Input.is_action_pressed("sprint");
 	
-	if Input.is_action_just_pressed("crouch") && is_on_floor():
+	if Input.is_action_just_pressed("crouch") && grounded:
 		crouchjump_buffer = crouchjump_buffer_max;
 	
+	grounded_state();
+	
 	if is_crouched:
-		if is_on_floor():
+		if grounded:
 			crouchjump_buffer -= 1.0;
 			if crouchjump_buffer <= 0.0:
 				crouchjump_buffer = 0.0;
@@ -105,25 +113,33 @@ func _physics_process(delta: float) -> void:
 			head.position.y = lerp(head.position.y, -0.1, 0.3);
 			weapon_viewmodel_node.position.y = lerp(weapon_viewmodel_node.position.y, 0.05, 0.1);
 	else:
-		if !ceiling_detection.is_colliding() && is_on_floor():
+		if !ceiling_detection.is_colliding() && grounded:
 			$Collision.disabled = false;
 			$CollisionCrouch.disabled = true;
 			head.position.y = lerp(head.position.y, 0.6, 0.3);
 			weapon_viewmodel_node.position.y = lerp(weapon_viewmodel_node.position.y, 0.0, 0.1);
 			crouchjump_buffer = 0.0;
 		
-	handle_jumping(delta);
+	#handle_jumping(delta);
+	vertical_movement(delta);
 
 	movement(input_dir, delta);
 	
 	tilt_camera(input_dir);
 	
 	look();
+
+func grounded_state():
 	
-	
+	if is_on_floor():
+		if abs(get_real_velocity().y) < 3.0:
+			grounded = true;
+	else:
+		grounded = false;
 
 func handle_jumping(delta: float):
-	if velocity.y > 0:
+	
+	if velocity.y > 0.0:
 		is_falling = true;
 	else:
 		is_falling = false;
@@ -136,7 +152,7 @@ func handle_jumping(delta: float):
 	else:
 		gravity = GRAVITY_BASE * 1.1;
 	
-	if is_on_floor():
+	if grounded:
 		accel = ACCEL_GROUND;
 		deccel = DECCEL_GROUND;
 		is_jumping = false;
@@ -156,7 +172,7 @@ func handle_jumping(delta: float):
 	if jump_buffer > 0:
 		jump_buffer -= 1;
 		
-		if (!jump_trigger && is_on_floor()):
+		if (!jump_trigger && grounded):
 			jump_trigger = true;
 			jump_accel_time = jump_accel_max;
 			
@@ -180,44 +196,91 @@ func handle_jumping(delta: float):
 			velocity.y = lerp(velocity.y, jump_force, jump_accel);
 		
 	if Input.is_action_just_released("jump"):
-		if jump_trigger && !is_on_floor():
+		if jump_trigger && !grounded:
 			velocity.y *= 0.8;
 			jump_accel_time = 0.0;
 	
 	if velocity.y > 1.0:
 		var _set = func(): crouchjump_buffer = 0.0;
 		_set.call_deferred();
+
+func vertical_movement(delta: float):
+	velocity.y -= GRAVITY_BASE;
 	
+	var current_wish_dir_speed = velocity.dot(wish_dir);
+	var capped_speed = min( (50 * wish_dir).length(),  0.85);
+	
+	var add_speed = capped_speed - current_wish_dir_speed;
+	if add_speed > 0:
+		var accel_speed = ACCEL_AIR * 50 * delta;
+		accel_speed = min(accel_speed, add_speed);
+		velocity += accel_speed * wish_dir;
+		
+	if is_on_wall():
+		if get_wall_normal().angle_to(Vector3.UP) > floor_max_angle:
+			motion_mode = CharacterBody3D.MOTION_MODE_FLOATING;
+		else:
+			motion_mode = CharacterBody3D.MOTION_MODE_GROUNDED;
+		clip_velocity(get_wall_normal(), 1, delta);
 
 func movement(input_dir: Vector2, delta: float) -> void:
 
 	var direction = input_dir.rotated(-head.rotation.y);
 	direction = Vector3(direction.x, 0.0, direction.y);
+	
+	var wish_dir_speed = velocity.dot(wish_dir);
+	var add_speed = BASE_SPEED - wish_dir_speed;
+	if add_speed > 0.0:
+		var accel_speed = ACCEL_GROUND * delta * BASE_SPEED;
+		accel_speed = min(accel_speed, add_speed);
+		velocity += accel_speed * wish_dir;
+		
+	var control = max(velocity.length(), DECCEL_GROUND);
+	var drop = control * 3.5 * delta;
+	var new_speed = max(velocity.length() - drop, 0.0);
+	if velocity.length() > 0.0:
+		new_speed /= velocity.length();
+	velocity *= new_speed;
+	
+	
 
 	if direction:
 		
-		if crouchjump_buffer > 0.0:
-			velocity.x *= 1.25;
-			velocity.z *= 1.25;
-		elif crouchjump_buffer <= 0.0\
-		&& is_crouched:
-			velocity.x *= 0.25;
-			velocity.z *= 0.25;
-		
-		var vel = accelerate(velocity, direction, delta);
-		
-		velocity.x = lerp(vel[0], direction.x * speed, accel);
-		velocity.z = lerp(vel[2], direction.z * speed, accel);
+		#if crouchjump_buffer > 0.0:
+			#velocity.x *= 1.25;
+			#velocity.z *= 1.25;
+		#elif crouchjump_buffer <= 0.0\
+		#&& is_crouched:
+			#velocity.x *= 0.25;
+			#velocity.z *= 0.25;
+
+		#var vel = accelerate(velocity, direction, delta);
+
+		#velocity.x = lerp(vel[0], direction.x * speed, accel);
+		#velocity.z = lerp(vel[2], direction.z * speed, accel);
 		
 		camera_bobbing(velocity, delta);
 		
 	else:
-		velocity.x = lerp(velocity.x, 0.0, deccel);
-		velocity.z = lerp(velocity.z, 0.0, deccel);
+		#velocity.x = lerp(velocity.x, 0.0, deccel);
+		#velocity.z = lerp(velocity.z, 0.0, deccel);
 		
 		camera_bobbing_reset();
 
 	move_and_slide();
+
+func clip_velocity(normal: Vector3, overbounce: float, _delta: float) -> void:
+	
+	var backoff = velocity.dot(normal) * overbounce;
+	
+	if backoff >= 0.0: return;
+	
+	var change = normal * backoff;
+	velocity -= change;
+	
+	var adjust = velocity.dot(normal);
+	if adjust < 0.0:
+		velocity -= normal * adjust;
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
@@ -235,13 +298,13 @@ func _unhandled_input(event: InputEvent) -> void:
 func look() -> void:
 	
 	head.rotation_degrees.x -= mouse_input.y * mouse_sensitivity;
-	head.rotation_degrees.y -= mouse_input.x * mouse_sensitivity;
+	#head.rotation_degrees.y -= mouse_input.x * mouse_sensitivity;
+	rotate_y(deg_to_rad(-mouse_input.x * mouse_sensitivity));
 	
 	#motion = Vector2(0.0, 0.0);
 	mouse_input = Vector2(0.0, 0.0);
 	
 	head.rotation.x = clamp(head.rotation.x, deg_to_rad(-89.99), deg_to_rad(89.99));
-
 
 func tilt_camera(input_dir):
 	
@@ -252,8 +315,6 @@ func tilt_camera(input_dir):
 		camera_tilt = 0.0;
 		
 	camera.rotation.z = camera_tilt;
-	
-	
 
 func accelerate(velocity: Vector3, move_direction: Vector3, delta: float) -> Vector3:
 	
@@ -269,10 +330,10 @@ func camera_bobbing(velocity, delta) -> void:
 	
 	var velocity_2d: Vector2 = Vector2(velocity.x, velocity.z);
 	
-	camera_bob_time += delta * velocity_2d.length() * float(is_on_floor());
+	camera_bob_time += delta * velocity_2d.length() * float(grounded);
 
 	camera.position.y = lerp(camera.position.y, 0.1 * -sin(camera_bob_time * 1.2), 0.1);
-		
+
 func camera_bobbing_reset() -> void:
 	
 	if abs(camera.position.y) < 0.001:
@@ -282,7 +343,7 @@ func camera_bobbing_reset() -> void:
 	camera.position.y = lerp(camera.position.y, 0.0, 0.1);
 	
 	camera_bob_time = 0.0;
-	
+
 func camera_shake():
 	
 	var tween = create_tween().set_parallel();
@@ -296,8 +357,6 @@ func camera_shake():
 	if camera.fov > 1.0 && camera.fov < 179.0:
 		tween.tween_property(camera, "fov", fov_change, time).as_relative();
 		tween.chain().tween_property(camera, "fov", -fov_change, time).as_relative();
-	
-
 
 func _on_area_step_up_bottom_body_entered(body):
 	pass
@@ -322,27 +381,23 @@ func _on_area_step_up_bottom_body_entered(body):
 				
 		if velocity.y <= 0.0:
 			global_position.y += i
-			
+
 func _on_area_step_up_bottom_body_exited(body):
 	
 	if body.is_in_group("wall"):
 		step_up_bottom = false;
 
-
 func _on_climb_area_top_area_entered(area: Area3D) -> void:
 	if area.is_in_group("climbable"):
 		can_climb_top = true;
-
 
 func _on_climb_area_top_area_exited(area: Area3D) -> void:
 	if area.is_in_group("climbable"):
 		can_climb_top = false;
 
-
 func _on_climb_area_bottom_area_entered(area: Area3D) -> void:
 	if area.is_in_group("climbable"):
 		can_climb_bottom = true;
-
 
 func _on_climb_area_bottom_area_exited(area: Area3D) -> void:
 	if area.is_in_group("climbable"):
