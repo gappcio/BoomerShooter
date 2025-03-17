@@ -7,26 +7,27 @@ class_name player
 @onready var weapon_attach := $Head/Camera/WeaponAttach;
 @onready var weapon_viewmodel_node := $Head/Camera/WeaponAttach/ViewmodelControl/Weapon;
 @onready var ceiling_detection: ShapeCast3D = $CeilingDetection
+@onready var raycast: RayCast3D = $Head/Camera/Raycast
 
 @onready var climb_area_top: Area3D = $Climb/ClimbAreaTop
 @onready var climb_area_bottom: Area3D = $Climb/ClimbAreaBottom
 
-const BASE_SPEED: float = 6.0;
+const BASE_SPEED: float = 5.0;
 const JUMP_VELOCITY: float = 4.75;
 
-const MAX_SPEED: float = 20.0;
+const MAX_SPEED: float = 15.0;
 const MAX_ACCEL: float = 4 * MAX_SPEED;
 
-const ACCEL_GROUND: float = 5.5;
+const ACCEL_GROUND: float = 0.25;
 const ACCEL_AIR: float = 0.2;
-const DECCEL_GROUND: float = 5.5;
-const DECCEL_AIR: float = 0.2;
+const DECCEL_GROUND: float = 0.25;
+const DECCEL_AIR: float = 0.1;
 var GRAVITY_BASE: float = ProjectSettings.get_setting("physics/3d/default_gravity");
 
 var gravity: float = GRAVITY_BASE;
 var speed: float = BASE_SPEED;
 
-var grounded: bool = true;
+var grounded: bool = false;
 
 var mouse_sensitivity = 0.17;
 
@@ -78,6 +79,13 @@ func _ready():
 	camera.fov = 90;
 	
 func _process(delta):
+	
+	if Input.is_action_just_pressed("debug_timescale"):
+		if Engine.time_scale == 1.0:
+			Engine.time_scale = 0.5;
+		else:
+			Engine.time_scale = 1.0;
+	
 	var vec = Vector2(velocity.z, velocity.x);
 	var l = vec.length();
 	var r = vec.angle_to_point(Vector2(0, 1));
@@ -97,8 +105,8 @@ func _physics_process(delta: float) -> void:
 	is_crouched = Input.is_action_pressed("crouch");
 	is_sprinting = Input.is_action_pressed("sprint");
 	
-	if Input.is_action_just_pressed("crouch") && grounded:
-		crouchjump_buffer = crouchjump_buffer_max;
+	#if Input.is_action_just_pressed("crouch") && grounded:
+		#crouchjump_buffer = crouchjump_buffer_max;
 	
 	grounded_state();
 	
@@ -120,10 +128,21 @@ func _physics_process(delta: float) -> void:
 			weapon_viewmodel_node.position.y = lerp(weapon_viewmodel_node.position.y, 0.0, 0.1);
 			crouchjump_buffer = 0.0;
 		
-	#handle_jumping(delta);
-	vertical_movement(delta);
+		
+		
+	
+	#if grounded:
+		#if Input.is_action_just_pressed("jump"):
+			#velocity.y = jump_force;
+		#movement(input_dir, delta);
+	#else:
+		#vertical_movement(delta);
+		
+	handle_jumping(delta);
 
 	movement(input_dir, delta);
+	
+	move_and_slide();
 	
 	tilt_camera(input_dir);
 	
@@ -139,18 +158,25 @@ func grounded_state():
 
 func handle_jumping(delta: float):
 	
-	if velocity.y > 0.0:
+	if velocity.y < 0.0:
 		is_falling = true;
 	else:
 		is_falling = false;
 	
 	if !is_falling:
-		if velocity.y < -1:
-			gravity = lerp(gravity, GRAVITY_BASE * 2, .25);
+		if velocity.y < 2.0:
+			# slow down during peak
+			gravity = lerp(gravity, GRAVITY_BASE * 0.75, .25);
 		else:
-			gravity = GRAVITY_BASE;
+			# we are moving upward
+			var vel: Vector2 = Vector2(velocity.x, velocity.z);
+			if vel.length() > BASE_SPEED * 1.75:
+				gravity = lerp(gravity, GRAVITY_BASE * 0.5, .25);
+			else:
+				gravity = GRAVITY_BASE;
 	else:
-		gravity = GRAVITY_BASE * 1.1;
+		# we are falling!!!
+		gravity = lerp(gravity, GRAVITY_BASE * 2, .25);
 	
 	if grounded:
 		accel = ACCEL_GROUND;
@@ -160,7 +186,11 @@ func handle_jumping(delta: float):
 		jump_trigger = false;
 	else:
 		accel = ACCEL_AIR;
-		deccel = DECCEL_AIR;
+		
+		var vel: Vector2 = Vector2(velocity.x, velocity.z);
+		var rate = vel.length() / MAX_SPEED * .35;
+		deccel = DECCEL_AIR * rate;
+
 		velocity.y -= gravity * delta;
 	
 	if !jump_trigger:
@@ -175,17 +205,8 @@ func handle_jumping(delta: float):
 		if (!jump_trigger && grounded):
 			jump_trigger = true;
 			jump_accel_time = jump_accel_max;
-			
-		#if (can_climb_bottom) && (velocity.y <= 0.0):
-			#velocity.y = jump_force * 0.5;
-			#jump_trigger = true;
-			#
-		#if (can_climb_top):
-			#velocity.y = jump_force * 1.25;
-			#jump_trigger = true;
 	
 	if jump_trigger:
-		
 		if jump_accel_time <= 0.0:
 			jump_accel_time = 0.0;
 		else:
@@ -205,14 +226,14 @@ func handle_jumping(delta: float):
 		_set.call_deferred();
 
 func vertical_movement(delta: float):
-	velocity.y -= GRAVITY_BASE;
+	velocity.y -= GRAVITY_BASE * delta;
 	
 	var current_wish_dir_speed = velocity.dot(wish_dir);
-	var capped_speed = min( (50 * wish_dir).length(),  0.85);
+	var capped_speed = min( (500.0 * wish_dir).length(),  0.85);
 	
 	var add_speed = capped_speed - current_wish_dir_speed;
 	if add_speed > 0:
-		var accel_speed = ACCEL_AIR * 50 * delta;
+		var accel_speed = 800 * 500 * delta;
 		accel_speed = min(accel_speed, add_speed);
 		velocity += accel_speed * wish_dir;
 		
@@ -222,27 +243,32 @@ func vertical_movement(delta: float):
 		else:
 			motion_mode = CharacterBody3D.MOTION_MODE_GROUNDED;
 		clip_velocity(get_wall_normal(), 1, delta);
+		
+	if Input.is_action_just_pressed("sprint"):
+		velocity *= Vector3(4.0, 1.0, 4.0);
 
 func movement(input_dir: Vector2, delta: float) -> void:
 
 	var direction = input_dir.rotated(-head.rotation.y);
 	direction = Vector3(direction.x, 0.0, direction.y);
-	
-	var wish_dir_speed = velocity.dot(wish_dir);
-	var add_speed = BASE_SPEED - wish_dir_speed;
-	if add_speed > 0.0:
-		var accel_speed = ACCEL_GROUND * delta * BASE_SPEED;
-		accel_speed = min(accel_speed, add_speed);
-		velocity += accel_speed * wish_dir;
-		
-	var control = max(velocity.length(), DECCEL_GROUND);
-	var drop = control * 3.5 * delta;
-	var new_speed = max(velocity.length() - drop, 0.0);
-	if velocity.length() > 0.0:
-		new_speed /= velocity.length();
-	velocity *= new_speed;
-	
-	
+	#
+	#var wish_dir_speed = velocity.dot(wish_dir);
+	#var add_speed = BASE_SPEED - wish_dir_speed;
+	#if add_speed > 0.0:
+		#var accel_speed = 11 * delta * BASE_SPEED;
+		#accel_speed = min(accel_speed, add_speed);
+		#velocity += accel_speed * wish_dir;
+		#
+	#var control = max(velocity.length(), 7);
+	#var drop = control * 3.5 * delta;
+	#var new_speed = max(velocity.length() - drop, 0.0);
+	#if velocity.length() > 0.0:
+		#new_speed /= velocity.length();
+	#velocity *= new_speed;
+
+	if Input.is_action_just_pressed("sprint"):
+		velocity.x = direction.x * 50.0;
+		velocity.z = direction.z * 50.0; 
 
 	if direction:
 		
@@ -254,20 +280,19 @@ func movement(input_dir: Vector2, delta: float) -> void:
 			#velocity.x *= 0.25;
 			#velocity.z *= 0.25;
 
-		#var vel = accelerate(velocity, direction, delta);
+		var vel: Vector3;
+		vel = accelerate(velocity, direction, delta);
 
-		#velocity.x = lerp(vel[0], direction.x * speed, accel);
-		#velocity.z = lerp(vel[2], direction.z * speed, accel);
+		velocity.x = lerp(vel[0], direction.x * speed, accel);
+		velocity.z = lerp(vel[2], direction.z * speed, accel);
 		
 		camera_bobbing(velocity, delta);
 		
 	else:
-		#velocity.x = lerp(velocity.x, 0.0, deccel);
-		#velocity.z = lerp(velocity.z, 0.0, deccel);
+		velocity.x = lerp(velocity.x, 0.0, deccel);
+		velocity.z = lerp(velocity.z, 0.0, deccel);
 		
 		camera_bobbing_reset();
-
-	move_and_slide();
 
 func clip_velocity(normal: Vector3, overbounce: float, _delta: float) -> void:
 	
@@ -298,8 +323,8 @@ func _unhandled_input(event: InputEvent) -> void:
 func look() -> void:
 	
 	head.rotation_degrees.x -= mouse_input.y * mouse_sensitivity;
-	#head.rotation_degrees.y -= mouse_input.x * mouse_sensitivity;
-	rotate_y(deg_to_rad(-mouse_input.x * mouse_sensitivity));
+	head.rotation_degrees.y -= mouse_input.x * mouse_sensitivity;
+	#rotate_y(deg_to_rad(-mouse_input.x * mouse_sensitivity));
 	
 	#motion = Vector2(0.0, 0.0);
 	mouse_input = Vector2(0.0, 0.0);

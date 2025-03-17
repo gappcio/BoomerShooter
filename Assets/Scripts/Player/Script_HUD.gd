@@ -49,6 +49,8 @@ func _process(delta):
 			#"camera.rot.z: " + str("%.2f" % float(player.camera.rotation.z))
 	if is_instance_valid(player):
 		var player_speed: float = Vector2(player.velocity.x, player.velocity.z).length();
+		var rate = player_speed / player.MAX_SPEED;
+		var deccel = player.DECCEL_AIR * rate * .35;
 		label.text = "camera.y: " + str(player_speed);
 		label.text = \
 			"velocity.x: " + str("%.2f" % float(player.get_real_velocity().x))\
@@ -59,7 +61,7 @@ func _process(delta):
 			+ "\n" + \
 			"speed: " + str("%.2f" % float(Vector2(player.velocity.x, player.velocity.z).length()))\
 			+ "\n" + \
-			"jump_trigger: " + str(player.jump_trigger)\
+			"gravity: " + str(player.gravity)\
 			+ "\n" + \
-			"grounded: " + str(player.grounded)\
+			"jump_trigger: " + str(player.jump_trigger)\
 			+ "\n";

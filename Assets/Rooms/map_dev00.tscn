@@ -264,7 +264,7 @@ directional_shadow_mode = 1
 environment = SubResource("Environment_j55ur")
 
 [node name="Player" parent="." instance=ExtResource("7_gqrsq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.88019, 0.889884, 1.55093)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.88019, 1.97398, 5.275)
 
 [node name="TestBlock" parent="." instance=ExtResource("6_jaj7b")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0.5, 1.5)
@@ -273,7 +273,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0.5, 1.5)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 1.5, 1.5)
 
 [node name="TestBlock6" parent="." instance=ExtResource("6_jaj7b")]
-transform = Transform3D(1.78, 0, 0, 0, 1.54153, 0.89, 0, -0.89, 1.54153, 2.5, 0, 5.5)
+transform = Transform3D(1.61137, -0.654915, -0.378114, 0.756228, 1.39549, 0.805686, 0, -0.89, 1.54153, 2.5, 0, 5.5)
 
 [node name="TestBlock7" parent="." instance=ExtResource("6_jaj7b")]
 transform = Transform3D(0.707107, -0.353553, 0.612372, 0, 0.866025, 0.5, -0.707107, -0.353553, 0.612372, 0.5, 0, 6.5)
