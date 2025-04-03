@@ -64,4 +64,6 @@ func _process(delta):
 			"gravity: " + str(player.gravity)\
 			+ "\n" + \
 			"jump_trigger: " + str(player.jump_trigger)\
-			+ "\n";
+			+ "\n" + \
+			"dash_time: " + str(player.dash_cooldown_active)\
+			+ "\n"

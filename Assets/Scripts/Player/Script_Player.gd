@@ -51,6 +51,18 @@ var jump_accel_time: float = jump_accel_max;
 var jump_time: float = 0.0;
 var jump_time_max: float = 100.0;
 
+var dash_time: float = 0.0;
+var dash_time_max: float = 0.025;
+var is_dashing: bool = false;
+
+var post_dash_time_base: float = 1.0;
+var post_dash_time: float = post_dash_time_base;
+
+var dash_cooldown_base: float = 0.5;
+var dash_cooldown: float = 0.0;
+var dash_cooldown_active: bool = false;
+
+
 var camera_tilt: float;
 var camera_bob_time: float = 0.0;
 
@@ -130,7 +142,6 @@ func _physics_process(delta: float) -> void:
 		
 		
 		
-	
 	#if grounded:
 		#if Input.is_action_just_pressed("jump"):
 			#velocity.y = jump_force;
@@ -163,6 +174,7 @@ func handle_jumping(delta: float):
 	else:
 		is_falling = false;
 	
+	
 	if !is_falling:
 		if velocity.y < 2.0:
 			# slow down during peak
@@ -177,7 +189,7 @@ func handle_jumping(delta: float):
 	else:
 		# we are falling!!!
 		gravity = lerp(gravity, GRAVITY_BASE * 2, .25);
-	
+		
 	if grounded:
 		accel = ACCEL_GROUND;
 		deccel = DECCEL_GROUND;
@@ -191,7 +203,8 @@ func handle_jumping(delta: float):
 		var rate = vel.length() / MAX_SPEED * .35;
 		deccel = DECCEL_AIR * rate;
 
-		velocity.y -= gravity * delta;
+		if !is_dashing:
+			velocity.y -= gravity * delta;
 	
 	if !jump_trigger:
 		jump_force = JUMP_VELOCITY * ((abs(velocity.x) * .0015) + 1);
@@ -221,9 +234,10 @@ func handle_jumping(delta: float):
 			velocity.y *= 0.8;
 			jump_accel_time = 0.0;
 	
-	if velocity.y > 1.0:
-		var _set = func(): crouchjump_buffer = 0.0;
-		_set.call_deferred();
+	
+	#if velocity.y > 1.0:
+		#var _set = func(): crouchjump_buffer = 0.0;
+		#_set.call_deferred();
 
 func vertical_movement(delta: float):
 	velocity.y -= GRAVITY_BASE * delta;
@@ -265,11 +279,39 @@ func movement(input_dir: Vector2, delta: float) -> void:
 	#if velocity.length() > 0.0:
 		#new_speed /= velocity.length();
 	#velocity *= new_speed;
-
+	
 	if Input.is_action_just_pressed("sprint"):
-		velocity.x = direction.x * 50.0;
-		velocity.z = direction.z * 50.0; 
-
+		if !is_dashing && dash_cooldown_active == false:
+			is_dashing = true;
+			dash_cooldown_active = true;
+	
+	if !is_dashing:
+		post_dash_time -= delta;
+		if post_dash_time <= 0.0:
+			post_dash_time = post_dash_time_base;
+			
+	
+	if dash_cooldown_active:
+		dash_cooldown -= delta;
+		if dash_cooldown <= 0.0:
+			dash_cooldown = dash_cooldown_base;
+			dash_cooldown_active = false;
+	
+	if is_dashing:
+		#velocity.x = direction.x * 50.0;
+		#velocity.z = direction.z * 50.0;
+		
+		var spd: float = 50.0;
+		
+		velocity.x = (spd * cos(-head.global_rotation.y - PI/2));
+		velocity.z = (spd * sin(-head.global_rotation.y - PI/2));
+		
+		if dash_time > dash_time_max:
+			dash_time = 0.0;
+			is_dashing = false;
+		else:
+			dash_time += delta;
+	
 	if direction:
 		
 		#if crouchjump_buffer > 0.0:
