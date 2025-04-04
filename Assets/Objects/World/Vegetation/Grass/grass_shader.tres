@@ -124,6 +124,10 @@ void fragment() {
 
 }
 "
+<<<<<<< Updated upstream
+=======
+graph_offset = Vector2(-188.537, 149.647)
+>>>>>>> Stashed changes
 modes/cull = 2
 flags/depth_prepass_alpha = true
 flags/vertex_lighting = true
