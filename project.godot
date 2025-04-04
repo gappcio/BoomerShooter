@@ -43,6 +43,7 @@ enabled=PackedStringArray("res://addons/qodot/plugin.cfg")
 
 folder_colors={
 "res://Assets/Audio/": "blue",
+"res://Assets/Common/": "red",
 "res://Assets/Objects/": "purple",
 "res://Assets/Rooms/": "orange",
 "res://Assets/Scripts/": "red",

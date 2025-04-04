@@ -3,7 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://w33bw2fu71mt" path="res://Assets/Objects/World/Vegetation/Grass/grass1_grass1.png" id="1_cr4ci"]
 [ext_resource type="Shader" uid="uid://ddl4d1mo8m2t" path="res://Assets/Objects/World/Vegetation/Grass/grass_shader.tres" id="2_b21hn"]
 [ext_resource type="Texture2D" uid="uid://dr7ot3befh154" path="res://Assets/Objects/World/Vegetation/Grass/grass1_mask.png" id="3_lkdcc"]
-[ext_resource type="Texture2D" uid="uid://cnyyc480gjos2" path="res://Assets/Objects/WeatherManager/grass_wind_noise.tres" id="4_b21hn"]
+[ext_resource type="Texture2D" uid="uid://cnyyc480gjos2" path="res://Assets/Common/WeatherManager/grass_wind_noise.tres" id="4_b21hn"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_swc4t"]
 resource_name = "grass1"

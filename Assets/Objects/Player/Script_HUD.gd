@@ -1,15 +1,19 @@
-extends CanvasLayer;
-class_name hud;
+extends Control;
+class_name HUD;
 
-@onready var label = $Label;
-@onready var player = $"../Player";
+@onready var player: Player;
 #@onready var pistol = $"../Player/Head/Camera/WeaponAttach/ViewmodelControl/Weapon/VIEWMODEL_Pistol/ComponentWeapon";
+@onready var canvas_layer: CanvasLayer = $CanvasLayer
+@onready var label: Label = $CanvasLayer/Label
+@onready var dash_bar: ProgressBar = $DashBar
 
 func _ready():
-	pass
+	player = get_tree().get_first_node_in_group("player");
 
 func _process(delta):
-	pass
+	
+	dash_bar.value = player.dash_cooldown / player.dash_cooldown_base * 100.0;
+	
 	#var viewmodel = player.get_node("Head/Camera/WeaponAttach/ViewmodelControl/Weapon/VIEWMODEL_Pistol");
 	
 	#pistol = $"../Player/Head/Camera/WeaponAttach/ViewmodelControl/Weapon/VIEWMODEL_Pistol/ComponentWeapon";
@@ -63,7 +67,7 @@ func _process(delta):
 			+ "\n" + \
 			"gravity: " + str(player.gravity)\
 			+ "\n" + \
-			"jump_trigger: " + str(player.jump_trigger)\
+			"accel: " + str(player.accel)\
 			+ "\n" + \
-			"dash_time: " + str(player.dash_cooldown_active)\
+			"deccel: " + str(player.deccel)\
 			+ "\n"

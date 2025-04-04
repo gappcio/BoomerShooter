@@ -1,6 +1,6 @@
 [gd_scene load_steps=49 format=4 uid="uid://degs01nlfjrpy"]
 
-[ext_resource type="Script" uid="uid://by15hv4hdceq0" path="res://Assets/Scripts/Player/Weapon/Script_PlayerWeaponPistol.gd" id="1_y0mra"]
+[ext_resource type="Script" uid="uid://by15hv4hdceq0" path="res://Assets/Objects/Player/Weapon/Script_PlayerWeaponPistol.gd" id="1_y0mra"]
 [ext_resource type="AudioStream" uid="uid://dnpm23ly1dahd" path="res://Assets/Audio/SFX/Weapons/Pistol/sound_pistol_shoot.wav" id="3_ajb11"]
 [ext_resource type="PackedScene" uid="uid://ddv5xshw0olb6" path="res://Assets/Composition/ComponentWeapon.tscn" id="4_764sq"]
 [ext_resource type="Texture2D" uid="uid://su7cb6bh63xj" path="res://Assets/Objects/Player/Viewmodels/Pistol/viewmodel_hands_hand_texture.png" id="5_82a7k"]

@@ -1,8 +1,0 @@
-[gd_scene load_steps=3 format=3 uid="uid://cwhxdl2jthine"]
-
-[ext_resource type="Script" uid="uid://ccx3dgh34oda" path="res://Assets/Objects/WeatherManager/WeatherManager.gd" id="1_xyaa0"]
-[ext_resource type="Texture2D" uid="uid://cnyyc480gjos2" path="res://Assets/Objects/WeatherManager/grass_wind_noise.tres" id="2_jmwrn"]
-
-[node name="WeatherManager" type="Node3D"]
-script = ExtResource("1_xyaa0")
-wind_texture = ExtResource("2_jmwrn")

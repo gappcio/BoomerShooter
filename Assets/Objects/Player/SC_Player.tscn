@@ -1,10 +1,10 @@
 [gd_scene load_steps=18 format=3 uid="uid://c0jd3cujvbmlc"]
 
-[ext_resource type="Script" uid="uid://rrxtl6hrf7dr" path="res://Assets/Scripts/Player/Script_Player.gd" id="1_5ffuh"]
+[ext_resource type="Script" uid="uid://rrxtl6hrf7dr" path="res://Assets/Objects/Player/Script_Player.gd" id="1_5ffuh"]
 [ext_resource type="PackedScene" uid="uid://1hxrf7rm1jbt" path="res://Assets/Objects/Player/SC_Camera.tscn" id="1_xqu0b"]
 [ext_resource type="PackedScene" uid="uid://blpvuc0ibnp7q" path="res://Assets/Objects/Player/Viewmodels/SC_Control_ViewModel.tscn" id="3_5jqs6"]
 [ext_resource type="Texture2D" uid="uid://bq04hxdqqem1b" path="res://Assets/Images/Debug/arrow.png" id="3_qcniq"]
-[ext_resource type="Script" uid="uid://b71a0vln8bc56" path="res://Assets/Scripts/Player/Weapon/Script_Control_PlayerWeapon.gd" id="4_7lj4b"]
+[ext_resource type="Script" uid="uid://b71a0vln8bc56" path="res://Assets/Objects/Player/Weapon/Script_Control_PlayerWeapon.gd" id="4_7lj4b"]
 [ext_resource type="PackedScene" uid="uid://dn3xfbukde1fv" path="res://Assets/Objects/Player/Viewmodels/SC_Viewmodel_None.tscn" id="4_hkojv"]
 [ext_resource type="PackedScene" uid="uid://04d8wgl8ry6b" path="res://Assets/Objects/Player/Viewmodels/SC_Viewmodel_Fists.tscn" id="6_hbj6a"]
 
