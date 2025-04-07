@@ -70,7 +70,7 @@ var post_dash_time_base: float = 1.0;
 var post_dash_time: float = post_dash_time_base;
 
 var dash_cooldown_base: float = 0.5;
-var dash_cooldown: float = 0.0;
+var dash_cooldown: float = dash_cooldown_base;
 var dash_cooldown_active: bool = false;
 
 

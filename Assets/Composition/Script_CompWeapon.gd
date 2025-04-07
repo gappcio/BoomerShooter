@@ -132,6 +132,7 @@ func shoot():
 	
 		if raycast.is_colliding():
 			
+			
 			var target = null;
 			var collision_point = null;
 			var collision_normal = null;
@@ -143,6 +144,8 @@ func shoot():
 			while raycast.is_colliding():
 				
 				var _target = raycast.get_collider();
+				
+				if _target is GridMap: break;
 				
 				target_list.append(_target);
 				

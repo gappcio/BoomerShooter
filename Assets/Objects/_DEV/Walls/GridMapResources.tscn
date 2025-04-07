@@ -1,0 +1,60 @@
+[gd_scene load_steps=7 format=4 uid="uid://d4i1rpgo5kqec"]
+
+[ext_resource type="PackedScene" uid="uid://ding7i6p7m1fi" path="res://Assets/Objects/_DEV/Walls/Wall.tscn" id="1_7767n"]
+[ext_resource type="Texture2D" uid="uid://cplkl52bsmexf" path="res://Assets/Objects/_DEV/Walls/slope45_wall.png" id="2_gldu8"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gxcq2"]
+resource_name = "Material"
+cull_mode = 2
+albedo_texture = ExtResource("2_gldu8")
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_od00l"]
+_surfaces = [{
+"aabb": AABB(-0.5, -0.5, -0.5, 1, 1, 1),
+"format": 34359742465,
+"index_count": 24,
+"index_data": PackedByteArray("AAABAAIAAQADAAIABAAAAAIABAACAAMABQABAAAABQAAAAQAAQAFAAMABQAEAAMA"),
+"name": "Material",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 6,
+"vertex_data": PackedByteArray("AAAAPwAAAL8AAAA/AAAAvwAAAL8AAAA/AAAAPwAAAD8AAAA/AAAAPwAAAD8AAAC/AAAAPwAAAL8AAAC/AAAAvwAAAL8AAAC/")
+}]
+blend_shape_mode = 0
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_i62js"]
+resource_name = "slope45_Cube"
+_surfaces = [{
+"aabb": AABB(-0.5, -0.5, -0.5, 1, 1, 1),
+"attribute_data": PackedByteArray("AACAPwAAgD8AAICzAACAPwAAgD8AAAAAAACAswAAgD8AAIA/AAAAAAAAgD8AAAAAAACAPwAAgD8AAIA/AACAPwAAAAAAAAAAAACAPwAAAAAAAICzAACAPwAAgD8AAIA/AAAAAAAAAAAAAIA/AAAAAAAAgLMAAIA/AACAPwAAgD8AAICzAACAPwAAAAAAAAAA"),
+"format": 34359742487,
+"index_count": 24,
+"index_data": PackedByteArray("AAABAAIAAwAEAAUAAwAGAAQABwAIAAkABwAKAAgACwAMAA0ACwAOAAwADwAQABEA"),
+"material": SubResource("StandardMaterial3D_gxcq2"),
+"name": "Material",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 18,
+"vertex_data": PackedByteArray("AAAAPwAAAL8AAAA/AAAAvwAAAL8AAAA/AAAAPwAAAD8AAAA/AAAAvwAAAL8AAAA/AAAAPwAAAD8AAAC/AAAAPwAAAD8AAAA/AAAAvwAAAL8AAAC/AAAAvwAAAL8AAAC/AAAAPwAAAL8AAAA/AAAAPwAAAL8AAAC/AAAAvwAAAL8AAAA/AAAAPwAAAL8AAAC/AAAAPwAAAD8AAAA/AAAAPwAAAD8AAAC/AAAAPwAAAL8AAAA/AAAAvwAAAL8AAAC/AAAAPwAAAL8AAAC/AAAAPwAAAD8AAAC//3//f////7//f/9/////v/9//3////+//z//v///AAD/P/+///8AAP8//7////+//z//v///AAD/fwAA//////9/AAD//////38AAP//////fwAA/////////3//////////f/////////9//////////3///////////wAA/7//////AAD/v/////8AAP+/")
+}]
+blend_shape_mode = 0
+shadow_mesh = SubResource("ArrayMesh_od00l")
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_lkhw7"]
+data = PackedVector3Array(0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5)
+
+[node name="GridMapResources" type="Node3D"]
+
+[node name="Wall" parent="." instance=ExtResource("1_7767n")]
+
+[node name="slope" type="MeshInstance3D" parent="."]
+mesh = SubResource("ArrayMesh_i62js")
+skeleton = NodePath("")
+
+[node name="slope45" type="StaticBody3D" parent="slope" groups=["wall"]]
+collision_mask = 7
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="slope/slope45"]
+shape = SubResource("ConcavePolygonShape3D_lkhw7")
+
+[editable path="Wall"]

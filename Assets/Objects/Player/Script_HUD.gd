@@ -9,10 +9,12 @@ class_name HUD;
 
 func _ready():
 	player = get_tree().get_first_node_in_group("player");
+	dash_bar.value = 100.0;
 
 func _process(delta):
-	
-	dash_bar.value = player.dash_cooldown / player.dash_cooldown_base * 100.0;
+
+	if is_instance_valid(player):
+		dash_bar.value = player.dash_cooldown / player.dash_cooldown_base * 100.0;
 	
 	#var viewmodel = player.get_node("Head/Camera/WeaponAttach/ViewmodelControl/Weapon/VIEWMODEL_Pistol");
 	
