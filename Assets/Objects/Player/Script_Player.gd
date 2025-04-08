@@ -14,6 +14,7 @@ class_name Player
 
 const BASE_SPEED: float = 5.0;
 const JUMP_VELOCITY: float = 4.75;
+var spd: float = 0.0;
 
 const MAX_SPEED: float = 15.0;
 const MAX_ACCEL: float = 2 * MAX_SPEED;
@@ -62,6 +63,9 @@ var dash_time: float = 0.0;
 var dash_time_max: float = 0.025;
 var is_dashing: bool = false;
 
+var dash_buffer_max: float = 5.0;
+var dash_buffer: float = 0.0;
+
 var dash_gravity_cancel: bool = false;
 var dash_gravity_cancel_time_base: float = 0.25;
 var dash_gravity_cancel_time: float = dash_gravity_cancel_time_base;
@@ -73,6 +77,9 @@ var dash_cooldown_base: float = 0.5;
 var dash_cooldown: float = dash_cooldown_base;
 var dash_cooldown_active: bool = false;
 
+var longjump_window_time_base: float = 0.1;
+var longjump_window_time: float = longjump_window_time_base;
+var can_longjump: float = false;
 
 var camera_tilt: float;
 var camera_bob_time: float = 0.0;
@@ -115,6 +122,8 @@ func _process(delta):
 
 	debug_arrow_velocity.scale = Vector3(l, 1, l);
 	debug_arrow_velocity.rotation = Vector3(0, r, 0);
+	
+	
 	
 	#camera.rotation.x = clamp(camera.rotation.x, deg_to_rad(-90), deg_to_rad(90));
 	#camera.rotation.y = 0.0;
@@ -176,8 +185,6 @@ func _physics_process(delta: float) -> void:
 		var normal_angle = floor_normal.angle_to(Vector3.UP);
 		var can_trimp = normal_angle > deg_to_rad(TRIMP_SLOPE_MAX_ANGLE);
 		
-		var spd = Vector2(velocity.x, velocity.z).length();
-		
 		if can_trimp and spd > TRIMP_SPEED_THRESHOLD:
 			var slope_dir = (Vector3.UP - floor_normal).normalized();
 			var trimp_force = velocity.length() * TRIMP_FORCE_MULTIPLIER;
@@ -196,6 +203,16 @@ func _physics_process(delta: float) -> void:
 	tilt_camera(input_dir);
 	
 	look();
+	
+	var pos = position + Vector3(0.0, -0.85, 0.0);
+	DebugDraw3D.draw_line(pos, pos + Vector3(velocity.x, 0.0, velocity.z), Color(1.0, 0.0, 1.0));
+	DebugDraw3D.draw_line(pos, pos + Vector3(velocity.x, 0.0, 0.0), Color(1.0, 0.0, 0.0));
+	DebugDraw3D.draw_line(pos, pos + Vector3(0.0, 0.0, velocity.z), Color(0.0, 0.0, 1.0));
+	
+	
+	#DebugDraw3D.draw_cylinder_ab(pos, pos + Vector3(0.0, 0.01, 0.0), Vector2(velocity.x, velocity.y).length(), Color(0.0, 0.0, 1.0));
+	
+
 
 func grounded_state():
 	
@@ -298,7 +315,9 @@ func movement(input_dir: Vector2, delta: float) -> void:
 
 	var direction = input_dir.rotated(-head.rotation.y);
 	direction = Vector3(direction.x, 0.0, direction.y);
-	#
+	
+	spd = Vector2(velocity.x, velocity.z).length();
+	
 	#var wish_dir_speed = velocity.dot(wish_dir);
 	#var add_speed = BASE_SPEED - wish_dir_speed;
 	#if add_speed > 0.0:
@@ -312,12 +331,20 @@ func movement(input_dir: Vector2, delta: float) -> void:
 	#if velocity.length() > 0.0:
 		#new_speed /= velocity.length();
 	#velocity *= new_speed;
-	
+
+
 	if Input.is_action_just_pressed("sprint"):
-		if !is_dashing && dash_cooldown_active == false:
+		dash_buffer = dash_buffer_max;
+		
+	if dash_buffer > 0.0:
+		dash_buffer -= 1.0;
+		
+		if !is_dashing && !dash_cooldown_active:
 			is_dashing = true;
 			dash_cooldown_active = true;
+			dash_cooldown = 0.0;
 			dash_gravity_cancel = true;
+			can_longjump = true;
 	
 	if dash_gravity_cancel:
 		dash_gravity_cancel_time -= delta;
@@ -332,30 +359,45 @@ func movement(input_dir: Vector2, delta: float) -> void:
 			
 	
 	if dash_cooldown_active:
-		dash_cooldown -= delta;
-		if dash_cooldown <= 0.0:
+		dash_cooldown += delta;
+		if dash_cooldown >= dash_cooldown_base:
 			dash_cooldown = dash_cooldown_base;
 			dash_cooldown_active = false;
 	
+	#print("input_dir: %v" % input_dir)
+	print(-head.global_rotation.y)
+	
+	
 	if is_dashing:
-		velocity.x = (DASH_POWER * cos(-head.global_rotation.y - PI/2));
-		velocity.z = (DASH_POWER * sin(-head.global_rotation.y - PI/2));
+			
+		if input_dir == Vector2(0.0, 0.0):
+			velocity.x = (DASH_POWER * cos(-head.global_rotation.y - PI/2));
+			velocity.z = (DASH_POWER * sin(-head.global_rotation.y - PI/2));
+		else:
+			velocity.x = (DASH_POWER * direction.x);
+			velocity.z = (DASH_POWER * direction.z);
+		
 		
 		if dash_time > dash_time_max:
 			dash_time = 0.0;
 			is_dashing = false;
+			longjump_window_time = longjump_window_time_base;
 		else:
 			dash_time += delta;
+		
+	
+	if longjump_window_time <= 0.0:
+		longjump_window_time = 0.0;
+	else:
+		longjump_window_time -= delta;
+	
+	if longjump_window_time > 0.0\
+	&& longjump_window_time < longjump_window_time_base:
+		can_longjump = true;
+	else:
+		can_longjump = false;
 	
 	if direction:
-		
-		#if crouchjump_buffer > 0.0:
-			#velocity.x *= 1.25;
-			#velocity.z *= 1.25;
-		#elif crouchjump_buffer <= 0.0\
-		#&& is_crouched:
-			#velocity.x *= 0.25;
-			#velocity.z *= 0.25;
 
 		var vel: Vector3;
 		vel = accelerate(velocity, direction, delta);
@@ -370,6 +412,10 @@ func movement(input_dir: Vector2, delta: float) -> void:
 		velocity.z = lerp(velocity.z, 0.0, deccel);
 		
 		camera_bobbing_reset();
+	
+	var pos = position + Vector3(0.0, -0.85, 0.0);
+	#DebugDraw3D.draw_line(pos, pos + Vector3(cos(-head.global_rotation.y - PI/2), 0.0, sin(-head.global_rotation.y - PI/2)), Color(0.0, 1.0, 0.0));
+	DebugDraw3D.draw_line(pos, pos + Vector3(direction.x, 0.0, direction.z), Color(1.0, 1.0, 1.0));
 
 func accelerate(velocity: Vector3, move_direction: Vector3, delta: float) -> Vector3:
 	
@@ -380,7 +426,6 @@ func accelerate(velocity: Vector3, move_direction: Vector3, delta: float) -> Vec
 	
 	
 	return velocity + add_speed * move_direction;
-
 
 func clip_velocity(normal: Vector3, overbounce: float, _delta: float) -> void:
 	

@@ -71,5 +71,5 @@ func _process(delta):
 			+ "\n" + \
 			"accel: " + str(player.accel)\
 			+ "\n" + \
-			"deccel: " + str(player.deccel)\
+			"deccel: " + str(player.can_longjump)\
 			+ "\n"

@@ -1,16 +1,13 @@
-[gd_scene load_steps=9 format=4 uid="uid://ding7i6p7m1fi"]
+[gd_scene load_steps=6 format=4 uid="uid://byyfu1ih71f0q"]
 
-[ext_resource type="Texture2D" uid="uid://bg8i18iw4pxoa" path="res://Assets/Objects/_DEV/Walls/wall1x1_wall.png" id="1_y2cvt"]
-[ext_resource type="Script" uid="uid://bvx6lf5rp62m3" path="res://Assets/Scripts/Script_Wall.gd" id="2_c55jd"]
-[ext_resource type="PackedScene" uid="uid://du12rfq3bg2p6" path="res://Assets/Composition/Texture.tscn" id="3_1u2wk"]
-[ext_resource type="Texture2D" uid="uid://jts7wrvweol8" path="res://Assets/Objects/_DEV/Walls/wall.png" id="4_e6bol"]
+[ext_resource type="Texture2D" uid="uid://cqexgxwq7yv01" path="res://Assets/Objects/_DEV/Walls/wall_gray_1x1_wall_gray.png" id="1_0na5i"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pg3qu"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3qlgp"]
 resource_name = "Material"
 cull_mode = 2
-albedo_texture = ExtResource("1_y2cvt")
+albedo_texture = ExtResource("1_0na5i")
 
-[sub_resource type="ArrayMesh" id="ArrayMesh_fnfg6"]
+[sub_resource type="ArrayMesh" id="ArrayMesh_6tbtu"]
 _surfaces = [{
 "aabb": AABB(-0.5, -0.5, -0.5, 1, 1, 1),
 "format": 34896613377,
@@ -24,15 +21,15 @@ _surfaces = [{
 }]
 blend_shape_mode = 0
 
-[sub_resource type="ArrayMesh" id="ArrayMesh_wfjuc"]
-resource_name = "wall1x1_Cube"
+[sub_resource type="ArrayMesh" id="ArrayMesh_en46g"]
+resource_name = "wall_gray_1x1_Cube"
 _surfaces = [{
 "aabb": AABB(-0.5, -0.5, -0.5, 1, 1, 1),
 "attribute_data": PackedByteArray("//////9//3////9//3//////////f/9/////f/9//////////3//f////3//f/////////9//3////9//3//////////f/9/////f/9//////////3//f////3//f///"),
 "format": 34896613399,
 "index_count": 36,
 "index_data": PackedByteArray("AAABAAIAAAADAAEABAAFAAYABAAHAAUACAAJAAoACAALAAkADAANAA4ADAAPAA0AEAARABIAEAATABEAFAAVABYAFAAXABUA"),
-"material": SubResource("StandardMaterial3D_pg3qu"),
+"material": SubResource("StandardMaterial3D_3qlgp"),
 "name": "Material",
 "primitive": 3,
 "uv_scale": Vector4(2, 2, 0, 0),
@@ -40,20 +37,16 @@ _surfaces = [{
 "vertex_data": PackedByteArray("/////wAAVNUAAP////9U1QAA//8AAFTV////////VNX//wAA//8AgAAA/////wCA////////AIAAAAAA//8AgAAAAAD///+/AAD//wAA/78AAP//////vwAAAAAAAP+/AAAAAAAAVNX//wAA//9U1f//AAAAAFTVAAAAAP//VNX//wAAAAD/v/////////+//////wAA/7///wAA////vwAAAAAAAP///////wAA//8AAP//AAD/////AAAAAP//VNWqKlTVqipU1aoqVNWqKv9/////f////3////9/////f////3////9/////f///VFVUVVRVVFVUVVRVVFVUVf9/AAD/fwAA/38AAP9/AAD/f////3////9/////f///")
 }]
 blend_shape_mode = 0
-shadow_mesh = SubResource("ArrayMesh_fnfg6")
+shadow_mesh = SubResource("ArrayMesh_6tbtu")
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_jp2mi"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_u2r7k"]
 
-[node name="Cube" type="MeshInstance3D"]
-mesh = SubResource("ArrayMesh_wfjuc")
+[node name="WallGray" type="MeshInstance3D"]
+mesh = SubResource("ArrayMesh_en46g")
 skeleton = NodePath("")
 
 [node name="Wall" type="StaticBody3D" parent="." groups=["wall"]]
 collision_mask = 7
-script = ExtResource("2_c55jd")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Wall"]
-shape = SubResource("BoxShape3D_jp2mi")
-
-[node name="Texture" parent="Wall" instance=ExtResource("3_1u2wk")]
-texture = ExtResource("4_e6bol")
+shape = SubResource("BoxShape3D_u2r7k")

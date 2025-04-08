@@ -163,6 +163,9 @@ shape = SubResource("CylinderShape3D_er805")
 shape = SubResource("CylinderShape3D_3xvwb")
 target_position = Vector3(0, 0.867, 0)
 
+[node name="Marker3D" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.841632, 0)
+
 [connection signal="timeout" from="Head/Camera/WeaponAttach/ViewmodelControl/WeaponControl/ChangeWeaponTimer" to="Head/Camera/WeaponAttach/ViewmodelControl/WeaponControl" method="_on_change_weapon_timer_timeout"]
 [connection signal="body_entered" from="StepUp/AreaStepUpBottom" to="." method="_on_area_step_up_bottom_body_entered"]
 [connection signal="body_exited" from="StepUp/AreaStepUpBottom" to="." method="_on_area_step_up_bottom_body_exited"]
