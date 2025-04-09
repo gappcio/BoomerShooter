@@ -6,6 +6,7 @@ class_name HUD;
 @onready var canvas_layer: CanvasLayer = $CanvasLayer
 @onready var label: Label = $CanvasLayer/Label
 @onready var dash_bar: ProgressBar = $DashBar
+@onready var health_bar: ProgressBar = $HealthBar
 
 func _ready():
 	player = get_tree().get_first_node_in_group("player");
@@ -14,6 +15,7 @@ func _ready():
 func _process(delta):
 
 	if is_instance_valid(player):
+		health_bar.value = player.health.health;
 		dash_bar.value = player.dash_cooldown / player.dash_cooldown_base * 100.0;
 	
 	#var viewmodel = player.get_node("Head/Camera/WeaponAttach/ViewmodelControl/Weapon/VIEWMODEL_Pistol");
@@ -71,5 +73,7 @@ func _process(delta):
 			+ "\n" + \
 			"accel: " + str(player.accel)\
 			+ "\n" + \
-			"deccel: " + str(player.can_longjump)\
+			"deccel: " + str(player.deccel)\
+			+ "\n" + \
+			"input_dir: " + str(player.input_dir)\
 			+ "\n"

@@ -1,0 +1,74 @@
+[gd_scene load_steps=12 format=4 uid="uid://drlnk7obsai4o"]
+
+[ext_resource type="Texture2D" uid="uid://dq737aghlpfaf" path="res://Assets/Objects/_DEV/Walls/hurt.png" id="1_uy4yk"]
+[ext_resource type="Script" uid="uid://dvwrb6m31n8pq" path="res://Assets/Objects/_DEV/Walls/hurt.gd" id="2_2il3b"]
+[ext_resource type="Script" uid="uid://bvx6lf5rp62m3" path="res://Assets/Scripts/Script_Wall.gd" id="2_iuxbh"]
+[ext_resource type="PackedScene" uid="uid://du12rfq3bg2p6" path="res://Assets/Composition/Texture.tscn" id="3_2il3b"]
+[ext_resource type="PackedScene" uid="uid://cch1gmlni7xgu" path="res://Assets/Composition/ComponentHitbox.tscn" id="5_2rdfs"]
+[ext_resource type="PackedScene" uid="uid://b2pmo5llggqsa" path="res://Assets/Composition/ComponentHealth.tscn" id="6_ugde3"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pg3qu"]
+resource_name = "Material"
+cull_mode = 2
+albedo_texture = ExtResource("1_uy4yk")
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_fnfg6"]
+_surfaces = [{
+"aabb": AABB(-0.5, -0.5, -0.5, 1, 1, 1),
+"format": 34896613377,
+"index_count": 36,
+"index_data": PackedByteArray("AAABAAIAAwACAAEAAAAEAAEAAwAFAAIABQAAAAIABgAEAAAABQAGAAAABwABAAQABwADAAEABgAHAAQABQADAAcABQAHAAYA"),
+"name": "Material",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 8,
+"vertex_data": PackedByteArray("/////wAAAAAAAP////8AAAAA//8AAAAAAAAAAP//AAD///////8AAAAAAAAAAAAA//8AAAAAAAD//wAA//8AAA==")
+}]
+blend_shape_mode = 0
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_wfjuc"]
+resource_name = "wall1x1_Cube"
+_surfaces = [{
+"aabb": AABB(-0.5, -0.5, -0.5, 1, 1, 1),
+"attribute_data": PackedByteArray("//////9//3////9//3//////////f/9/////f/9//////////3//f////3//f/////////9//3////9//3//////////f/9/////f/9//////////3//f////3//f///"),
+"format": 34896613399,
+"index_count": 36,
+"index_data": PackedByteArray("AAABAAIAAAADAAEABAAFAAYABAAHAAUACAAJAAoACAALAAkADAANAA4ADAAPAA0AEAARABIAEAATABEAFAAVABYAFAAXABUA"),
+"material": SubResource("StandardMaterial3D_pg3qu"),
+"name": "Material",
+"primitive": 3,
+"uv_scale": Vector4(2, 2, 0, 0),
+"vertex_count": 24,
+"vertex_data": PackedByteArray("/////wAAVNUAAP////9U1QAA//8AAFTV////////VNX//wAA//8AgAAA/////wCA////////AIAAAAAA//8AgAAAAAD///+/AAD//wAA/78AAP//////vwAAAAAAAP+/AAAAAAAAVNX//wAA//9U1f//AAAAAFTVAAAAAP//VNX//wAAAAD/v/////////+//////wAA/7///wAA////vwAAAAAAAP///////wAA//8AAP//AAD/////AAAAAP//VNWqKlTVqipU1aoqVNWqKv9/////f////3////9/////f////3////9/////f///VFVUVVRVVFVUVVRVVFVUVf9/AAD/fwAA/38AAP9/AAD/f////3////9/////f///")
+}]
+blend_shape_mode = 0
+shadow_mesh = SubResource("ArrayMesh_fnfg6")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_jp2mi"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_q1o18"]
+size = Vector3(1.01, 1.01, 1.01)
+
+[node name="Hurt" type="MeshInstance3D" groups=["hurtarea"]]
+mesh = SubResource("ArrayMesh_wfjuc")
+skeleton = NodePath("")
+script = ExtResource("2_2il3b")
+
+[node name="Wall" type="StaticBody3D" parent="." groups=["wall"]]
+collision_mask = 7
+script = ExtResource("2_iuxbh")
+
+[node name="Texture" parent="Wall" instance=ExtResource("3_2il3b")]
+texture = ExtResource("1_uy4yk")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="Wall"]
+shape = SubResource("BoxShape3D_jp2mi")
+
+[node name="ComponentHitbox" parent="." node_paths=PackedStringArray("health") instance=ExtResource("5_2rdfs")]
+health = NodePath("../ComponentHealth")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ComponentHitbox"]
+shape = SubResource("BoxShape3D_q1o18")
+
+[node name="ComponentHealth" parent="." instance=ExtResource("6_ugde3")]
+max_health = 1e+07

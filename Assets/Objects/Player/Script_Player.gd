@@ -12,6 +12,10 @@ class_name Player
 @onready var climb_area_top: Area3D = $Climb/ClimbAreaTop
 @onready var climb_area_bottom: Area3D = $Climb/ClimbAreaBottom
 
+@onready var hitbox: Area3D = $ComponentHitbox
+@onready var health: Node = $ComponentHealth
+
+
 const BASE_SPEED: float = 5.0;
 const JUMP_VELOCITY: float = 4.75;
 var spd: float = 0.0;
@@ -20,11 +24,11 @@ const MAX_SPEED: float = 15.0;
 const MAX_ACCEL: float = 2 * MAX_SPEED;
 
 const ACCEL_GROUND: float = 0.25;
-const ACCEL_AIR: float = 0.1;
+const ACCEL_AIR: float = 0.04;
 const DECCEL_GROUND: float = 0.25;
 const DECCEL_AIR: float = 0.1;
 
-const DASH_POWER: float = 30.0;
+const DASH_POWER: float = 20.0;
 
 const TRIMP_SPEED_THRESHOLD = 15.0;
 const TRIMP_FORCE_MULTIPLIER = 1.0;
@@ -77,7 +81,7 @@ var dash_cooldown_base: float = 0.5;
 var dash_cooldown: float = dash_cooldown_base;
 var dash_cooldown_active: bool = false;
 
-var longjump_window_time_base: float = 0.1;
+var longjump_window_time_base: float = 0.3;
 var longjump_window_time: float = longjump_window_time_base;
 var can_longjump: float = false;
 
@@ -107,6 +111,7 @@ var wish_dir;
 func _ready():
 	Engine.time_scale = 1.0;
 	camera.fov = 90;
+	health.health_init();
 	
 func _process(delta):
 	
@@ -115,6 +120,8 @@ func _process(delta):
 			Engine.time_scale = 0.5;
 		else:
 			Engine.time_scale = 1.0;
+	
+	
 	
 	var vec = Vector2(velocity.z, velocity.x);
 	var l = vec.length();
@@ -133,6 +140,9 @@ func _physics_process(delta: float) -> void:
 	
 	input_dir = Input.get_vector("left", "right", "forward", "back").normalized();
 	wish_dir = global_transform.basis * Vector3(input_dir.x, 0.0, input_dir.y);
+	
+	if can_longjump && !grounded:
+		input_dir = Vector2(0.0, 0.0);
 	
 	is_crouched = Input.is_action_pressed("crouch");
 	is_sprinting = Input.is_action_pressed("sprint");
@@ -161,7 +171,6 @@ func _physics_process(delta: float) -> void:
 			head.position.y = lerp(head.position.y, 0.6, 0.3);
 			weapon_viewmodel_node.position.y = lerp(weapon_viewmodel_node.position.y, 0.0, 0.1);
 			crouchjump_buffer = 0.0;
-		
 		
 		
 	#if grounded:
@@ -240,18 +249,22 @@ func handle_jumping(delta: float):
 		# we are falling!!!
 		gravity = lerp(gravity, GRAVITY_BASE * 3, .25);
 		
+	var vel: Vector2 = Vector2(velocity.x, velocity.z);
+	var rate = vel.length() / MAX_SPEED * .15;
+		
 	if grounded:
 		accel = ACCEL_GROUND;
 		deccel = DECCEL_GROUND;
+		
 		is_jumping = false;
 		is_falling = false;
 		jump_trigger = false;
 	else:
 		accel = ACCEL_AIR;
-		
-		var vel: Vector2 = Vector2(velocity.x, velocity.z);
-		var rate = vel.length() / MAX_SPEED * .35;
-		deccel = DECCEL_AIR * rate;
+		if !can_longjump:
+			deccel = DECCEL_AIR * rate;
+		else:
+			deccel = 0.0;
 
 		if !is_dashing:
 			velocity.y -= gravity * delta;
@@ -365,7 +378,7 @@ func movement(input_dir: Vector2, delta: float) -> void:
 			dash_cooldown_active = false;
 	
 	#print("input_dir: %v" % input_dir)
-	print(-head.global_rotation.y)
+	#print(-head.global_rotation.y)
 	
 	
 	if is_dashing:
@@ -506,6 +519,11 @@ func camera_shake():
 		tween.tween_property(camera, "fov", fov_change, time).as_relative();
 		tween.chain().tween_property(camera, "fov", -fov_change, time).as_relative();
 
+func hurt(collision_point, collision_normal):
+	pass
+
+
+
 func _on_area_step_up_bottom_body_entered(body):
 	pass
 	
@@ -550,3 +568,17 @@ func _on_climb_area_bottom_area_entered(area: Area3D) -> void:
 func _on_climb_area_bottom_area_exited(area: Area3D) -> void:
 	if area.is_in_group("climbable"):
 		can_climb_bottom = false;
+
+
+func _on_component_hitbox_been_hit(body) -> void:
+	health.hurt(1.0);
+
+func _on_component_hitbox_area_entered(area: Area3D) -> void:
+	
+	var body = area.get_parent();
+	if body != null && body.is_in_group("hurtarea"):
+		health.hurt(body.damage);
+
+
+func _on_component_hitbox_area_exited(area: Area3D) -> void:
+	pass

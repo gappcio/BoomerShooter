@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dr15k6itwdmuy"
-path.s3tc="res://.godot/imported/wall_gray.png-b1b8e0262d7bc3ec510615ca44d3513d.s3tc.ctex"
+uid="uid://dq737aghlpfaf"
+path.s3tc="res://.godot/imported/hurt.png-bca24cdcb9cd005059fd331d739c72eb.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://Assets/Objects/_DEV/Walls/wall_gray.png"
-dest_files=["res://.godot/imported/wall_gray.png-b1b8e0262d7bc3ec510615ca44d3513d.s3tc.ctex"]
+source_file="res://Assets/Objects/_DEV/Walls/hurt.png"
+dest_files=["res://.godot/imported/hurt.png-bca24cdcb9cd005059fd331d739c72eb.s3tc.ctex"]
 
 [params]
 
@@ -32,4 +32,4 @@ process/normal_map_invert_y=false
 process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
-detect_3d/compress_to=1
+detect_3d/compress_to=0

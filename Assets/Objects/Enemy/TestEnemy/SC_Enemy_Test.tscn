@@ -54,7 +54,7 @@ animation = &"idle"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite"]
 libraries = {
-"": SubResource("AnimationLibrary_yes4l")
+&"": SubResource("AnimationLibrary_yes4l")
 }
 
 [node name="ComponentHealth" parent="." instance=ExtResource("3_qb61q")]
