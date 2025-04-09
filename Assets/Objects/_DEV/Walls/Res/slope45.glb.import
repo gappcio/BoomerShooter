@@ -4,12 +4,12 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://byyt2qtw4bb8h"
-path="res://.godot/imported/slope45.glb-35801f24a686e492caffb4e22b04ef36.scn"
+path="res://.godot/imported/slope45.glb-dc4845612d6785dec1d8c88a68b0071b.scn"
 
 [deps]
 
-source_file="res://Assets/Objects/_DEV/Walls/slope45.glb"
-dest_files=["res://.godot/imported/slope45.glb-35801f24a686e492caffb4e22b04ef36.scn"]
+source_file="res://Assets/Objects/_DEV/Walls/Res/slope45.glb"
+dest_files=["res://.godot/imported/slope45.glb-dc4845612d6785dec1d8c88a68b0071b.scn"]
 
 [params]
 

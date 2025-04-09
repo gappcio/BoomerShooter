@@ -2,20 +2,18 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bg8i18iw4pxoa"
-path.s3tc="res://.godot/imported/wall1x1_wall.png-0888489b3922456ca8ede2647179cfb0.s3tc.ctex"
+uid="uid://cb7r1fnt5dtyi"
+path.s3tc="res://.godot/imported/slide.png-0fe0d385e074b6fb59153ecbb4d85883.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
-generator_parameters={
-"md5": "bf4ff3577a8d48553e2a5bf804164ff5"
-}
+generator_parameters={}
 
 [deps]
 
-source_file="res://Assets/Objects/_DEV/Walls/wall1x1_wall.png"
-dest_files=["res://.godot/imported/wall1x1_wall.png-0888489b3922456ca8ede2647179cfb0.s3tc.ctex"]
+source_file="res://Assets/Objects/Player/Viewmodels/Blender/textures/slide.png"
+dest_files=["res://.godot/imported/slide.png-0fe0d385e074b6fb59153ecbb4d85883.s3tc.ctex"]
 
 [params]
 

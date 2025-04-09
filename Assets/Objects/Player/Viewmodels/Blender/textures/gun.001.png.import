@@ -2,17 +2,18 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dr15k6itwdmuy"
-path.s3tc="res://.godot/imported/wall_gray.png-b1b8e0262d7bc3ec510615ca44d3513d.s3tc.ctex"
+uid="uid://ba3ua5a3shk18"
+path.s3tc="res://.godot/imported/gun.001.png-736529ee1e3947ae22c5b15392be4757.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
+generator_parameters={}
 
 [deps]
 
-source_file="res://Assets/Objects/_DEV/Walls/wall_gray.png"
-dest_files=["res://.godot/imported/wall_gray.png-b1b8e0262d7bc3ec510615ca44d3513d.s3tc.ctex"]
+source_file="res://Assets/Objects/Player/Viewmodels/Blender/textures/gun.001.png"
+dest_files=["res://.godot/imported/gun.001.png-736529ee1e3947ae22c5b15392be4757.s3tc.ctex"]
 
 [params]
 
@@ -32,4 +33,4 @@ process/normal_map_invert_y=false
 process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
-detect_3d/compress_to=1
+detect_3d/compress_to=0

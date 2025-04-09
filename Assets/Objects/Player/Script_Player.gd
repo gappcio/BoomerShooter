@@ -24,14 +24,14 @@ const MAX_SPEED: float = 15.0;
 const MAX_ACCEL: float = 2 * MAX_SPEED;
 
 const ACCEL_GROUND: float = 0.25;
-const ACCEL_AIR: float = 0.04;
+const ACCEL_AIR: float = 0.1;
 const DECCEL_GROUND: float = 0.25;
-const DECCEL_AIR: float = 0.1;
+const DECCEL_AIR: float = 0.25;
 
-const DASH_POWER: float = 20.0;
+const DASH_POWER: float = 25.0;
 
 const TRIMP_SPEED_THRESHOLD = 15.0;
-const TRIMP_FORCE_MULTIPLIER = 1.0;
+const TRIMP_FORCE_MULTIPLIER = 1.2;
 const TRIMP_SLOPE_MAX_ANGLE = 40.0;
 
 var GRAVITY_BASE: float = ProjectSettings.get_setting("physics/3d/default_gravity");
@@ -186,9 +186,6 @@ func _physics_process(delta: float) -> void:
 	
 	#region trimping test
 	
-	#if dash_gravity_cancel:
-		#gravity = 0.0;
-	
 	if grounded:
 		var floor_normal = get_floor_normal();
 		var normal_angle = floor_normal.angle_to(Vector3.UP);
@@ -199,8 +196,8 @@ func _physics_process(delta: float) -> void:
 			var trimp_force = velocity.length() * TRIMP_FORCE_MULTIPLIER;
 			var launch_vector = slope_dir * trimp_force;
 			
-			velocity.x *= 1.1;
-			velocity.z *= 1.1;
+			#velocity.x *= 1.2;
+			#velocity.z *= 1.2;
 			
 			velocity.y = 0.0;
 			velocity.y += launch_vector.y
@@ -251,7 +248,10 @@ func handle_jumping(delta: float):
 		
 	var vel: Vector2 = Vector2(velocity.x, velocity.z);
 	var rate = vel.length() / MAX_SPEED * .15;
-		
+	
+	if vel.length() > 12.0:
+		rate = 0.08;
+
 	if grounded:
 		accel = ACCEL_GROUND;
 		deccel = DECCEL_GROUND;
@@ -569,16 +569,13 @@ func _on_climb_area_bottom_area_exited(area: Area3D) -> void:
 	if area.is_in_group("climbable"):
 		can_climb_bottom = false;
 
-
-func _on_component_hitbox_been_hit(body) -> void:
-	health.hurt(1.0);
-
 func _on_component_hitbox_area_entered(area: Area3D) -> void:
-	
 	var body = area.get_parent();
 	if body != null && body.is_in_group("hurtarea"):
-		health.hurt(body.damage);
+		health.hurtflux(body.damage);
 
 
 func _on_component_hitbox_area_exited(area: Area3D) -> void:
-	pass
+	var body = area.get_parent();
+	if body != null && body.is_in_group("hurtarea"):
+		health.flux_end();

@@ -1,8 +1,8 @@
 [gd_scene load_steps=12 format=4 uid="uid://d4i1rpgo5kqec"]
 
 [ext_resource type="PackedScene" uid="uid://ding7i6p7m1fi" path="res://Assets/Objects/_DEV/Walls/Wall.tscn" id="1_7767n"]
-[ext_resource type="Texture2D" uid="uid://cplkl52bsmexf" path="res://Assets/Objects/_DEV/Walls/slope45_wall.png" id="2_gldu8"]
-[ext_resource type="Texture2D" uid="uid://cqexgxwq7yv01" path="res://Assets/Objects/_DEV/Walls/wall_gray_1x1_wall_gray.png" id="3_gldu8"]
+[ext_resource type="Texture2D" uid="uid://cplkl52bsmexf" path="res://Assets/Objects/_DEV/Walls/Res/slope45_wall.png" id="2_gldu8"]
+[ext_resource type="Texture2D" uid="uid://cqexgxwq7yv01" path="res://Assets/Objects/_DEV/Walls/Res/wall_gray_1x1_wall_gray.png" id="3_gldu8"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gxcq2"]
 resource_name = "Material"

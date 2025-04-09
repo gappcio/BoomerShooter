@@ -32,7 +32,7 @@
 [ext_resource type="PackedScene" uid="uid://du12rfq3bg2p6" path="res://Assets/Composition/Texture.tscn" id="23_sep45"]
 [ext_resource type="Texture2D" uid="uid://d1exu8ly7vt8k" path="res://textures/new/asphalt_lines.png" id="24_43hds"]
 [ext_resource type="PackedScene" uid="uid://bdcrrhdm6vkv6" path="res://Assets/Objects/World/Vegetation/PineTree/SC_PineTree1.tscn" id="29_1m1fx"]
-[ext_resource type="MeshLibrary" uid="uid://bfpi54nhciyt8" path="res://Assets/Objects/_DEV/Walls/mesh_lib.tres" id="30_e41io"]
+[ext_resource type="MeshLibrary" uid="uid://bfpi54nhciyt8" path="res://Assets/Objects/_DEV/Walls/Res/mesh_lib.tres" id="30_e41io"]
 [ext_resource type="PackedScene" uid="uid://p6w3l25xcjdh" path="res://Assets/Objects/Enemy/TestEnemy/SC_Enemy_Test.tscn" id="32_bx4fq"]
 [ext_resource type="PackedScene" uid="uid://dahqh5iltf71w" path="res://Assets/Objects/World/Vegetation/Grass/Grass1.tscn" id="33_l85pa"]
 [ext_resource type="PackedScene" uid="uid://6blvw1urbt6p" path="res://Assets/Objects/World/Vegetation/Fern/Fern1.tscn" id="34_pru3i"]

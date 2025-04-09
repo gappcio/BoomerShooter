@@ -1,7 +1,7 @@
 [gd_scene load_steps=12 format=4 uid="uid://drlnk7obsai4o"]
 
-[ext_resource type="Texture2D" uid="uid://dq737aghlpfaf" path="res://Assets/Objects/_DEV/Walls/hurt.png" id="1_uy4yk"]
-[ext_resource type="Script" uid="uid://dvwrb6m31n8pq" path="res://Assets/Objects/_DEV/Walls/hurt.gd" id="2_2il3b"]
+[ext_resource type="Texture2D" uid="uid://dq737aghlpfaf" path="res://Assets/Objects/_DEV/Walls/Res/hurt.png" id="1_uy4yk"]
+[ext_resource type="Script" uid="uid://dvwrb6m31n8pq" path="res://Assets/Objects/_DEV/Walls/Res/hurt.gd" id="2_2il3b"]
 [ext_resource type="Script" uid="uid://bvx6lf5rp62m3" path="res://Assets/Scripts/Script_Wall.gd" id="2_iuxbh"]
 [ext_resource type="PackedScene" uid="uid://du12rfq3bg2p6" path="res://Assets/Composition/Texture.tscn" id="3_2il3b"]
 [ext_resource type="PackedScene" uid="uid://cch1gmlni7xgu" path="res://Assets/Composition/ComponentHitbox.tscn" id="5_2rdfs"]
@@ -53,6 +53,7 @@ size = Vector3(1.01, 1.01, 1.01)
 mesh = SubResource("ArrayMesh_wfjuc")
 skeleton = NodePath("")
 script = ExtResource("2_2il3b")
+damage = 20.0
 
 [node name="Wall" type="StaticBody3D" parent="." groups=["wall"]]
 collision_mask = 7

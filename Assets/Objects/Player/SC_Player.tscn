@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://c0jd3cujvbmlc"]
+[gd_scene load_steps=22 format=3 uid="uid://c0jd3cujvbmlc"]
 
 [ext_resource type="Script" uid="uid://rrxtl6hrf7dr" path="res://Assets/Objects/Player/Script_Player.gd" id="1_5ffuh"]
 [ext_resource type="PackedScene" uid="uid://1hxrf7rm1jbt" path="res://Assets/Objects/Player/SC_Camera.tscn" id="1_xqu0b"]
@@ -52,6 +52,9 @@ height = 0.364395
 height = 0.025
 radius = 0.4
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_er805"]
+size = Vector3(0.8, 1.25177, 0.503516)
+
 [node name="Player" type="CharacterBody3D" groups=["player"]]
 collision_layer = 2
 collision_mask = 5
@@ -76,6 +79,7 @@ shape = SubResource("BoxShape3D_7iqpk")
 
 [node name="ComponentHealth" parent="." instance=ExtResource("3_vwhjx")]
 max_health = 100.0
+invis_seconds = 1.0
 
 [node name="Head" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
@@ -112,6 +116,7 @@ collide_with_areas = true
 debug_shape_custom_color = Color(1, 0, 0, 1)
 
 [node name="FistsArea" type="Area3D" parent="Head/Camera"]
+visible = false
 collision_layer = 2
 collision_mask = 5
 monitoring = false
@@ -161,6 +166,7 @@ collision_layer = 0
 shape = SubResource("CylinderShape3D_hxa4n")
 
 [node name="Climb" type="Node3D" parent="."]
+visible = false
 
 [node name="ClimbAreaTop" type="Area3D" parent="Climb"]
 
@@ -175,15 +181,20 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.687645, 0)
 shape = SubResource("CylinderShape3D_er805")
 
 [node name="CeilingDetection" type="ShapeCast3D" parent="."]
+visible = false
 shape = SubResource("CylinderShape3D_3xvwb")
 target_position = Vector3(0, 0.867, 0)
 
-[node name="Marker3D" type="Marker3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.841632, 0)
+[node name="Vault" type="Node3D" parent="."]
+
+[node name="AreaVaultBottom" type="Area3D" parent="Vault"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Vault/AreaVaultBottom"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.249786, -0.253916)
+shape = SubResource("BoxShape3D_er805")
 
 [connection signal="area_entered" from="ComponentHitbox" to="." method="_on_component_hitbox_area_entered"]
 [connection signal="area_exited" from="ComponentHitbox" to="." method="_on_component_hitbox_area_exited"]
-[connection signal="been_hit" from="ComponentHitbox" to="." method="_on_component_hitbox_been_hit"]
 [connection signal="timeout" from="Head/Camera/WeaponAttach/ViewmodelControl/WeaponControl/ChangeWeaponTimer" to="Head/Camera/WeaponAttach/ViewmodelControl/WeaponControl" method="_on_change_weapon_timer_timeout"]
 [connection signal="body_entered" from="StepUp/AreaStepUpBottom" to="." method="_on_area_step_up_bottom_body_entered"]
 [connection signal="body_exited" from="StepUp/AreaStepUpBottom" to="." method="_on_area_step_up_bottom_body_exited"]

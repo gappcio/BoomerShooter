@@ -2,20 +2,17 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cplkl52bsmexf"
-path.s3tc="res://.godot/imported/slope45_wall.png-8bb442b96b3395e97d2aaf9f89bb6cfd.s3tc.ctex"
+uid="uid://dq737aghlpfaf"
+path.s3tc="res://.godot/imported/hurt.png-b05c5b949c3db1e35aa093751c9b1dbd.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
-generator_parameters={
-"md5": "bf4ff3577a8d48553e2a5bf804164ff5"
-}
 
 [deps]
 
-source_file="res://Assets/Objects/_DEV/Walls/slope45_wall.png"
-dest_files=["res://.godot/imported/slope45_wall.png-8bb442b96b3395e97d2aaf9f89bb6cfd.s3tc.ctex"]
+source_file="res://Assets/Objects/_DEV/Walls/Res/hurt.png"
+dest_files=["res://.godot/imported/hurt.png-b05c5b949c3db1e35aa093751c9b1dbd.s3tc.ctex"]
 
 [params]
 

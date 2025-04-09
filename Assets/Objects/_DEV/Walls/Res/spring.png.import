@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://jts7wrvweol8"
-path.s3tc="res://.godot/imported/wall.png-356fcacd8f0c92c13691a3c4cbef69d4.s3tc.ctex"
+uid="uid://bhso4dnbrily0"
+path.s3tc="res://.godot/imported/spring.png-f913b1acf4f41f8f61e0278c9ebc5fd1.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://Assets/Objects/_DEV/Walls/wall.png"
-dest_files=["res://.godot/imported/wall.png-356fcacd8f0c92c13691a3c4cbef69d4.s3tc.ctex"]
+source_file="res://Assets/Objects/_DEV/Walls/Res/spring.png"
+dest_files=["res://.godot/imported/spring.png-f913b1acf4f41f8f61e0278c9ebc5fd1.s3tc.ctex"]
 
 [params]
 
@@ -22,7 +22,7 @@ compress/lossy_quality=0.7
 compress/hdr_compression=1
 compress/normal_map=0
 compress/channel_pack=0
-mipmaps/generate=true
+mipmaps/generate=false
 mipmaps/limit=-1
 roughness/mode=0
 roughness/src_normal=""
