@@ -15,9 +15,16 @@ class_name Player
 @onready var hitbox: Area3D = $ComponentHitbox
 @onready var health: Node = $ComponentHealth
 
+@onready var vault_node: Node3D = $Vault
+@onready var vault_check: Area3D = $Vault/VaultCheck
+@onready var vault_raycast: RayCast3D = $Vault/VaultRaycast
+@onready var vault_raycast_top: RayCast3D = $Vault/VaultRaycastTop
+
+var visual_helper = preload("res://Assets/Objects/Player/VisualHelper.tscn");
+var player_visual_helper = preload("res://Assets/Objects/Player/VisualHelperPlayer.tscn");
 
 const BASE_SPEED: float = 5.0;
-const JUMP_VELOCITY: float = 4.75;
+const JUMP_VELOCITY: float = 6.5;
 var spd: float = 0.0;
 
 const MAX_SPEED: float = 15.0;
@@ -28,9 +35,9 @@ const ACCEL_AIR: float = 0.1;
 const DECCEL_GROUND: float = 0.25;
 const DECCEL_AIR: float = 0.25;
 
-const DASH_POWER: float = 25.0;
+const DASH_POWER: float = 20.0;
 
-const TRIMP_SPEED_THRESHOLD = 15.0;
+const TRIMP_SPEED_THRESHOLD = 14.0;
 const TRIMP_FORCE_MULTIPLIER = 1.2;
 const TRIMP_SLOPE_MAX_ANGLE = 40.0;
 
@@ -64,7 +71,7 @@ var jump_time: float = 0.0;
 var jump_time_max: float = 100.0;
 
 var dash_time: float = 0.0;
-var dash_time_max: float = 0.025;
+var dash_time_max: float = 0.25;
 var is_dashing: bool = false;
 
 var dash_buffer_max: float = 5.0;
@@ -105,6 +112,12 @@ var crouchjump_buffer: float = 0.0;
 var can_climb_top: bool = false;
 var can_climb_bottom: bool = false;
 
+var vault_check_colliding: bool = false;
+var vault_body;
+
+var vault_visual_helper = [];
+
+var is_vaulting: bool = false;
 
 var wish_dir;
 
@@ -112,6 +125,7 @@ func _ready():
 	Engine.time_scale = 1.0;
 	camera.fov = 90;
 	health.health_init();
+	vault_visual_helper.resize(100);
 	
 func _process(delta):
 	
@@ -141,8 +155,6 @@ func _physics_process(delta: float) -> void:
 	input_dir = Input.get_vector("left", "right", "forward", "back").normalized();
 	wish_dir = global_transform.basis * Vector3(input_dir.x, 0.0, input_dir.y);
 	
-	if can_longjump && !grounded:
-		input_dir = Vector2(0.0, 0.0);
 	
 	is_crouched = Input.is_action_pressed("crouch");
 	is_sprinting = Input.is_action_pressed("sprint");
@@ -199,10 +211,12 @@ func _physics_process(delta: float) -> void:
 			#velocity.x *= 1.2;
 			#velocity.z *= 1.2;
 			
-			velocity.y = 0.0;
-			velocity.y += launch_vector.y
+			#velocity.y = 0.0;
+			velocity.y = launch_vector.y
 
 	#endregion
+	
+	vault();
 	
 	move_and_slide();
 	
@@ -234,12 +248,12 @@ func handle_jumping(delta: float):
 	if !is_falling:
 		if velocity.y < 2.0:
 			# slow down during peak
-			gravity = lerp(gravity, GRAVITY_BASE, .25);
+			gravity = lerp(gravity, GRAVITY_BASE * 1.25, .25);
 		else:
 			# we are moving upward
 			var vel: Vector2 = Vector2(velocity.x, velocity.z);
 			if vel.length() >= TRIMP_SPEED_THRESHOLD:
-				gravity = lerp(gravity, GRAVITY_BASE * 0.75, .25);
+				gravity = lerp(gravity, GRAVITY_BASE, .25);
 			else:
 				gravity = GRAVITY_BASE * 1.5;
 	else:
@@ -261,13 +275,12 @@ func handle_jumping(delta: float):
 		jump_trigger = false;
 	else:
 		accel = ACCEL_AIR;
-		if !can_longjump:
-			deccel = DECCEL_AIR * rate;
+		
+		if is_dashing:
+			deccel = DECCEL_AIR;
 		else:
-			deccel = 0.0;
-
-		if !is_dashing:
 			velocity.y -= gravity * delta;
+			deccel = DECCEL_AIR * rate;
 	
 	if !jump_trigger:
 		jump_force = JUMP_VELOCITY * ((abs(velocity.x) * .0015) + 1);
@@ -487,6 +500,50 @@ func tilt_camera(input_dir):
 		
 	camera.rotation.z = camera_tilt;
 
+func vault() -> void:
+	
+	vault_node.rotation.y = head.rotation.y;
+	#vault_check.rotation.y = head.rotation.y;
+	#vault_raycast.rotation.y = head.rotation.y;
+	
+	var body = vault_raycast.get_collider();
+	
+	if vault_check_colliding:
+		if body == vault_body:
+			
+			if vault_raycast_top.get_collider() == null:
+				
+				is_vaulting = true;
+				# disable movement
+				
+				# play animation
+			
+				# at the end teleport (where???)
+				# enable movement
+				
+				
+				for i in range(0, 2, 0.25):
+					var offset = Vector3(0.0, i, 0.0);
+					test_move(transform, velocity + offset)
+			
+			if !is_instance_valid(vault_visual_helper[0]):
+				vault_visual_helper[0] = visual_helper.instantiate();
+				self.add_child(vault_visual_helper[0]);
+				vault_visual_helper[0].global_position = vault_raycast.get_collision_point();
+			else:
+				vault_visual_helper[0].global_position = vault_raycast.get_collision_point();
+				
+			if !is_instance_valid(vault_visual_helper[1]):
+				vault_visual_helper[1] = visual_helper.instantiate();
+				self.add_child(vault_visual_helper[1]);
+				vault_visual_helper[1].global_position = vault_raycast_top.get_collision_point();
+			else:
+				vault_visual_helper[1].global_position = vault_raycast_top.get_collision_point();
+				
+		else:
+			if is_instance_valid(vault_visual_helper[0]):
+				vault_visual_helper[0].queue_free();
+
 func camera_bobbing(velocity, delta) -> void:
 	
 	var velocity_2d: Vector2 = Vector2(velocity.x, velocity.z);
@@ -521,8 +578,6 @@ func camera_shake():
 
 func hurt(collision_point, collision_normal):
 	pass
-
-
 
 func _on_area_step_up_bottom_body_entered(body):
 	pass
@@ -574,8 +629,17 @@ func _on_component_hitbox_area_entered(area: Area3D) -> void:
 	if body != null && body.is_in_group("hurtarea"):
 		health.hurtflux(body.damage);
 
-
 func _on_component_hitbox_area_exited(area: Area3D) -> void:
 	var body = area.get_parent();
 	if body != null && body.is_in_group("hurtarea"):
 		health.flux_end();
+
+func _on_vault_check_body_entered(body: Node3D) -> void:
+	if body.is_in_group("wall"):
+		vault_check_colliding = true;
+		vault_body = body;
+
+func _on_vault_check_body_exited(body: Node3D) -> void:
+	if body.is_in_group("wall"):
+		vault_check_colliding = false;
+		vault_body = null;

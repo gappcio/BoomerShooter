@@ -11,12 +11,10 @@
 [ext_resource type="PackedScene" uid="uid://04d8wgl8ry6b" path="res://Assets/Objects/Player/Viewmodels/SC_Viewmodel_Fists.tscn" id="6_hbj6a"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_c23eb"]
-margin = 0.5
 radius = 0.4
 height = 1.75
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_vm6pp"]
-margin = 0.5
 radius = 0.4
 height = 0.95
 
@@ -53,7 +51,7 @@ height = 0.025
 radius = 0.4
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_er805"]
-size = Vector3(0.8, 1.25177, 0.503516)
+size = Vector3(0.8, 1.23477, 0.619775)
 
 [node name="Player" type="CharacterBody3D" groups=["player"]]
 collision_layer = 2
@@ -187,11 +185,22 @@ target_position = Vector3(0, 0.867, 0)
 
 [node name="Vault" type="Node3D" parent="."]
 
-[node name="AreaVaultBottom" type="Area3D" parent="Vault"]
+[node name="VaultCheck" type="Area3D" parent="Vault"]
+input_ray_pickable = false
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Vault/AreaVaultBottom"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.249786, -0.253916)
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Vault/VaultCheck"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.241287, -0.312046)
 shape = SubResource("BoxShape3D_er805")
+
+[node name="VaultRaycast" type="RayCast3D" parent="Vault"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.470652, 0)
+target_position = Vector3(0, 0, -0.6)
+hit_back_faces = false
+
+[node name="VaultRaycastTop" type="RayCast3D" parent="Vault"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.535, 0)
+target_position = Vector3(0, 0, -1.5)
+hit_back_faces = false
 
 [connection signal="area_entered" from="ComponentHitbox" to="." method="_on_component_hitbox_area_entered"]
 [connection signal="area_exited" from="ComponentHitbox" to="." method="_on_component_hitbox_area_exited"]
@@ -202,5 +211,7 @@ shape = SubResource("BoxShape3D_er805")
 [connection signal="area_exited" from="Climb/ClimbAreaTop" to="." method="_on_climb_area_top_area_exited"]
 [connection signal="area_entered" from="Climb/ClimbAreaBottom" to="." method="_on_climb_area_bottom_area_entered"]
 [connection signal="area_exited" from="Climb/ClimbAreaBottom" to="." method="_on_climb_area_bottom_area_exited"]
+[connection signal="body_entered" from="Vault/VaultCheck" to="." method="_on_vault_check_body_entered"]
+[connection signal="body_exited" from="Vault/VaultCheck" to="." method="_on_vault_check_body_exited"]
 
 [editable path="Head/Camera/WeaponAttach/ViewmodelControl"]

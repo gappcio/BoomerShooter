@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://bnsnfna8471ec"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_8y6iu"]
+radius = 0.4
+height = 1.75
+radial_segments = 16
+
+[node name="VisualHelper" type="Node3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("CapsuleMesh_8y6iu")

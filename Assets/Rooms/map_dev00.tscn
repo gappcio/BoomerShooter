@@ -1,4 +1,4 @@
-[gd_scene load_steps=60 format=4 uid="uid://7itgyyfxj4ga"]
+[gd_scene load_steps=68 format=4 uid="uid://7itgyyfxj4ga"]
 
 [ext_resource type="Script" uid="uid://c11xq6o4831nj" path="res://addons/qodot/src/nodes/qodot_map.gd" id="1_5g4pq"]
 [ext_resource type="PackedScene" uid="uid://cwhxdl2jthine" path="res://Assets/Common/WeatherManager/WeatherManager.tscn" id="1_qdr34"]
@@ -38,6 +38,8 @@
 [ext_resource type="PackedScene" uid="uid://6blvw1urbt6p" path="res://Assets/Objects/World/Vegetation/Fern/Fern1.tscn" id="34_pru3i"]
 [ext_resource type="PackedScene" uid="uid://ding7i6p7m1fi" path="res://Assets/Objects/_DEV/Walls/Wall.tscn" id="37_2dje4"]
 [ext_resource type="PackedScene" uid="uid://drlnk7obsai4o" path="res://Assets/Objects/_DEV/Walls/Hurt.tscn" id="38_2dje4"]
+[ext_resource type="Texture2D" uid="uid://bg8i18iw4pxoa" path="res://Assets/Objects/_DEV/Walls/Res/wall1x1_wall.png" id="38_w70e7"]
+[ext_resource type="Texture2D" uid="uid://jts7wrvweol8" path="res://Assets/Objects/_DEV/Walls/Res/wall.png" id="39_232gy"]
 
 [sub_resource type="Resource" id="Resource_ihmsf"]
 script = ExtResource("19_jnt08")
@@ -188,6 +190,49 @@ volumetric_fog_sky_affect = 0.621
 [sub_resource type="BoxShape3D" id="BoxShape3D_pdnst"]
 size = Vector3(1.1, 0.25, 1.1)
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pg3qu"]
+resource_name = "Material"
+cull_mode = 2
+albedo_texture = ExtResource("38_w70e7")
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_fnfg6"]
+_surfaces = [{
+"aabb": AABB(-0.5, -0.5, -0.5, 1, 1, 1),
+"format": 34896613377,
+"index_count": 36,
+"index_data": PackedByteArray("AAABAAIAAwACAAEAAAAEAAEAAwAFAAIABQAAAAIABgAEAAAABQAGAAAABwABAAQABwADAAEABgAHAAQABQADAAcABQAHAAYA"),
+"name": "Material",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 8,
+"vertex_data": PackedByteArray("/////wAAAAAAAP////8AAAAA//8AAAAAAAAAAP//AAD///////8AAAAAAAAAAAAA//8AAAAAAAD//wAA//8AAA==")
+}]
+blend_shape_mode = 0
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_wfjuc"]
+resource_name = "wall1x1_Cube"
+_surfaces = [{
+"aabb": AABB(-0.5, -0.5, -0.5, 1, 1, 1),
+"attribute_data": PackedByteArray("//////9//3////9//3//////////f/9/////f/9//////////3//f////3//f/////////9//3////9//3//////////f/9/////f/9//////////3//f////3//f///"),
+"format": 34896613399,
+"index_count": 36,
+"index_data": PackedByteArray("AAABAAIAAAADAAEABAAFAAYABAAHAAUACAAJAAoACAALAAkADAANAA4ADAAPAA0AEAARABIAEAATABEAFAAVABYAFAAXABUA"),
+"material": SubResource("StandardMaterial3D_pg3qu"),
+"name": "Material",
+"primitive": 3,
+"uv_scale": Vector4(2, 2, 0, 0),
+"vertex_count": 24,
+"vertex_data": PackedByteArray("/////wAAVNUAAP////9U1QAA//8AAFTV////////VNX//wAA//8AgAAA/////wCA////////AIAAAAAA//8AgAAAAAD///+/AAD//wAA/78AAP//////vwAAAAAAAP+/AAAAAAAAVNX//wAA//9U1f//AAAAAFTVAAAAAP//VNX//wAAAAD/v/////////+//////wAA/7///wAA////vwAAAAAAAP///////wAA//8AAP//AAD/////AAAAAP//VNWqKlTVqipU1aoqVNWqKv9/////f////3////9/////f////3////9/////f///VFVUVVRVVFVUVVRVVFVUVf9/AAD/fwAA/38AAP9/AAD/f////3////9/////f///")
+}]
+blend_shape_mode = 0
+shadow_mesh = SubResource("ArrayMesh_fnfg6")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_jp2mi"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_w70e7"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_232gy"]
+
 [node name="UNIVERSE" type="Node3D"]
 
 [node name="HUDControl" parent="." instance=ExtResource("1_ubt68")]
@@ -277,7 +322,7 @@ data = {
 metadata/_editor_floor_ = Vector3(0, 2, 0)
 
 [node name="Player" parent="." instance=ExtResource("7_gqrsq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 67.2831, 1.97398, 5.275)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 65.5862, 1.97055, 2.17619)
 
 [node name="TestBlock" parent="." instance=ExtResource("6_jaj7b")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0.5, 1.5)
@@ -453,6 +498,21 @@ transform = Transform3D(1, 0, 0, 0, 1.87939, -0.34202, 0, 0.68404, 0.939693, -17
 [node name="Wall8" parent="Node3D" instance=ExtResource("37_2dje4")]
 transform = Transform3D(1, 0, 0, 0, 1.96962, -0.173648, 0, 0.347296, 0.984808, -19.5, -0.105644, -3.5)
 
+[node name="Wall43" type="MeshInstance3D" parent="Node3D"]
+transform = Transform3D(2.89, 0, 0, 0, 1, 0, 0, 0, 0.345, -8, 0, -6)
+mesh = SubResource("ArrayMesh_wfjuc")
+skeleton = NodePath("")
+
+[node name="Wall" type="StaticBody3D" parent="Node3D/Wall43" groups=["wall"]]
+collision_mask = 7
+script = ExtResource("21_uvjlx")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Node3D/Wall43/Wall"]
+shape = SubResource("BoxShape3D_jp2mi")
+
+[node name="Texture" parent="Node3D/Wall43/Wall" instance=ExtResource("23_sep45")]
+texture = ExtResource("39_232gy")
+
 [node name="Wall10" parent="Node3D" instance=ExtResource("37_2dje4")]
 transform = Transform3D(1, 0, 0, 0, 0.707107, -0.707107, 0, 0.707107, 0.707107, 24, -0.5, 0)
 
@@ -544,3 +604,17 @@ text = "21"
 
 [node name="Hurt" parent="Node3D2" instance=ExtResource("38_2dje4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 81.5, 1.5, 11.5)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="." groups=["wall"]]
+transform = Transform3D(2.21, 0, 0, 0, 1.51, 0, 0, 0, 1.755, 62.875, 1.52297, 0.485)
+
+[node name="Area3D" type="Area3D" parent="StaticBody3D" groups=["wall"]]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D/Area3D"]
+shape = SubResource("BoxShape3D_w70e7")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
+mesh = SubResource("BoxMesh_232gy")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="StaticBody3D"]
+shape = SubResource("BoxShape3D_w70e7")
