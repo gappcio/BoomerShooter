@@ -185,13 +185,6 @@ func _physics_process(delta: float) -> void:
 			crouchjump_buffer = 0.0;
 		
 		
-	#if grounded:
-		#if Input.is_action_just_pressed("jump"):
-			#velocity.y = jump_force;
-		#movement(input_dir, delta);
-	#else:
-		#vertical_movement(delta);
-		
 	handle_jumping(delta);
 
 	movement(input_dir, delta);
@@ -290,6 +283,13 @@ func handle_jumping(delta: float):
 	
 	if jump_buffer > 0:
 		jump_buffer -= 1;
+		
+		if vault_raycast.is_colliding()\
+		&& !vault_raycast_top.is_colliding():
+			jump_buffer = 0.0;
+			grounded = false;
+			is_vaulting = true;
+			velocity.y = jump_force;
 		
 		if (!jump_trigger && grounded):
 			jump_trigger = true;
@@ -513,7 +513,6 @@ func vault() -> void:
 			
 			if vault_raycast_top.get_collider() == null:
 				
-				is_vaulting = true;
 				# disable movement
 				
 				# play animation

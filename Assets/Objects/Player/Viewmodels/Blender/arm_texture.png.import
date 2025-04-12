@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cjm1v47d8lo4j"
-path.s3tc="res://.godot/imported/grass2_ao.png-48b632f6b907718f74a613f2e7abad27.s3tc.ctex"
+uid="uid://d2hu3okuwdgjf"
+path.s3tc="res://.godot/imported/arm_texture.png-06c6ae1c0932ec2322f9e0d57f8ae127.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://Assets/Images/textures/Grass2/grass2_ao.png"
-dest_files=["res://.godot/imported/grass2_ao.png-48b632f6b907718f74a613f2e7abad27.s3tc.ctex"]
+source_file="res://Assets/Objects/Player/Viewmodels/Blender/arm_texture.png"
+dest_files=["res://.godot/imported/arm_texture.png-06c6ae1c0932ec2322f9e0d57f8ae127.s3tc.ctex"]
 
 [params]
 
