@@ -62,6 +62,7 @@ func _ready():
 func _process(delta):
 	
 	sprite_animation();
+	print(is_shooting)
 
 func _physics_process(delta: float) -> void:
 	
@@ -76,11 +77,11 @@ func _physics_process(delta: float) -> void:
 		state = STATE.shoot
 		
 	if is_instance_valid(player_instance):
-		viewmodel.rotation.z = -player_instance.camera_tilt * 5.0;
+		viewmodel.rotation.x = player_instance.camera_tilt * 2.0;
 		
 		mouse_input = lerp(mouse_input, Vector2.ZERO, 10.0 * delta);
-		viewmodel.rotation.x = lerp(viewmodel.rotation.x, mouse_input.y * 0.0025, 10.0 * delta);
-		viewmodel.rotation.y = lerp(viewmodel.rotation.y, mouse_input.x * 0.0025, 10.0 * delta);
+		#viewmodel.rotation.x = lerp(viewmodel.rotation.x, mouse_input.y * 0.0025, 10.0 * delta);
+		#viewmodel.rotation.y = lerp(viewmodel.rotation.y, mouse_input.x * 0.0025, 10.0 * delta);
 		
 	if Input.is_action_pressed("mouse_left"):
 		shoot_buffer = shoot_buffer_max;
@@ -234,6 +235,12 @@ func _on_anim_pistol_animation_finished(anim_name: StringName) -> void:
 
 
 func _on_anim_shotgun_animation_finished(anim_name: StringName) -> void:
+	if anim_name == anim_weapon_shoot:
+		shooting_anim_finished = true;
+		is_shooting = false;
+
+
+func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 	if anim_name == anim_weapon_shoot:
 		shooting_anim_finished = true;
 		is_shooting = false;

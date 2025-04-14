@@ -3,10 +3,9 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bhx14ny37mm7s"
-path.s3tc="res://.godot/imported/pistol_viewmodel_animated_hand_texture _Sheet_.png-1b7ebfcb1cdf186527cbabe3fa03535e.s3tc.ctex"
+path="res://.godot/imported/pistol_viewmodel_animated_hand_texture _Sheet_.png-1b7ebfcb1cdf186527cbabe3fa03535e.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
-"vram_texture": true
+"vram_texture": false
 }
 generator_parameters={
 "md5": "a7cebe729a82989d6319dfd70baf09a2"
@@ -15,11 +14,11 @@ generator_parameters={
 [deps]
 
 source_file="res://Assets/Objects/Player/Viewmodels/Pistol/pistol_viewmodel_animated_hand_texture _Sheet_.png"
-dest_files=["res://.godot/imported/pistol_viewmodel_animated_hand_texture _Sheet_.png-1b7ebfcb1cdf186527cbabe3fa03535e.s3tc.ctex"]
+dest_files=["res://.godot/imported/pistol_viewmodel_animated_hand_texture _Sheet_.png-1b7ebfcb1cdf186527cbabe3fa03535e.ctex"]
 
 [params]
 
-compress/mode=2
+compress/mode=0
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
