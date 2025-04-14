@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://c0jd3cujvbmlc"]
+[gd_scene load_steps=17 format=3 uid="uid://c0jd3cujvbmlc"]
 
 [ext_resource type="Script" uid="uid://rrxtl6hrf7dr" path="res://Assets/Objects/Player/Script_Player.gd" id="1_5ffuh"]
 [ext_resource type="PackedScene" uid="uid://1hxrf7rm1jbt" path="res://Assets/Objects/Player/SC_Camera.tscn" id="1_xqu0b"]
@@ -11,10 +11,12 @@
 [ext_resource type="PackedScene" uid="uid://04d8wgl8ry6b" path="res://Assets/Objects/Player/Viewmodels/SC_Viewmodel_Fists.tscn" id="6_hbj6a"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_c23eb"]
+margin = 0.01
 radius = 0.4
 height = 1.75
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_vm6pp"]
+margin = 0.01
 radius = 0.4
 height = 0.95
 
@@ -28,24 +30,6 @@ size = Vector3(1.4, 0.75, 1.5)
 radius = 0.4
 height = 1.75
 
-[sub_resource type="CylinderShape3D" id="CylinderShape3D_i8dor"]
-height = 0.01
-radius = 0.401
-
-[sub_resource type="CylinderShape3D" id="CylinderShape3D_j6xbl"]
-height = 0.01
-radius = 0.401
-
-[sub_resource type="CylinderShape3D" id="CylinderShape3D_hxa4n"]
-height = 0.01
-radius = 0.401
-
-[sub_resource type="CylinderShape3D" id="CylinderShape3D_ogvvi"]
-height = 1.2522
-
-[sub_resource type="CylinderShape3D" id="CylinderShape3D_er805"]
-height = 0.364395
-
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_3xvwb"]
 height = 0.025
 radius = 0.4
@@ -53,7 +37,8 @@ radius = 0.4
 [sub_resource type="BoxShape3D" id="BoxShape3D_er805"]
 size = Vector3(0.8, 1.23477, 0.619775)
 
-[node name="Player" type="CharacterBody3D" groups=["player"]]
+[node name="Player" type="StairsCharacter3D" groups=["player"]]
+collider = NodePath("Collision")
 collision_layer = 2
 collision_mask = 5
 floor_stop_on_slope = false
@@ -83,6 +68,7 @@ invis_seconds = 1.0
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
 
 [node name="Camera" parent="Head" instance=ExtResource("1_xqu0b")]
+current = true
 
 [node name="WeaponAttach" type="Node3D" parent="Head/Camera"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0163806, -0.0672958, -0.908494)
@@ -139,45 +125,6 @@ axis = 0
 texture_filter = 0
 texture = ExtResource("3_qcniq")
 
-[node name="StepUp" type="Node3D" parent="."]
-visible = false
-
-[node name="AreaStepUpBottom" type="Area3D" parent="StepUp"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.86, 0)
-collision_layer = 0
-
-[node name="CollisionStepUpBottom" type="CollisionShape3D" parent="StepUp/AreaStepUpBottom"]
-shape = SubResource("CylinderShape3D_i8dor")
-
-[node name="AreaStepUpMiddle" type="Area3D" parent="StepUp"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 0)
-collision_layer = 0
-
-[node name="CollisionStepUpMiddle" type="CollisionShape3D" parent="StepUp/AreaStepUpMiddle"]
-shape = SubResource("CylinderShape3D_j6xbl")
-
-[node name="AreaStepUpTop" type="Area3D" parent="StepUp"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.883, 0)
-collision_layer = 0
-
-[node name="CollisionStepUpTop" type="CollisionShape3D" parent="StepUp/AreaStepUpTop"]
-shape = SubResource("CylinderShape3D_hxa4n")
-
-[node name="Climb" type="Node3D" parent="."]
-visible = false
-
-[node name="ClimbAreaTop" type="Area3D" parent="Climb"]
-
-[node name="CollisionClimbTop" type="CollisionShape3D" parent="Climb/ClimbAreaTop"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.623901, 0)
-shape = SubResource("CylinderShape3D_ogvvi")
-
-[node name="ClimbAreaBottom" type="Area3D" parent="Climb"]
-
-[node name="CollisionClimbBottom" type="CollisionShape3D" parent="Climb/ClimbAreaBottom"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.687645, 0)
-shape = SubResource("CylinderShape3D_er805")
-
 [node name="CeilingDetection" type="ShapeCast3D" parent="."]
 visible = false
 shape = SubResource("CylinderShape3D_3xvwb")
@@ -202,15 +149,23 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.847391, 0)
 target_position = Vector3(0, 0, -1.5)
 hit_back_faces = false
 
+[node name="Step" type="Node3D" parent="."]
+visible = false
+
+[node name="StepBelowRaycast" type="RayCast3D" parent="Step"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.886562, 0)
+target_position = Vector3(0, -0.3, 0)
+
+[node name="StepAheadRaycast" type="RayCast3D" parent="Step"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, -0.57106)
+target_position = Vector3(0, -0.3, 0)
+debug_shape_custom_color = Color(0.933333, 0, 1, 1)
+debug_shape_thickness = 4
+
 [connection signal="area_entered" from="ComponentHitbox" to="." method="_on_component_hitbox_area_entered"]
 [connection signal="area_exited" from="ComponentHitbox" to="." method="_on_component_hitbox_area_exited"]
+[connection signal="been_hit" from="ComponentHitbox" to="." method="_on_component_hitbox_been_hit"]
 [connection signal="timeout" from="Head/Camera/WeaponAttach/ViewmodelControl/WeaponControl/ChangeWeaponTimer" to="Head/Camera/WeaponAttach/ViewmodelControl/WeaponControl" method="_on_change_weapon_timer_timeout"]
-[connection signal="body_entered" from="StepUp/AreaStepUpBottom" to="." method="_on_area_step_up_bottom_body_entered"]
-[connection signal="body_exited" from="StepUp/AreaStepUpBottom" to="." method="_on_area_step_up_bottom_body_exited"]
-[connection signal="area_entered" from="Climb/ClimbAreaTop" to="." method="_on_climb_area_top_area_entered"]
-[connection signal="area_exited" from="Climb/ClimbAreaTop" to="." method="_on_climb_area_top_area_exited"]
-[connection signal="area_entered" from="Climb/ClimbAreaBottom" to="." method="_on_climb_area_bottom_area_entered"]
-[connection signal="area_exited" from="Climb/ClimbAreaBottom" to="." method="_on_climb_area_bottom_area_exited"]
 [connection signal="body_entered" from="Vault/VaultCheck" to="." method="_on_vault_check_body_entered"]
 [connection signal="body_exited" from="Vault/VaultCheck" to="." method="_on_vault_check_body_exited"]
 

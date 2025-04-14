@@ -322,7 +322,7 @@ data = {
 metadata/_editor_floor_ = Vector3(0, 2, 0)
 
 [node name="Player" parent="." instance=ExtResource("7_gqrsq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 65.5862, 1.97055, 2.17619)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 54.5086, 1.89687, -0.739392)
 
 [node name="TestBlock" parent="." instance=ExtResource("6_jaj7b")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0.5, 1.5)
@@ -497,6 +497,45 @@ transform = Transform3D(1, 0, 0, 0, 1.87939, -0.34202, 0, 0.68404, 0.939693, -17
 
 [node name="Wall8" parent="Node3D" instance=ExtResource("37_2dje4")]
 transform = Transform3D(1, 0, 0, 0, 1.96962, -0.173648, 0, 0.347296, 0.984808, -19.5, -0.105644, -3.5)
+
+[node name="Wall44" parent="Node3D" instance=ExtResource("37_2dje4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.5, -0.852667, -8.5)
+
+[node name="Wall45" parent="Node3D" instance=ExtResource("37_2dje4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.5, -0.506675, -9.5)
+
+[node name="Wall46" parent="Node3D" instance=ExtResource("37_2dje4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.5, -0.448197, -10.5)
+
+[node name="Wall47" parent="Node3D" instance=ExtResource("37_2dje4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.5, -0.211552, -11.5)
+
+[node name="Wall48" parent="Node3D" instance=ExtResource("37_2dje4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.5, -0.10252, -12.5)
+
+[node name="Wall49" parent="Node3D" instance=ExtResource("37_2dje4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.5, 0, -13.5)
+
+[node name="Wall50" parent="Node3D" instance=ExtResource("37_2dje4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18.5, 0, -13.5)
+
+[node name="Wall51" parent="Node3D" instance=ExtResource("37_2dje4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18.5, 0, -14.5)
+
+[node name="Wall52" parent="Node3D" instance=ExtResource("37_2dje4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.5, 0, -14.5)
+
+[node name="Wall53" parent="Node3D" instance=ExtResource("37_2dje4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.5, 0, -15.5)
+
+[node name="Wall55" parent="Node3D" instance=ExtResource("37_2dje4")]
+transform = Transform3D(12.9904, 0, -12.5, 0, 0.5, 0, 7.5, 0, 21.6506, -36.5, -0.25, -24.5)
+
+[node name="Wall56" parent="Node3D" instance=ExtResource("37_2dje4")]
+transform = Transform3D(8.48528, 0, -12.0208, 0, 0.5, 0, 8.48528, 0, 12.0208, -34.5, 0.25, -30.5)
+
+[node name="Wall54" parent="Node3D" instance=ExtResource("37_2dje4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18.5, 0, -15.5)
 
 [node name="Wall43" type="MeshInstance3D" parent="Node3D"]
 transform = Transform3D(2.89, 0, 0, 0, 1, 0, 0, 0, 0.345, -8, 0, -6)
