@@ -1,4 +1,4 @@
-extends CharacterBody3D
+extends StairsCharacter3D
 class_name Player
 
 @onready var head := $Head;
@@ -9,9 +9,6 @@ class_name Player
 @onready var ceiling_detection: ShapeCast3D = $CeilingDetection
 @onready var raycast: RayCast3D = $Head/Camera/Raycast
 
-@onready var climb_area_top: Area3D = $Climb/ClimbAreaTop
-@onready var climb_area_bottom: Area3D = $Climb/ClimbAreaBottom
-
 @onready var hitbox: Area3D = $ComponentHitbox
 @onready var health: Node = $ComponentHealth
 
@@ -19,6 +16,10 @@ class_name Player
 @onready var vault_check: Area3D = $Vault/VaultCheck
 @onready var vault_raycast: RayCast3D = $Vault/VaultRaycast
 @onready var vault_raycast_top: RayCast3D = $Vault/VaultRaycastTop
+
+@onready var step: Node3D = $Step
+@onready var step_below_raycast: RayCast3D = $Step/StepBelowRaycast
+@onready var step_ahead_raycast: RayCast3D = $Step/StepAheadRaycast
 
 var visual_helper = preload("res://Assets/Objects/Player/VisualHelper.tscn");
 var player_visual_helper = preload("res://Assets/Objects/Player/VisualHelperPlayer.tscn");
@@ -211,7 +212,8 @@ func _physics_process(delta: float) -> void:
 	
 	vault();
 	
-	move_and_slide();
+	move_and_stair_step();
+	
 	
 	tilt_camera(input_dir);
 	
@@ -343,6 +345,17 @@ func movement(input_dir: Vector2, delta: float) -> void:
 	direction = Vector3(direction.x, 0.0, direction.y);
 	
 	spd = Vector2(velocity.x, velocity.z).length();
+	
+	
+	#region step up
+	
+	#step.rotation.y = direction.angle_to(Vector3.UP)
+	#
+	#if step_ahead_raycast.is_colliding() && step_below_raycast.is_colliding():
+		#if spd > 0.0:
+			#position.y = step_ahead_raycast.get_collision_point().y + 0.8;
+	#
+	#endregion
 	
 	#var wish_dir_speed = velocity.dot(wish_dir);
 	#var add_speed = BASE_SPEED - wish_dir_speed;
@@ -577,51 +590,6 @@ func camera_shake():
 
 func hurt(collision_point, collision_normal):
 	pass
-
-func _on_area_step_up_bottom_body_entered(body):
-	pass
-	
-	if body.is_in_group("wall"):
-		step_up_bottom = true;
-		
-		#if velocity.x != 0 || velocity.z != 0:
-		var i = 0.0;
-		var direction = (head.transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized();
-		
-		#print(direction)
-
-		while test_move(global_transform, Vector3(direction.x / 10, i, direction.z / 10)):
-			#print(str(global_position.y) + "/" + str(global_position.y + i))
-			
-			if (i > 1.0):
-				i = 0.0;
-				break;
-			else:
-				i += 0.05;
-				
-		if velocity.y <= 0.0:
-			global_position.y += i
-
-func _on_area_step_up_bottom_body_exited(body):
-	
-	if body.is_in_group("wall"):
-		step_up_bottom = false;
-
-func _on_climb_area_top_area_entered(area: Area3D) -> void:
-	if area.is_in_group("climbable"):
-		can_climb_top = true;
-
-func _on_climb_area_top_area_exited(area: Area3D) -> void:
-	if area.is_in_group("climbable"):
-		can_climb_top = false;
-
-func _on_climb_area_bottom_area_entered(area: Area3D) -> void:
-	if area.is_in_group("climbable"):
-		can_climb_bottom = true;
-
-func _on_climb_area_bottom_area_exited(area: Area3D) -> void:
-	if area.is_in_group("climbable"):
-		can_climb_bottom = false;
 
 func _on_component_hitbox_area_entered(area: Area3D) -> void:
 	var body = area.get_parent();

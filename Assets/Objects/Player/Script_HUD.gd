@@ -7,10 +7,16 @@ class_name HUD;
 @onready var label: Label = $CanvasLayer/Label
 @onready var dash_bar: ProgressBar = $DashBar
 @onready var health_bar: ProgressBar = $HealthBar
+@onready var fx_rect: ColorRect = $FXRect
+@onready var fx_rect_anim: AnimationPlayer = $FXRect/FXRectAnim
 
 func _ready():
 	player = get_tree().get_first_node_in_group("player");
 	dash_bar.value = 100.0;
+
+func hurt() -> void:
+	fx_rect_anim.play("hurt");
+	fx_rect_anim.seek(0.0);
 
 func _process(delta):
 

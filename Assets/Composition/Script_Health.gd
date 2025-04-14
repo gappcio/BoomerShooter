@@ -44,6 +44,9 @@ func health_set(new_health):
 func hurt(damage):
 	if !is_invis:
 		health_set(health - damage);
+		# kurwa ale zjebane wez cos zrob z tym xd
+		var hud = get_tree().get_first_node_in_group("hud");
+		hud.hurt();
 	is_invis = true;
 
 func hurtflux(damage):
