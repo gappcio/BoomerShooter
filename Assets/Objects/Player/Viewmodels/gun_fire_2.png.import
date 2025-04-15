@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cjm1v47d8lo4j"
-path.s3tc="res://.godot/imported/grass2_ao.png-48b632f6b907718f74a613f2e7abad27.s3tc.ctex"
+uid="uid://ciul4frbk5x3l"
+path.s3tc="res://.godot/imported/gun_fire_2.png-044b52ffad54233b678899c5b45f0119.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://Assets/Images/textures/Grass2/grass2_ao.png"
-dest_files=["res://.godot/imported/grass2_ao.png-48b632f6b907718f74a613f2e7abad27.s3tc.ctex"]
+source_file="res://Assets/Objects/Player/Viewmodels/gun_fire_2.png"
+dest_files=["res://.godot/imported/gun_fire_2.png-044b52ffad54233b678899c5b45f0119.s3tc.ctex"]
 
 [params]
 

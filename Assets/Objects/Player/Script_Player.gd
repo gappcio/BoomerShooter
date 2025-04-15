@@ -1,4 +1,4 @@
-extends StairsCharacter3D
+extends CharacterBody3D
 class_name Player
 
 @onready var head := $Head;
@@ -179,7 +179,7 @@ func _physics_process(delta: float) -> void:
 			$Collision.disabled = true;
 			$CollisionCrouch.disabled = false;
 			head.position.y = lerp(head.position.y, -0.1, 0.3);
-			weapon_viewmodel_node.position.y = lerp(weapon_viewmodel_node.position.y, 0.05, 0.1);
+			weapon_viewmodel_node.position.y = lerp(weapon_viewmodel_node.position.y, 0.02, 0.1);
 	else:
 		if !ceiling_detection.is_colliding() && grounded:
 			$Collision.disabled = false;
@@ -215,7 +215,7 @@ func _physics_process(delta: float) -> void:
 	
 	vault();
 	
-	move_and_stair_step();
+	move_and_slide();
 	
 	
 	tilt_camera(input_dir);

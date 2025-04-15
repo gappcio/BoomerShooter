@@ -37,8 +37,7 @@ radius = 0.4
 [sub_resource type="BoxShape3D" id="BoxShape3D_er805"]
 size = Vector3(0.8, 1.23477, 0.619775)
 
-[node name="Player" type="StairsCharacter3D" groups=["player"]]
-collider = NodePath("Collision")
+[node name="Player" type="CharacterBody3D" groups=["player"]]
 collision_layer = 2
 collision_mask = 5
 floor_stop_on_slope = false
@@ -140,13 +139,13 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.241287, -0.312046)
 shape = SubResource("BoxShape3D_er805")
 
 [node name="VaultRaycast" type="RayCast3D" parent="Vault"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0433591, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.000681251, 0)
 target_position = Vector3(0, 0, -0.6)
 hit_back_faces = false
 
 [node name="VaultRaycastTop" type="RayCast3D" parent="Vault"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.847391, 0)
-target_position = Vector3(0, 0, -1.5)
+target_position = Vector3(0, 0, -1)
 hit_back_faces = false
 
 [node name="Step" type="Node3D" parent="."]
@@ -164,7 +163,6 @@ debug_shape_thickness = 4
 
 [connection signal="area_entered" from="ComponentHitbox" to="." method="_on_component_hitbox_area_entered"]
 [connection signal="area_exited" from="ComponentHitbox" to="." method="_on_component_hitbox_area_exited"]
-[connection signal="been_hit" from="ComponentHitbox" to="." method="_on_component_hitbox_been_hit"]
 [connection signal="timeout" from="Head/Camera/WeaponAttach/ViewmodelControl/WeaponControl/ChangeWeaponTimer" to="Head/Camera/WeaponAttach/ViewmodelControl/WeaponControl" method="_on_change_weapon_timer_timeout"]
 [connection signal="body_entered" from="Vault/VaultCheck" to="." method="_on_vault_check_body_entered"]
 [connection signal="body_exited" from="Vault/VaultCheck" to="." method="_on_vault_check_body_exited"]

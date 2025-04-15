@@ -1,0 +1,86 @@
+[gd_resource type="VisualShader" load_steps=10 format=3 uid="uid://dhqbt8ydagpft"]
+
+[ext_resource type="Texture2D" uid="uid://bhx14ny37mm7s" path="res://Assets/Objects/Player/Viewmodels/Pistol/pistol_viewmodel_animated_hand_texture _Sheet_.png" id="1_bh64l"]
+
+[sub_resource type="VisualShaderNodeFresnel" id="VisualShaderNodeFresnel_ashfy"]
+default_input_values = [2, false, 3, 0.96]
+
+[sub_resource type="Gradient" id="Gradient_0bq1b"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0.600473, 0.884161)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_el721"]
+gradient = SubResource("Gradient_0bq1b")
+
+[sub_resource type="VisualShaderNodeTexture" id="VisualShaderNodeTexture_ssqi7"]
+texture = SubResource("GradientTexture1D_el721")
+texture_type = 1
+
+[sub_resource type="VisualShaderNodeFloatConstant" id="VisualShaderNodeFloatConstant_57vdf"]
+constant = 0.7
+
+[sub_resource type="VisualShaderNodeColorOp" id="VisualShaderNodeColorOp_mia7k"]
+operator = 2
+
+[sub_resource type="VisualShaderNodeTexture" id="VisualShaderNodeTexture_r2vxq"]
+source = 5
+texture = ExtResource("1_bh64l")
+
+[sub_resource type="VisualShaderNodeTexture2DParameter" id="VisualShaderNodeTexture2DParameter_2hqtw"]
+parameter_name = "texture_slide"
+texture_filter = 1
+
+[resource]
+code = "shader_type spatial;
+render_mode blend_mix, depth_draw_opaque, cull_back, diffuse_toon, specular_toon;
+
+uniform sampler2D texture_slide : filter_nearest;
+uniform sampler2D tex_frg_3 : source_color;
+
+
+
+void fragment() {
+	vec4 n_out7p0;
+// Texture2D:7
+	n_out7p0 = texture(texture_slide, UV);
+
+
+// FloatConstant:4
+	float n_out4p0 = 0.700000;
+
+
+// Fresnel:2
+	float n_out2p0 = pow(1.0 - clamp(dot(NORMAL, VIEW), 0.0, 1.0), n_out4p0);
+
+
+// Texture2D:3
+	vec4 n_out3p0 = texture(tex_frg_3, vec2(n_out2p0));
+
+
+// ColorOp:6
+	vec3 n_out6p0 = min(vec3(n_out7p0.xyz), vec3(n_out3p0.xyz));
+
+
+// Output:0
+	ALBEDO = n_out6p0;
+
+
+}
+"
+graph_offset = Vector2(-950.593, -170.181)
+modes/diffuse = 3
+modes/specular = 1
+nodes/fragment/2/node = SubResource("VisualShaderNodeFresnel_ashfy")
+nodes/fragment/2/position = Vector2(-1060, 420)
+nodes/fragment/3/node = SubResource("VisualShaderNodeTexture_ssqi7")
+nodes/fragment/3/position = Vector2(-700, 320)
+nodes/fragment/4/node = SubResource("VisualShaderNodeFloatConstant_57vdf")
+nodes/fragment/4/position = Vector2(-1420, 480)
+nodes/fragment/6/node = SubResource("VisualShaderNodeColorOp_mia7k")
+nodes/fragment/6/position = Vector2(-140, 160)
+nodes/fragment/7/node = SubResource("VisualShaderNodeTexture_r2vxq")
+nodes/fragment/7/position = Vector2(-640, -80)
+nodes/fragment/8/node = SubResource("VisualShaderNodeTexture2DParameter_2hqtw")
+nodes/fragment/8/position = Vector2(-1340, -80)
+nodes/fragment/connections = PackedInt32Array(2, 0, 3, 0, 4, 0, 2, 3, 3, 0, 6, 1, 6, 0, 0, 0, 8, 0, 7, 2, 7, 0, 6, 0)

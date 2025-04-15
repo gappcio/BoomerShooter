@@ -1,4 +1,4 @@
-[gd_scene load_steps=68 format=4 uid="uid://7itgyyfxj4ga"]
+[gd_scene load_steps=71 format=4 uid="uid://7itgyyfxj4ga"]
 
 [ext_resource type="Script" uid="uid://c11xq6o4831nj" path="res://addons/qodot/src/nodes/qodot_map.gd" id="1_5g4pq"]
 [ext_resource type="PackedScene" uid="uid://cwhxdl2jthine" path="res://Assets/Common/WeatherManager/WeatherManager.tscn" id="1_qdr34"]
@@ -6,7 +6,6 @@
 [ext_resource type="Resource" uid="uid://dgm276g7bw8q5" path="res://addons/qodot/game_definitions/fgd/base_classes/target_base_class.tres" id="2_wr6du"]
 [ext_resource type="Resource" uid="uid://ccdjpf5j25aua" path="res://addons/qodot/game_definitions/fgd/base_classes/targetname_base_class.tres" id="3_ro43b"]
 [ext_resource type="Resource" uid="uid://c5o31v30rw7v5" path="res://addons/qodot/game_definitions/fgd/base_classes/light_base_class.tres" id="4_poo5i"]
-[ext_resource type="Material" uid="uid://b4dca13i4mt11" path="res://Assets/Materials/MAT_SkyCloudy.tres" id="5_t6u81"]
 [ext_resource type="Resource" uid="uid://dxp37dladbquv" path="res://addons/qodot/game_definitions/fgd/solid_classes/worldspawn_solid_class.tres" id="5_ulvm6"]
 [ext_resource type="PackedScene" uid="uid://blhii3tmmhh2d" path="res://Assets/Objects/World/SC_TestBlock.tscn" id="6_jaj7b"]
 [ext_resource type="Resource" uid="uid://cw4s1hnxqetee" path="res://addons/qodot/game_definitions/fgd/solid_classes/func_group_solid_class.tres" id="6_s8uev"]
@@ -40,6 +39,7 @@
 [ext_resource type="PackedScene" uid="uid://drlnk7obsai4o" path="res://Assets/Objects/_DEV/Walls/Hurt.tscn" id="38_2dje4"]
 [ext_resource type="Texture2D" uid="uid://bg8i18iw4pxoa" path="res://Assets/Objects/_DEV/Walls/Res/wall1x1_wall.png" id="38_w70e7"]
 [ext_resource type="Texture2D" uid="uid://jts7wrvweol8" path="res://Assets/Objects/_DEV/Walls/Res/wall.png" id="39_232gy"]
+[ext_resource type="Shader" uid="uid://c17b8uo1g3ws" path="res://Assets/Objects/Player/hands_material.tres" id="40_w70e7"]
 
 [sub_resource type="Resource" id="Resource_ihmsf"]
 script = ExtResource("19_jnt08")
@@ -168,8 +168,14 @@ points = PackedVector3Array(1, 0.666667, -22.5, 1, -0.333333, -22.5, 5, -0.33333
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_lhj06"]
 points = PackedVector3Array(-5, 0.666667, -22.5, -5, -0.333333, -22.5, -1, -0.333333, -22.5, -1, 0.666667, -22.5, -5, 0.666667, 22.5, -5, -0.333333, 22.5, -1, -0.333333, 22.5, -1, 0.666667, 22.5)
 
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_kd32u"]
+sky_top_color = Color(0.2976, 0.63488, 0.93, 1)
+sky_horizon_color = Color(0.5244, 0.6422, 0.76, 1)
+sky_curve = 4.17856
+
 [sub_resource type="Sky" id="Sky_vj82v"]
-sky_material = ExtResource("5_t6u81")
+sky_material = SubResource("ProceduralSkyMaterial_kd32u")
+radiance_size = 0
 
 [sub_resource type="Environment" id="Environment_j55ur"]
 background_mode = 2
@@ -231,7 +237,19 @@ shadow_mesh = SubResource("ArrayMesh_fnfg6")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_w70e7"]
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_232gy"]
+render_priority = 0
+shader = ExtResource("40_w70e7")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_b3gpx"]
+next_pass = SubResource("ShaderMaterial_232gy")
+diffuse_mode = 3
+specular_mode = 1
+roughness = 0.0
+texture_filter = 0
+
 [sub_resource type="BoxMesh" id="BoxMesh_232gy"]
+material = SubResource("StandardMaterial3D_b3gpx")
 
 [node name="UNIVERSE" type="Node3D"]
 
