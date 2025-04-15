@@ -136,7 +136,10 @@ func _process(delta):
 		else:
 			Engine.time_scale = 1.0;
 	
-	
+	if health.flux:
+		print(health.invis_frame)
+		if health.invis_frame == health.invis_seconds:
+			hurt(0.0, 0.0);
 	
 	var vec = Vector2(velocity.z, velocity.x);
 	var l = vec.length();
@@ -589,7 +592,8 @@ func camera_shake():
 		tween.chain().tween_property(camera, "fov", -fov_change, time).as_relative();
 
 func hurt(collision_point, collision_normal):
-	pass
+	var hud = get_tree().get_first_node_in_group("hud");
+	hud.hurt();
 
 func _on_component_hitbox_area_entered(area: Area3D) -> void:
 	var body = area.get_parent();

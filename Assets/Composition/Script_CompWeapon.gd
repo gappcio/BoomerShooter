@@ -21,15 +21,20 @@ enum BULLET_TYPE {
 @export var audio: AudioStreamPlayer3D;
 @export var anim_weapon: AnimationPlayer;
 @export var anim_arms: AnimationPlayer;
-@export var anim_tree: AnimationTree;
+@export var anim_tree_arms: AnimationTree;
+@export var anim_tree_weapon: AnimationTree;
 @export var anim_fx: AnimationPlayer;
-@export var viewmodel: Node3D;
+@export var viewmodel_arms: Node3D;
+@export var viewmodel_weapon: Node3D;
 
-@export_group("Animation Variables")
+@export_group("Animation Variables Arms")
 @export var anim_hands_idle: String;
 @export var anim_hands_walk: String;
 @export var anim_hands_shoot: String;
+
+@export_group("Animation Variables Weapon")
 @export var anim_weapon_idle: String;
+@export var anim_weapon_walk: String;
 @export var anim_weapon_shoot: String;
 
 var is_shooting: bool = false;
@@ -56,13 +61,14 @@ func _ready():
 	#animation_tree["parameters/playback"].travel("idle");
 	anim_weapon.play(anim_weapon_idle);
 	anim_arms.play(anim_hands_idle);
-	anim_tree["parameters/playback"].travel("idle");
+	anim_tree_arms["parameters/playback"].travel("idle");
+	anim_tree_weapon["parameters/playback"].travel("idle");
 	anim_fx.play("none");
 
 func _process(delta):
 	
 	sprite_animation();
-	print(is_shooting)
+	#print(is_shooting)
 
 func _physics_process(delta: float) -> void:
 	
@@ -77,7 +83,8 @@ func _physics_process(delta: float) -> void:
 		state = STATE.shoot
 		
 	if is_instance_valid(player_instance):
-		viewmodel.rotation.x = player_instance.camera_tilt * 2.0;
+		viewmodel_arms.rotation.x = player_instance.camera_tilt * 2.0;
+		viewmodel_weapon.rotation.x = viewmodel_arms.rotation.x;
 		
 		mouse_input = lerp(mouse_input, Vector2.ZERO, 10.0 * delta);
 		#viewmodel.rotation.x = lerp(viewmodel.rotation.x, mouse_input.y * 0.0025, 10.0 * delta);
@@ -198,28 +205,40 @@ func sprite_animation():
 	
 	match(state):
 		STATE.idle:
-			anim_weapon.play(anim_weapon_idle);
+			#anim_weapon.play(anim_weapon_idle);
 			#anim_arms.play("idle");
-			anim_tree["parameters/playback"].travel("idle");
-			anim_tree.set("parameters/shoot/TimeScale/scale", 1.0);
-			anim_weapon.speed_scale = 1.0;
+			anim_tree_arms["parameters/playback"].travel("idle");
+			anim_tree_arms.set("parameters/shoot/TimeScale/scale", 1.0);
+			
+			anim_tree_weapon["parameters/playback"].travel("idle");
+			anim_tree_weapon.set("parameters/shoot/TimeScale/scale", 1.0);
+			
+			#anim_weapon.speed_scale = 1.0;
 			anim_fx.play("none");
 		STATE.walk:
 			var player_speed: float = Vector2(player_instance.velocity.x, player_instance.velocity.z).length();
 			
-			anim_weapon.play(anim_weapon_idle);
+			#anim_weapon.play(anim_weapon_idle);
 			#anim_arms.play("walk");
-			anim_tree["parameters/playback"].travel("walk");
-			anim_tree.set("parameters/shoot/TimeScale/scale", player_speed / 10.0);
-			anim_weapon.speed_scale = 1.0;
+			anim_tree_arms["parameters/playback"].travel("walk");
+			anim_tree_arms.set("parameters/shoot/TimeScale/scale", player_speed / 10.0);
+			
+			anim_tree_weapon["parameters/playback"].travel("walk");
+			anim_tree_weapon.set("parameters/shoot/TimeScale/scale", player_speed / 10.0);
+			
+			#anim_weapon.speed_scale = 1.0;
 			anim_fx.play("none");
 			
 		STATE.shoot:
-			anim_weapon.play(anim_weapon_shoot);
+			#anim_weapon.play(anim_weapon_shoot);
 			#anim_arms.play("shoot");
-			anim_tree["parameters/playback"].travel("shoot");
-			anim_tree.set("parameters/shoot/TimeScale/scale", shooting_speed);
-			anim_weapon.speed_scale = shooting_speed;
+			anim_tree_arms["parameters/playback"].travel("shoot");
+			anim_tree_arms.set("parameters/shoot/TimeScale/scale", shooting_speed);
+			
+			anim_tree_weapon["parameters/playback"].travel("shoot");
+			anim_tree_weapon.set("parameters/shoot/TimeScale/scale", shooting_speed);
+			
+			#anim_weapon.speed_scale = shooting_speed;
 			anim_fx.play("fire");
 
 func _on_shoot_timer_timeout() -> void:
@@ -227,20 +246,14 @@ func _on_shoot_timer_timeout() -> void:
 	shoot_timer.stop();
 	shoot_timer.wait_time = shooting_speed;
 
-
-func _on_anim_pistol_animation_finished(anim_name: StringName) -> void:
-	if anim_name == anim_weapon_shoot:
-		shooting_anim_finished = true;
-		is_shooting = false;
-
-
 func _on_anim_shotgun_animation_finished(anim_name: StringName) -> void:
 	if anim_name == anim_weapon_shoot:
 		shooting_anim_finished = true;
 		is_shooting = false;
 
-
-func _on_animation_player_animation_finished(anim_name: StringName) -> void:
+func _on_anim_pistol_animation_finished(anim_name: StringName) -> void:
+	print("end")
+	print(anim_name)
 	if anim_name == anim_weapon_shoot:
 		shooting_anim_finished = true;
 		is_shooting = false;

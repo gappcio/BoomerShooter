@@ -24,6 +24,8 @@ func _process(delta):
 	
 	if is_invis:
 		invis_frame -= delta;
+	else:
+		invis_frame = invis_seconds;
 	
 	if invis_frame <= 0.0:
 		invis_frame = invis_seconds;
@@ -34,19 +36,16 @@ func _process(delta):
 
 func health_init():
 	health = max_health;
-	
+
 func health_get():
 	return health;
 
 func health_set(new_health):
 	health = new_health;
-	
+
 func hurt(damage):
 	if !is_invis:
 		health_set(health - damage);
-		# kurwa ale zjebane wez cos zrob z tym xd
-		var hud = get_tree().get_first_node_in_group("hud");
-		hud.hurt();
 	is_invis = true;
 
 func hurtflux(damage):

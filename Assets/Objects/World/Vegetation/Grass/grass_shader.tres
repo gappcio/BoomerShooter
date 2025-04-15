@@ -124,6 +124,7 @@ void fragment() {
 
 }
 "
+graph_offset = Vector2(-226.323, -0.485703)
 modes/cull = 2
 flags/depth_prepass_alpha = true
 flags/vertex_lighting = true
