@@ -11,6 +11,8 @@ var random_texture_offset: float = 0.0;
 var random_dir: int = 1;
 var random_dir_list: Array = [-1, 1];
 
+signal player_landed;
+
 func _ready():
 	random.seed = hash("spucha");
 	

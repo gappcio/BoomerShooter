@@ -1,37 +1,45 @@
-[gd_resource type="VisualShader" load_steps=16 format=3 uid="uid://c17b8uo1g3ws"]
-
-[ext_resource type="Texture2D" uid="uid://bhx14ny37mm7s" path="res://Assets/Objects/Player/Viewmodels/Pistol/pistol_viewmodel_animated_hand_texture _Sheet_.png" id="1_p72ns"]
-
-[sub_resource type="VisualShaderNodeTexture" id="VisualShaderNodeTexture_2xfgb"]
-source = 5
-texture = ExtResource("1_p72ns")
-
-[sub_resource type="VisualShaderNodeTexture2DParameter" id="VisualShaderNodeTexture2DParameter_sa0io"]
-parameter_name = "texture_hands"
-texture_filter = 1
-
-[sub_resource type="VisualShaderNodeColorOp" id="VisualShaderNodeColorOp_a503j"]
-operator = 2
-
-[sub_resource type="VisualShaderNodeFresnel" id="VisualShaderNodeFresnel_pu8ph"]
-default_input_values = [2, false, 3, 0.96]
-
-[sub_resource type="Gradient" id="Gradient_kfbd5"]
-interpolation_mode = 1
-offsets = PackedFloat32Array(0, 0.825059)
-colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
-
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_5ikab"]
-gradient = SubResource("Gradient_kfbd5")
-
-[sub_resource type="VisualShaderNodeTexture" id="VisualShaderNodeTexture_mikga"]
-texture = SubResource("GradientTexture1D_5ikab")
-
-[sub_resource type="VisualShaderNodeFloatConstant" id="VisualShaderNodeFloatConstant_kg111"]
-constant = 0.7
+[gd_resource type="VisualShader" load_steps=14 format=3 uid="uid://c17b8uo1g3ws"]
 
 [sub_resource type="VisualShaderNodeColorConstant" id="VisualShaderNodeColorConstant_p72ns"]
 constant = Color(0, 0, 0, 1)
+
+[sub_resource type="Gradient" id="Gradient_a622q"]
+offsets = PackedFloat32Array(0, 0.185501)
+colors = PackedColorArray(0.637843, 0.637843, 0.637843, 1, 1, 1, 1, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_p72ns"]
+noise_type = 5
+frequency = 0.0548
+fractal_type = 3
+fractal_octaves = 1
+fractal_gain = 6.995
+fractal_ping_pong_strength = 1.515
+domain_warp_type = 2
+domain_warp_frequency = 0.91
+domain_warp_fractal_octaves = 10
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_2xfgb"]
+generate_mipmaps = false
+color_ramp = SubResource("Gradient_a622q")
+noise = SubResource("FastNoiseLite_p72ns")
+
+[sub_resource type="VisualShaderNodeTexture" id="VisualShaderNodeTexture_sa0io"]
+output_port_for_preview = 0
+texture = SubResource("NoiseTexture2D_2xfgb")
+texture_type = 1
+
+[sub_resource type="VisualShaderNodeInput" id="VisualShaderNodeInput_a503j"]
+input_name = "light"
+
+[sub_resource type="VisualShaderNodeExpression" id="VisualShaderNodeExpression_pu8ph"]
+size = Vector2(600, 360)
+expression = "float dotproduct = clamp(dot(NORMAL, LIGHT), -0.9, 0.9);
+float sample = clamp((dotproduct + 1.0) * ATTENUATION / 2.1, 0.05, 0.95);
+vec4 shaded = texture(color_gradient, vec2(sample, 0.0));
+diffuse_light += clamp((shaded.rgb * LIGHT_COLOR), 0.0, 1.0);"
+
+[sub_resource type="VisualShaderNodeTexture2DParameter" id="VisualShaderNodeTexture2DParameter_a622q"]
+parameter_name = "gradient"
 
 [sub_resource type="VisualShaderNodeInput" id="VisualShaderNodeInput_2xfgb"]
 input_name = "normal"
@@ -51,6 +59,7 @@ input_name = "vertex"
 code = "shader_type spatial;
 render_mode blend_mix, depth_draw_opaque, cull_front, diffuse_toon, specular_toon;
 
+uniform sampler2D tex_frg_9 : source_color;
 
 
 
@@ -86,13 +95,18 @@ void fragment() {
 	vec4 n_out8p0 = vec4(0.000000, 0.000000, 0.000000, 1.000000);
 
 
+// Texture2D:9
+	vec4 n_out9p0 = texture(tex_frg_9, UV);
+
+
 // Output:0
 	ALBEDO = vec3(n_out8p0.xyz);
+	ALPHA = n_out9p0.x;
 
 
 }
 "
-graph_offset = Vector2(-835.192, 42.7192)
+graph_offset = Vector2(-649.278, 207.404)
 modes/cull = 1
 modes/diffuse = 3
 modes/specular = 1
@@ -107,18 +121,23 @@ nodes/vertex/5/position = Vector2(20, 340)
 nodes/vertex/6/node = SubResource("VisualShaderNodeInput_kfbd5")
 nodes/vertex/6/position = Vector2(-400, 460)
 nodes/vertex/connections = PackedInt32Array(2, 0, 3, 0, 4, 0, 3, 1, 3, 0, 5, 0, 5, 0, 0, 0, 6, 0, 5, 1)
-nodes/fragment/2/node = SubResource("VisualShaderNodeTexture_2xfgb")
-nodes/fragment/2/position = Vector2(-560, 100)
-nodes/fragment/3/node = SubResource("VisualShaderNodeTexture2DParameter_sa0io")
-nodes/fragment/3/position = Vector2(-1260, 100)
-nodes/fragment/4/node = SubResource("VisualShaderNodeColorOp_a503j")
-nodes/fragment/4/position = Vector2(-200, 240)
-nodes/fragment/5/node = SubResource("VisualShaderNodeFresnel_pu8ph")
-nodes/fragment/5/position = Vector2(-1040, 560)
-nodes/fragment/6/node = SubResource("VisualShaderNodeTexture_mikga")
-nodes/fragment/6/position = Vector2(-680, 460)
-nodes/fragment/7/node = SubResource("VisualShaderNodeFloatConstant_kg111")
-nodes/fragment/7/position = Vector2(-1400, 620)
 nodes/fragment/8/node = SubResource("VisualShaderNodeColorConstant_p72ns")
-nodes/fragment/8/position = Vector2(-146.665, 485.441)
-nodes/fragment/connections = PackedInt32Array(3, 0, 2, 2, 2, 0, 4, 0, 5, 0, 6, 0, 7, 0, 5, 3, 8, 0, 0, 0)
+nodes/fragment/8/position = Vector2(-360, 200)
+nodes/fragment/9/node = SubResource("VisualShaderNodeTexture_sa0io")
+nodes/fragment/9/position = Vector2(-640, 380)
+nodes/fragment/connections = PackedInt32Array(8, 0, 0, 0, 9, 0, 0, 1)
+nodes/light/0/position = Vector2(520, 160)
+nodes/light/2/node = SubResource("VisualShaderNodeInput_a503j")
+nodes/light/2/position = Vector2(-660, 140)
+nodes/light/3/node = SubResource("VisualShaderNodeExpression_pu8ph")
+nodes/light/3/position = Vector2(-260, 120)
+nodes/light/3/size = Vector2(600, 360)
+nodes/light/3/input_ports = "0,4,light;1,8,color_gradient;"
+nodes/light/3/output_ports = "0,4,diffuse_light;"
+nodes/light/3/expression = "float dotproduct = clamp(dot(NORMAL, LIGHT), -0.9, 0.9);
+float sample = clamp((dotproduct + 1.0) * ATTENUATION / 2.1, 0.05, 0.95);
+vec4 shaded = texture(color_gradient, vec2(sample, 0.0));
+diffuse_light += clamp((shaded.rgb * LIGHT_COLOR), 0.0, 1.0);"
+nodes/light/5/node = SubResource("VisualShaderNodeTexture2DParameter_a622q")
+nodes/light/5/position = Vector2(-1060, 160)
+nodes/light/connections = PackedInt32Array(2, 0, 3, 0, 5, 0, 3, 1)

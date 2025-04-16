@@ -5,7 +5,6 @@ enum BULLET_TYPE {
 	projectile
 }
 
-@onready var shoot_timer: Timer = $"ShootTimer";
 @onready var player_instance: CharacterBody3D = null;
 @onready var raycast: RayCast3D = $"../../../../../Raycast";
 
@@ -13,11 +12,13 @@ enum BULLET_TYPE {
 @export var bullet_type: BULLET_TYPE;
 @export_range(0, 1) var accuracy: float;
 @export var always_hit_center: bool;
-@export_range(0.01, 100, 0.01) var shooting_speed: float;
+@export_range(0.01, 10, 0.01) var shooting_speed: float;
+@export_range(0.01, 10, 0.01) var shooting_interval: float;
 @export_range(0, 9) var bullet_amount: int;
 @export_range(0, 100) var damage: float;
 
 @export_group("Nodes")
+@export var shoot_timer: Timer;
 @export var audio: AudioStreamPlayer3D;
 @export var anim_weapon: AnimationPlayer;
 @export var anim_arms: AnimationPlayer;
@@ -26,6 +27,8 @@ enum BULLET_TYPE {
 @export var anim_fx: AnimationPlayer;
 @export var viewmodel_arms: Node3D;
 @export var viewmodel_weapon: Node3D;
+@export var viewmodel_anim: AnimationPlayer;
+@export var model_node: Node3D;
 
 @export_group("Animation Variables Arms")
 @export var anim_hands_idle: String;
@@ -49,15 +52,17 @@ var mouse_input: Vector2;
 enum STATE {
 	idle,
 	walk,
-	shoot
+	shoot,
+	air
 }
 
 var state = STATE.idle;
 
 func _ready():
-	shoot_timer.wait_time = shooting_speed;
-	shoot_timer.paused = false;
-	player_instance = $"../../../../../../../";
+	Autoload.player_landed.connect(_on_player_landed);
+	
+	shoot_timer.wait_time = shooting_interval;
+	player_instance = get_tree().get_first_node_in_group("player");
 	#animation_tree["parameters/playback"].travel("idle");
 	anim_weapon.play(anim_weapon_idle);
 	anim_arms.play(anim_hands_idle);
@@ -68,27 +73,35 @@ func _ready():
 func _process(delta):
 	
 	sprite_animation();
-	#print(is_shooting)
 
 func _physics_process(delta: float) -> void:
 	
 	var player_speed: float = Vector2(player_instance.velocity.x, player_instance.velocity.z).length();
 	
-	if !is_shooting:
-		if player_speed < 1.0:
-			state = STATE.idle
-		else:
-			state = STATE.walk
-	else:
-		state = STATE.shoot
-		
 	if is_instance_valid(player_instance):
+		
+		if !is_shooting:
+			if player_instance.grounded:
+				if player_speed < 1.0:
+					state = STATE.idle;
+				else:
+					state = STATE.walk;
+			else:
+				state = STATE.air;
+		else:
+			state = STATE.shoot;
+			
+	
 		viewmodel_arms.rotation.x = player_instance.camera_tilt * 2.0;
 		viewmodel_weapon.rotation.x = viewmodel_arms.rotation.x;
 		
+		
+		
 		mouse_input = lerp(mouse_input, Vector2.ZERO, 10.0 * delta);
-		#viewmodel.rotation.x = lerp(viewmodel.rotation.x, mouse_input.y * 0.0025, 10.0 * delta);
-		#viewmodel.rotation.y = lerp(viewmodel.rotation.y, mouse_input.x * 0.0025, 10.0 * delta);
+		model_node.rotation.x = lerp(model_node.rotation.x, mouse_input.y * 0.0025, 5.0 * delta);
+		model_node.rotation.y = lerp(model_node.rotation.y, mouse_input.x * 0.0025, 5.0 * delta);
+		
+		
 		
 	if Input.is_action_pressed("mouse_left"):
 		shoot_buffer = shoot_buffer_max;
@@ -137,9 +150,8 @@ func shoot():
 			);
 			
 		#print(raycast.position);
-	
+		
 		if raycast.is_colliding():
-			
 			
 			var target = null;
 			var collision_point = null;
@@ -208,10 +220,10 @@ func sprite_animation():
 			#anim_weapon.play(anim_weapon_idle);
 			#anim_arms.play("idle");
 			anim_tree_arms["parameters/playback"].travel("idle");
-			anim_tree_arms.set("parameters/shoot/TimeScale/scale", 1.0);
+			anim_tree_arms.set("parameters/idle/TimeScale/scale", 1.0);
 			
 			anim_tree_weapon["parameters/playback"].travel("idle");
-			anim_tree_weapon.set("parameters/shoot/TimeScale/scale", 1.0);
+			anim_tree_weapon.set("parameters/idle/TimeScale/scale", 1.0);
 			
 			#anim_weapon.speed_scale = 1.0;
 			anim_fx.play("none");
@@ -221,10 +233,10 @@ func sprite_animation():
 			#anim_weapon.play(anim_weapon_idle);
 			#anim_arms.play("walk");
 			anim_tree_arms["parameters/playback"].travel("walk");
-			anim_tree_arms.set("parameters/shoot/TimeScale/scale", player_speed / 10.0);
+			anim_tree_arms.set("parameters/walk/TimeScale/scale", player_speed / 10.0);
 			
 			anim_tree_weapon["parameters/playback"].travel("walk");
-			anim_tree_weapon.set("parameters/shoot/TimeScale/scale", player_speed / 10.0);
+			anim_tree_weapon.set("parameters/walk/TimeScale/scale", player_speed / 10.0);
 			
 			#anim_weapon.speed_scale = 1.0;
 			anim_fx.play("none");
@@ -240,20 +252,42 @@ func sprite_animation():
 			
 			#anim_weapon.speed_scale = shooting_speed;
 			anim_fx.play("fire");
+			anim_fx.speed_scale = shooting_speed / 2;
+			
+		STATE.air:
 
+			if is_instance_valid(player_instance):
+				if player_instance.velocity.y > 0.0:
+					viewmodel_anim.play("jump");
+				if player_instance.velocity.y < 0.0:
+					viewmodel_anim.play("fall");
+
+			anim_tree_arms["parameters/playback"].travel("idle");
+			anim_tree_arms.set("parameters/idle/TimeScale/scale", 0.0);
+			
+			anim_tree_weapon["parameters/playback"].travel("idle");
+			anim_tree_weapon.set("parameters/idle/TimeScale/scale", 0.0);
+			
+			anim_fx.play("none");
+
+func _on_player_landed() -> void:
+	viewmodel_anim.play("land");
+	viewmodel_anim.seek(0);
+	if is_instance_valid(player_instance):
+		player_instance.camera_land();
+		
 func _on_shoot_timer_timeout() -> void:
 	is_shooting = false;
 	shoot_timer.stop();
-	shoot_timer.wait_time = shooting_speed;
-
-func _on_anim_shotgun_animation_finished(anim_name: StringName) -> void:
-	if anim_name == anim_weapon_shoot:
-		shooting_anim_finished = true;
-		is_shooting = false;
+	shoot_timer.wait_time = shooting_interval;
 
 func _on_anim_pistol_animation_finished(anim_name: StringName) -> void:
-	print("end")
-	print(anim_name)
 	if anim_name == anim_weapon_shoot:
 		shooting_anim_finished = true;
 		is_shooting = false;
+
+
+func _on_anim_action_animation_finished(anim_name: StringName) -> void:
+	if anim_name == "land": 
+		viewmodel_anim.play("stop");
+		viewmodel_anim.seek(0);

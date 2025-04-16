@@ -48,6 +48,7 @@ var gravity: float = GRAVITY_BASE;
 var speed: float = BASE_SPEED;
 
 var grounded: bool = false;
+var just_landed: bool = false;
 
 var mouse_sensitivity = 0.17;
 
@@ -132,7 +133,7 @@ func _process(delta):
 	
 	if Input.is_action_just_pressed("debug_timescale"):
 		if Engine.time_scale == 1.0:
-			Engine.time_scale = 0.5;
+			Engine.time_scale = 0.25;
 		else:
 			Engine.time_scale = 1.0;
 	
@@ -217,10 +218,11 @@ func _physics_process(delta: float) -> void:
 	
 	move_and_slide();
 	
-	
 	tilt_camera(input_dir);
 	
 	look();
+	
+
 	
 	var pos = position + Vector3(0.0, -0.85, 0.0);
 	DebugDraw3D.draw_line(pos, pos + Vector3(velocity.x, 0.0, velocity.z), Color(1.0, 0.0, 1.0));
@@ -229,15 +231,13 @@ func _physics_process(delta: float) -> void:
 	
 	
 	#DebugDraw3D.draw_cylinder_ab(pos, pos + Vector3(0.0, 0.01, 0.0), Vector2(velocity.x, velocity.y).length(), Color(0.0, 0.0, 1.0));
-	
-
 
 func grounded_state():
 	
 	if is_on_floor():
+		if !grounded:
+			Autoload.player_landed.emit();
 		grounded = true;
-		#if abs(get_real_velocity().y) < 3.0:
-			#grounded = true;
 	else:
 		grounded = false;
 
@@ -590,6 +590,13 @@ func camera_shake():
 	if camera.fov > 1.0 && camera.fov < 179.0:
 		tween.tween_property(camera, "fov", fov_change, time).as_relative();
 		tween.chain().tween_property(camera, "fov", -fov_change, time).as_relative();
+
+func camera_land() -> void:
+	var tween = create_tween().set_parallel();
+	var offset = -0.2;
+	tween.tween_property(head, "position", Vector3(0.0, offset, 0.0), 0.05).as_relative();
+	tween.chain().tween_property(head, "position", Vector3(0.0, -offset, 0.0), 0.1).as_relative();
+	
 
 func hurt(collision_point, collision_normal):
 	var hud = get_tree().get_first_node_in_group("hud");

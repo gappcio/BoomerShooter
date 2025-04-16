@@ -6,6 +6,3 @@
 script = ExtResource("1_ua4r0")
 always_hit_center = true
 shooting_speed = 0.1
-
-[node name="ShootTimer" type="Timer" parent="."]
-wait_time = 0.1

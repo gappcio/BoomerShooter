@@ -93,7 +93,7 @@ one_shot = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0163806, 0.0672958, -0.770245)
 
 [node name="Raycast" type="RayCast3D" parent="Head/Camera"]
-target_position = Vector3(0, 0, -100)
+target_position = Vector3(0, 0, -50)
 collision_mask = 5
 collide_with_areas = true
 debug_shape_custom_color = Color(1, 0, 0, 1)

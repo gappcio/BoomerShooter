@@ -59,7 +59,7 @@ void fragment() {
 
 }
 "
-graph_offset = Vector2(-792.003, -129.343)
+graph_offset = Vector2(-507.646, -65.2009)
 modes/diffuse = 3
 modes/specular = 1
 nodes/fragment/4/node = SubResource("VisualShaderNodeColorOp_wts2o")
