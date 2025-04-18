@@ -6,6 +6,7 @@ enum BULLET_TYPE {
 }
 
 @onready var player_instance: CharacterBody3D = null;
+@onready var camera: Camera3D = null;
 @onready var raycast: RayCast3D = $"../../../../../Raycast";
 
 @export_group("Properties")
@@ -63,6 +64,7 @@ func _ready():
 	
 	shoot_timer.wait_time = shooting_interval;
 	player_instance = get_tree().get_first_node_in_group("player");
+	camera = get_tree().get_first_node_in_group("camera");
 	#animation_tree["parameters/playback"].travel("idle");
 	anim_weapon.play(anim_weapon_idle);
 	anim_arms.play(anim_hands_idle);
@@ -92,7 +94,7 @@ func _physics_process(delta: float) -> void:
 			state = STATE.shoot;
 			
 	
-		viewmodel_arms.rotation.x = player_instance.camera_tilt * 2.0;
+		viewmodel_arms.rotation.x = camera.camera_tilt * 2.0;
 		viewmodel_weapon.rotation.x = viewmodel_arms.rotation.x;
 		
 		
@@ -126,7 +128,8 @@ func shoot():
 	audio.play();
 	
 	if is_instance_valid(player_instance):
-		player_instance.camera_shake();
+		camera.camera_shoot_effect();
+		camera.camera_shake(0.2);
 	
 	for i in bullet_amount:
 	
@@ -228,15 +231,17 @@ func sprite_animation():
 			#anim_weapon.speed_scale = 1.0;
 			anim_fx.play("none");
 		STATE.walk:
-			var player_speed: float = Vector2(player_instance.velocity.x, player_instance.velocity.z).length();
+			#var player_speed: float = Vector2(player_instance.velocity.x, player_instance.velocity.z).length();
+			
+			var anim_speed: float = clamp(player_instance.spd / 10.0, 0.0, 2.0);
 			
 			#anim_weapon.play(anim_weapon_idle);
 			#anim_arms.play("walk");
 			anim_tree_arms["parameters/playback"].travel("walk");
-			anim_tree_arms.set("parameters/walk/TimeScale/scale", player_speed / 10.0);
+			anim_tree_arms.set("parameters/walk/TimeScale/scale", anim_speed);
 			
 			anim_tree_weapon["parameters/playback"].travel("walk");
-			anim_tree_weapon.set("parameters/walk/TimeScale/scale", player_speed / 10.0);
+			anim_tree_weapon.set("parameters/walk/TimeScale/scale", anim_speed);
 			
 			#anim_weapon.speed_scale = 1.0;
 			anim_fx.play("none");
@@ -274,7 +279,7 @@ func _on_player_landed() -> void:
 	viewmodel_anim.play("land");
 	viewmodel_anim.seek(0);
 	if is_instance_valid(player_instance):
-		player_instance.camera_land();
+		player_instance.land_anim();
 		
 func _on_shoot_timer_timeout() -> void:
 	is_shooting = false;

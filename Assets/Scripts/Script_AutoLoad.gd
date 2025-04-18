@@ -1,5 +1,7 @@
 extends Node
 
+var debug_mode: bool = false;
+
 var FX_HITPARTICLE = preload("res://Assets/Objects/World/Particles/SC_HitParticles.tscn");
 var FX_HITPARTICLE2 = preload("res://Assets/Objects/World/Particles/SC_HitParticles2.tscn");
 var FX_BULLETHOLE = preload("res://Assets/Objects/World/SC_BulletHole.tscn");

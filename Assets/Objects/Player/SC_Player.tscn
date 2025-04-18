@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://c0jd3cujvbmlc"]
+[gd_scene load_steps=27 format=3 uid="uid://c0jd3cujvbmlc"]
 
 [ext_resource type="Script" uid="uid://rrxtl6hrf7dr" path="res://Assets/Objects/Player/Script_Player.gd" id="1_5ffuh"]
 [ext_resource type="PackedScene" uid="uid://1hxrf7rm1jbt" path="res://Assets/Objects/Player/SC_Camera.tscn" id="1_xqu0b"]
@@ -8,7 +8,10 @@
 [ext_resource type="PackedScene" uid="uid://b2pmo5llggqsa" path="res://Assets/Composition/ComponentHealth.tscn" id="3_vwhjx"]
 [ext_resource type="Script" uid="uid://b71a0vln8bc56" path="res://Assets/Objects/Player/Weapon/Script_Control_PlayerWeapon.gd" id="4_7lj4b"]
 [ext_resource type="PackedScene" uid="uid://dn3xfbukde1fv" path="res://Assets/Objects/Player/Viewmodels/SC_Viewmodel_None.tscn" id="4_hkojv"]
+[ext_resource type="Script" uid="uid://ulhbmgirm102" path="res://Assets/Objects/Player/Script_Camera.gd" id="5_vwhjx"]
 [ext_resource type="PackedScene" uid="uid://04d8wgl8ry6b" path="res://Assets/Objects/Player/Viewmodels/SC_Viewmodel_Fists.tscn" id="6_hbj6a"]
+[ext_resource type="Shader" uid="uid://30jupcwsbqm1" path="res://Assets/Objects/Player/shader_dash_fx.tres" id="10_7iqpk"]
+[ext_resource type="Script" uid="uid://dhveyx1fvmyvb" path="res://Assets/Objects/Player/Script_DashFX.gd" id="11_jc3lu"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_c23eb"]
 margin = 0.01
@@ -23,8 +26,52 @@ height = 0.95
 [sub_resource type="BoxShape3D" id="BoxShape3D_7iqpk"]
 size = Vector3(1, 1.77298, 0.821655)
 
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_vwhjx"]
+
 [sub_resource type="BoxShape3D" id="BoxShape3D_xd2rw"]
 size = Vector3(1.4, 0.75, 1.5)
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_jc3lu"]
+lifetime_randomness = 0.24
+emission_shape = 6
+emission_ring_axis = Vector3(0, 0, 1)
+emission_ring_height = 0.49
+emission_ring_radius = 1.16
+emission_ring_inner_radius = 0.0
+emission_ring_cone_angle = 60.0
+angle_min = 1.07288e-05
+angle_max = 1.07288e-05
+direction = Vector3(0, 0, 1)
+spread = 0.0
+initial_velocity_min = 0.1
+initial_velocity_max = 3.0
+gravity = Vector3(0, 0, 0)
+attractor_interaction_enabled = false
+scale_min = 0.4
+
+[sub_resource type="Gradient" id="Gradient_ahrm2"]
+offsets = PackedFloat32Array(0, 0.548694, 1)
+colors = PackedColorArray(0, 0, 0, 1, 0.497474, 0.497474, 0.497474, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_xn4hj"]
+gradient = SubResource("Gradient_ahrm2")
+width = 32
+height = 256
+fill_to = Vector2(0, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_cjdk2"]
+render_priority = 0
+shader = ExtResource("10_7iqpk")
+shader_parameter/gradient_tex = SubResource("GradientTexture2D_xn4hj")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_ojp02"]
+material = SubResource("ShaderMaterial_cjdk2")
+size = Vector2(0.02, 2)
+
+[sub_resource type="Curve" id="Curve_jc3lu"]
+_limits = [0.0, 0.8, 0.0, 20.0]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 1, Vector2(9, 0), 0.0, 0.4, 1, 1, Vector2(11, 0.8), 0.4, 0.0, 1, 0]
+point_count = 3
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_qsvxe"]
 radius = 0.4
@@ -66,8 +113,10 @@ invis_seconds = 1.0
 [node name="Head" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
 
-[node name="Camera" parent="Head" instance=ExtResource("1_xqu0b")]
+[node name="Camera" parent="Head" groups=["camera"] instance=ExtResource("1_xqu0b")]
 current = true
+script = ExtResource("5_vwhjx")
+noise = SubResource("FastNoiseLite_vwhjx")
 
 [node name="WeaponAttach" type="Node3D" parent="Head/Camera"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0163806, -0.0672958, -0.908494)
@@ -108,6 +157,20 @@ monitorable = false
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Head/Camera/FistsArea"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.75)
 shape = SubResource("BoxShape3D_xd2rw")
+
+[node name="DashingFX" type="Node3D" parent="Head/Camera"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.136111)
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="Head/Camera/DashingFX"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.486835)
+amount = 32
+amount_ratio = 0.8
+lifetime = 0.5
+explosiveness = 0.23
+process_material = SubResource("ParticleProcessMaterial_jc3lu")
+draw_pass_1 = SubResource("PlaneMesh_ojp02")
+script = ExtResource("11_jc3lu")
+alpha_curve = SubResource("Curve_jc3lu")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 visible = false

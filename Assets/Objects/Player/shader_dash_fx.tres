@@ -1,0 +1,52 @@
+[gd_resource type="VisualShader" load_steps=4 format=3 uid="uid://30jupcwsbqm1"]
+
+[sub_resource type="VisualShaderNodeTexture" id="VisualShaderNodeTexture_j57m8"]
+output_port_for_preview = 0
+source = 5
+
+[sub_resource type="VisualShaderNodeTexture2DParameter" id="VisualShaderNodeTexture2DParameter_5gp8d"]
+parameter_name = "gradient_tex"
+texture_type = 1
+texture_filter = 1
+
+[sub_resource type="VisualShaderNodeColorConstant" id="VisualShaderNodeColorConstant_2l2cq"]
+
+[resource]
+code = "shader_type spatial;
+render_mode blend_mix, depth_draw_opaque, cull_disabled, diffuse_lambert, specular_schlick_ggx, unshaded;
+
+uniform sampler2D gradient_tex : source_color, filter_nearest;
+
+
+
+void fragment() {
+// ColorConstant:4
+	vec4 n_out4p0 = vec4(1.000000, 1.000000, 1.000000, 1.000000);
+
+
+	vec4 n_out2p0;
+// Texture2D:2
+	n_out2p0 = texture(gradient_tex, UV);
+
+
+// Output:0
+	ALBEDO = vec3(n_out4p0.xyz);
+	ALPHA = n_out2p0.x;
+
+
+}
+"
+graph_offset = Vector2(-610.806, 20.5813)
+modes/cull = 2
+flags/unshaded = true
+preview_params/gradient_tex = "Object(GradientTexture1D,\"resource_local_to_scene\":false,\"resource_name\":\"\",\"gradient\":Object(Gradient,\"resource_local_to_scene\":false,\"resource_name\":\"\",\"interpolation_mode\":0,\"interpolation_color_space\":0,\"offsets\":PackedFloat32Array(0, 0.337292, 0.524941, 0.660333, 1),\"colors\":PackedColorArray(0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0),\"script\":null)
+,\"width\":256,\"use_hdr\":false,\"script\":null)
+"
+nodes/fragment/0/position = Vector2(540, 160)
+nodes/fragment/2/node = SubResource("VisualShaderNodeTexture_j57m8")
+nodes/fragment/2/position = Vector2(-180, 100)
+nodes/fragment/3/node = SubResource("VisualShaderNodeTexture2DParameter_5gp8d")
+nodes/fragment/3/position = Vector2(-880, 180)
+nodes/fragment/4/node = SubResource("VisualShaderNodeColorConstant_2l2cq")
+nodes/fragment/4/position = Vector2(258.481, 96.9839)
+nodes/fragment/connections = PackedInt32Array(3, 0, 2, 2, 2, 0, 0, 1, 4, 0, 0, 0)

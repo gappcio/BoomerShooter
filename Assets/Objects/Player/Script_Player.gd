@@ -3,7 +3,6 @@ class_name Player
 
 @onready var head := $Head;
 @onready var camera := $Head/Camera;
-@onready var debug_arrow_velocity := $ArrowVelocityPivot;
 @onready var weapon_attach := $Head/Camera/WeaponAttach;
 @onready var weapon_viewmodel_node := $Head/Camera/WeaponAttach/ViewmodelControl/Weapon;
 @onready var ceiling_detection: ShapeCast3D = $CeilingDetection
@@ -50,6 +49,8 @@ var speed: float = BASE_SPEED;
 var grounded: bool = false;
 var just_landed: bool = false;
 
+var is_trimping: bool = false;
+
 var mouse_sensitivity = 0.17;
 
 var accel: float = 0.0;
@@ -94,8 +95,6 @@ var longjump_window_time_base: float = 0.3;
 var longjump_window_time: float = longjump_window_time_base;
 var can_longjump: float = false;
 
-var camera_tilt: float;
-var camera_bob_time: float = 0.0;
 
 var mesh_instance;
 var im_mesh;
@@ -128,7 +127,8 @@ func _ready():
 	camera.fov = 90;
 	health.health_init();
 	vault_visual_helper.resize(100);
-	
+
+
 func _process(delta):
 	
 	if Input.is_action_just_pressed("debug_timescale"):
@@ -141,19 +141,8 @@ func _process(delta):
 		print(health.invis_frame)
 		if health.invis_frame == health.invis_seconds:
 			hurt(0.0, 0.0);
-	
-	var vec = Vector2(velocity.z, velocity.x);
-	var l = vec.length();
-	var r = vec.angle_to_point(Vector2(0, 1));
+			
 
-	debug_arrow_velocity.scale = Vector3(l, 1, l);
-	debug_arrow_velocity.rotation = Vector3(0, r, 0);
-	
-	
-	
-	#camera.rotation.x = clamp(camera.rotation.x, deg_to_rad(-90), deg_to_rad(90));
-	#camera.rotation.y = 0.0;
-	#Draw.line(Vector3(position.x, 0, position.z), Vector3(position.x + velocity.x, 0, position.z + velocity.z), Color.BLACK, 1);
 
 func _physics_process(delta: float) -> void:
 	
@@ -206,8 +195,10 @@ func _physics_process(delta: float) -> void:
 			var trimp_force = velocity.length() * TRIMP_FORCE_MULTIPLIER;
 			var launch_vector = slope_dir * trimp_force;
 			
-			#velocity.x *= 1.2;
-			#velocity.z *= 1.2;
+			is_trimping = true;
+			
+			velocity.x *= 1.2;
+			velocity.z *= 1.2;
 			
 			#velocity.y = 0.0;
 			velocity.y = launch_vector.y
@@ -218,19 +209,19 @@ func _physics_process(delta: float) -> void:
 	
 	move_and_slide();
 	
-	tilt_camera(input_dir);
+	camera.tilt_camera(input_dir);
 	
 	look();
 	
-
-	
-	var pos = position + Vector3(0.0, -0.85, 0.0);
-	DebugDraw3D.draw_line(pos, pos + Vector3(velocity.x, 0.0, velocity.z), Color(1.0, 0.0, 1.0));
-	DebugDraw3D.draw_line(pos, pos + Vector3(velocity.x, 0.0, 0.0), Color(1.0, 0.0, 0.0));
-	DebugDraw3D.draw_line(pos, pos + Vector3(0.0, 0.0, velocity.z), Color(0.0, 0.0, 1.0));
-	
+	if Autoload.debug_mode:
+		var pos = position + Vector3(0.0, -0.85, 0.0);
+		DebugDraw3D.draw_line(pos, pos + Vector3(velocity.x, 0.0, velocity.z), Color(1.0, 0.0, 1.0));
+		DebugDraw3D.draw_line(pos, pos + Vector3(velocity.x, 0.0, 0.0), Color(1.0, 0.0, 0.0));
+		DebugDraw3D.draw_line(pos, pos + Vector3(0.0, 0.0, velocity.z), Color(0.0, 0.0, 1.0));
+		
 	
 	#DebugDraw3D.draw_cylinder_ab(pos, pos + Vector3(0.0, 0.01, 0.0), Vector2(velocity.x, velocity.y).length(), Color(0.0, 0.0, 1.0));
+
 
 func grounded_state():
 	
@@ -238,8 +229,10 @@ func grounded_state():
 		if !grounded:
 			Autoload.player_landed.emit();
 		grounded = true;
+		is_trimping = false;
 	else:
 		grounded = false;
+
 
 func handle_jumping(delta: float):
 	
@@ -314,33 +307,7 @@ func handle_jumping(delta: float):
 		if jump_trigger && !grounded:
 			velocity.y *= 0.8;
 			jump_accel_time = 0.0;
-	
-	
-	#if velocity.y > 1.0:
-		#var _set = func(): crouchjump_buffer = 0.0;
-		#_set.call_deferred();
 
-func vertical_movement(delta: float):
-	velocity.y -= GRAVITY_BASE * delta;
-	
-	var current_wish_dir_speed = velocity.dot(wish_dir);
-	var capped_speed = min( (500.0 * wish_dir).length(),  0.85);
-	
-	var add_speed = capped_speed - current_wish_dir_speed;
-	if add_speed > 0:
-		var accel_speed = 800 * 500 * delta;
-		accel_speed = min(accel_speed, add_speed);
-		velocity += accel_speed * wish_dir;
-		
-	if is_on_wall():
-		if get_wall_normal().angle_to(Vector3.UP) > floor_max_angle:
-			motion_mode = CharacterBody3D.MOTION_MODE_FLOATING;
-		else:
-			motion_mode = CharacterBody3D.MOTION_MODE_GROUNDED;
-		clip_velocity(get_wall_normal(), 1, delta);
-		
-	if Input.is_action_just_pressed("sprint"):
-		velocity *= Vector3(4.0, 1.0, 4.0);
 
 func movement(input_dir: Vector2, delta: float) -> void:
 
@@ -348,7 +315,6 @@ func movement(input_dir: Vector2, delta: float) -> void:
 	direction = Vector3(direction.x, 0.0, direction.y);
 	
 	spd = Vector2(velocity.x, velocity.z).length();
-	
 	
 	#region step up
 	
@@ -360,21 +326,7 @@ func movement(input_dir: Vector2, delta: float) -> void:
 	#
 	#endregion
 	
-	#var wish_dir_speed = velocity.dot(wish_dir);
-	#var add_speed = BASE_SPEED - wish_dir_speed;
-	#if add_speed > 0.0:
-		#var accel_speed = 11 * delta * BASE_SPEED;
-		#accel_speed = min(accel_speed, add_speed);
-		#velocity += accel_speed * wish_dir;
-		#
-	#var control = max(velocity.length(), 7);
-	#var drop = control * 3.5 * delta;
-	#var new_speed = max(velocity.length() - drop, 0.0);
-	#if velocity.length() > 0.0:
-		#new_speed /= velocity.length();
-	#velocity *= new_speed;
-
-
+	
 	if Input.is_action_just_pressed("sprint"):
 		dash_buffer = dash_buffer_max;
 		
@@ -406,9 +358,6 @@ func movement(input_dir: Vector2, delta: float) -> void:
 			dash_cooldown = dash_cooldown_base;
 			dash_cooldown_active = false;
 	
-	#print("input_dir: %v" % input_dir)
-	#print(-head.global_rotation.y)
-	
 	
 	if is_dashing:
 			
@@ -424,9 +373,13 @@ func movement(input_dir: Vector2, delta: float) -> void:
 			dash_time = 0.0;
 			is_dashing = false;
 			longjump_window_time = longjump_window_time_base;
+			
+			if !is_trimping:
+				velocity.z *= 0.4;
+				velocity.x *= 0.4;
 		else:
 			dash_time += delta;
-		
+	
 	
 	if longjump_window_time <= 0.0:
 		longjump_window_time = 0.0;
@@ -439,6 +392,7 @@ func movement(input_dir: Vector2, delta: float) -> void:
 	else:
 		can_longjump = false;
 	
+	
 	if direction:
 
 		var vel: Vector3;
@@ -447,17 +401,19 @@ func movement(input_dir: Vector2, delta: float) -> void:
 		velocity.x = lerp(vel[0], direction.x * BASE_SPEED, accel);
 		velocity.z = lerp(vel[2], direction.z * BASE_SPEED, accel);
 		
-		camera_bobbing(velocity, delta);
+		camera.camera_bobbing(velocity, delta);
 		
 	else:
 		velocity.x = lerp(velocity.x, 0.0, deccel);
 		velocity.z = lerp(velocity.z, 0.0, deccel);
 		
-		camera_bobbing_reset();
+		camera.camera_bobbing_reset();
 	
-	var pos = position + Vector3(0.0, -0.85, 0.0);
-	#DebugDraw3D.draw_line(pos, pos + Vector3(cos(-head.global_rotation.y - PI/2), 0.0, sin(-head.global_rotation.y - PI/2)), Color(0.0, 1.0, 0.0));
-	DebugDraw3D.draw_line(pos, pos + Vector3(direction.x, 0.0, direction.z), Color(1.0, 1.0, 1.0));
+	if Autoload.debug_mode:
+		var pos = position + Vector3(0.0, -0.85, 0.0);
+		#DebugDraw3D.draw_line(pos, pos + Vector3(cos(-head.global_rotation.y - PI/2), 0.0, sin(-head.global_rotation.y - PI/2)), Color(0.0, 1.0, 0.0));
+		DebugDraw3D.draw_line(pos, pos + Vector3(direction.x, 0.0, direction.z), Color(1.0, 1.0, 1.0));
+
 
 func accelerate(velocity: Vector3, move_direction: Vector3, delta: float) -> Vector3:
 	
@@ -469,18 +425,6 @@ func accelerate(velocity: Vector3, move_direction: Vector3, delta: float) -> Vec
 	
 	return velocity + add_speed * move_direction;
 
-func clip_velocity(normal: Vector3, overbounce: float, _delta: float) -> void:
-	
-	var backoff = velocity.dot(normal) * overbounce;
-	
-	if backoff >= 0.0: return;
-	
-	var change = normal * backoff;
-	velocity -= change;
-	
-	var adjust = velocity.dot(normal);
-	if adjust < 0.0:
-		velocity -= normal * adjust;
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
@@ -495,6 +439,7 @@ func _unhandled_input(event: InputEvent) -> void:
 			var viewport_transform: Transform2D = get_tree().root.get_final_transform();
 			mouse_input = event.xformed_by(viewport_transform).relative;
 
+
 func look() -> void:
 	
 	head.rotation_degrees.x -= mouse_input.y * mouse_sensitivity;
@@ -506,15 +451,6 @@ func look() -> void:
 	
 	head.rotation.x = clamp(head.rotation.x, deg_to_rad(-89.99), deg_to_rad(89.99));
 
-func tilt_camera(input_dir):
-	
-	var tilt_strength: float = input_dir.x / MAX_SPEED;
-	camera_tilt = lerp(camera_tilt, tilt_strength, 0.1);
-	
-	if abs(camera_tilt) < 0.001:
-		camera_tilt = 0.0;
-		
-	camera.rotation.z = camera_tilt;
 
 func vault() -> void:
 	
@@ -559,63 +495,36 @@ func vault() -> void:
 			if is_instance_valid(vault_visual_helper[0]):
 				vault_visual_helper[0].queue_free();
 
-func camera_bobbing(velocity, delta) -> void:
-	
-	var velocity_2d: Vector2 = Vector2(velocity.x, velocity.z);
-	
-	camera_bob_time += delta * velocity_2d.length() * float(grounded);
 
-	camera.position.y = lerp(camera.position.y, 0.1 * -sin(camera_bob_time * 1.2), 0.1);
-
-func camera_bobbing_reset() -> void:
-	
-	if abs(camera.position.y) < 0.001:
-		camera.position.y = 0.0;
-		return;
-	
-	camera.position.y = lerp(camera.position.y, 0.0, 0.1);
-	
-	camera_bob_time = 0.0;
-
-func camera_shake():
-	
-	var tween = create_tween().set_parallel();
-	var fov_change = 2.0;
-	var time = 0.01;
-	var rotation_amount = 0.05;
-
-	tween.tween_property(camera, "rotation", Vector3(0, 0, time * Autoload.random_dir), rotation_amount).as_relative();
-	tween.chain().tween_property(camera, "rotation", Vector3(0, 0, -time * Autoload.random_dir), rotation_amount).as_relative();
-	
-	if camera.fov > 1.0 && camera.fov < 179.0:
-		tween.tween_property(camera, "fov", fov_change, time).as_relative();
-		tween.chain().tween_property(camera, "fov", -fov_change, time).as_relative();
-
-func camera_land() -> void:
+func land_anim() -> void:
 	var tween = create_tween().set_parallel();
 	var offset = -0.2;
 	tween.tween_property(head, "position", Vector3(0.0, offset, 0.0), 0.05).as_relative();
 	tween.chain().tween_property(head, "position", Vector3(0.0, -offset, 0.0), 0.1).as_relative();
-	
+
 
 func hurt(collision_point, collision_normal):
 	var hud = get_tree().get_first_node_in_group("hud");
 	hud.hurt();
+
 
 func _on_component_hitbox_area_entered(area: Area3D) -> void:
 	var body = area.get_parent();
 	if body != null && body.is_in_group("hurtarea"):
 		health.hurtflux(body.damage);
 
+
 func _on_component_hitbox_area_exited(area: Area3D) -> void:
 	var body = area.get_parent();
 	if body != null && body.is_in_group("hurtarea"):
 		health.flux_end();
 
+
 func _on_vault_check_body_entered(body: Node3D) -> void:
 	if body.is_in_group("wall"):
 		vault_check_colliding = true;
 		vault_body = body;
+
 
 func _on_vault_check_body_exited(body: Node3D) -> void:
 	if body.is_in_group("wall"):

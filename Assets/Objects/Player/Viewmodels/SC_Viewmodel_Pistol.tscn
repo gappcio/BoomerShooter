@@ -3156,33 +3156,6 @@ states/walk/position = Vector2(589, 100)
 transitions = ["Start", "idle", SubResource("AnimationNodeStateMachineTransition_2lg1h"), "idle", "walk", SubResource("AnimationNodeStateMachineTransition_n6dtq"), "walk", "idle", SubResource("AnimationNodeStateMachineTransition_7usbc"), "idle", "shoot", SubResource("AnimationNodeStateMachineTransition_su0ex"), "shoot", "idle", SubResource("AnimationNodeStateMachineTransition_ajc2d"), "shoot", "walk", SubResource("AnimationNodeStateMachineTransition_82id6"), "walk", "shoot", SubResource("AnimationNodeStateMachineTransition_aqpoq")]
 graph_offset = Vector2(-255, 21)
 
-[sub_resource type="Animation" id="Animation_j7r2r"]
-resource_name = "stop"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Model:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector3(-0.160295, 0.10922, -0.835489)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Model:rotation")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector3(0, 0, 0)]
-}
-
 [sub_resource type="Animation" id="Animation_2lg1h"]
 length = 0.001
 tracks/0/type = "value"
@@ -3208,6 +3181,60 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [Vector3(0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_pplq5"]
+resource_name = "fall"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Model:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [Vector3(-0.160295, 0.10922, -0.835489), Vector3(-0.160191, 0.108087, -0.835317), Vector3(-0.160037, 0.106404, -0.835061), Vector3(-0.16, 0.106, -0.835)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Model:rotation")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [Vector3(0.0610865, 0, 0), Vector3(0.0349066, 0, 0), Vector3(-0.0610633, 0, 0), Vector3(-0.0698132, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_2o3m7"]
+resource_name = "jump"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Model:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.266667, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [Vector3(-0.160295, 0.10922, -0.835489), Vector3(-0.160191, 0.109495, -0.835317), Vector3(-0.160037, 0.109902, -0.835061), Vector3(-0.16, 0.11, -0.835)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Model:rotation")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.266667, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [Vector3(0, 0, 0), Vector3(0.0245742, 0, 0), Vector3(0.0610633, 0, 0), Vector3(0.0698132, 0, 0)]
 }
 
 [sub_resource type="Animation" id="Animation_n6dtq"]
@@ -3238,58 +3265,31 @@ tracks/1/keys = {
 "values": [Vector3(-0.139626, 0, 0), Vector3(-0.0698132, 0, 0), Vector3(0, 0, 0)]
 }
 
-[sub_resource type="Animation" id="Animation_2o3m7"]
-resource_name = "jump"
+[sub_resource type="Animation" id="Animation_j7r2r"]
+resource_name = "stop"
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/path = NodePath("Model:position")
-tracks/0/interp = 2
+tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.266667, 0.5),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
-"update": 1,
-"values": [Vector3(-0.160295, 0.10922, -0.835489), Vector3(-0.160191, 0.109495, -0.835317), Vector3(-0.160037, 0.109902, -0.835061), Vector3(-0.16, 0.11, -0.835)]
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(-0.160295, 0.10922, -0.835489)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/path = NodePath("Model:rotation")
-tracks/1/interp = 2
+tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.266667, 0.5),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
-"update": 1,
-"values": [Vector3(0, 0, 0), Vector3(0.0245742, 0, 0), Vector3(0.0610633, 0, 0), Vector3(0.0698132, 0, 0)]
-}
-
-[sub_resource type="Animation" id="Animation_pplq5"]
-resource_name = "fall"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Model:position")
-tracks/0/interp = 2
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.2, 0.4, 0.5),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
-"update": 1,
-"values": [Vector3(-0.160295, 0.10922, -0.835489), Vector3(-0.160191, 0.108087, -0.835317), Vector3(-0.160037, 0.106404, -0.835061), Vector3(-0.16, 0.106, -0.835)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Model:rotation")
-tracks/1/interp = 2
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.2, 0.4, 0.5),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
-"update": 1,
-"values": [Vector3(0.0610865, 0, 0), Vector3(0.0349066, 0, 0), Vector3(-0.0610633, 0, 0), Vector3(-0.0698132, 0, 0)]
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_7usbc"]
@@ -3718,7 +3718,7 @@ transform = Transform3D(-0.702153, 0.712026, 2.53518e-06, 0.712026, 0.702152, 7.
 mesh = SubResource("QuadMesh_iuml0")
 
 [node name="FireBarellFX" type="Node3D" parent="Model/pistol_viewmodel_pistol_animated/pistol_armature/Skeleton3D/BoneAttachment3D/Muzzle/FireFX"]
-transform = Transform3D(1, -1.90761e-09, 2.28913e-08, 1.90761e-09, 1, -4.65549e-24, -2.28913e-08, 4.36677e-17, 1, 0, 0, -0.005)
+transform = Transform3D(1, -1.90761e-09, 2.28913e-08, 1.90761e-09, 1, -3.11253e-23, -2.28913e-08, 4.36677e-17, 1, 0, 0, -0.005)
 
 [node name="FireBarrel" type="MeshInstance3D" parent="Model/pistol_viewmodel_pistol_animated/pistol_armature/Skeleton3D/BoneAttachment3D/Muzzle/FireFX/FireBarellFX"]
 transform = Transform3D(0.309993, -0.000645134, -0.00204627, 0.00210463, 0.148902, 0.271889, 0.000417065, -0.271897, 0.148903, -0.00336573, 0.00980736, -0.00927103)

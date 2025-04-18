@@ -61,25 +61,26 @@ func _process(delta):
 			#"camera.rot.y: " + str("%.2f" % float(player.camera.rotation.y))\
 			#+ "\n" + \
 			#"camera.rot.z: " + str("%.2f" % float(player.camera.rotation.z))
-	if is_instance_valid(player):
-		var player_speed: float = Vector2(player.velocity.x, player.velocity.z).length();
-		var rate = player_speed / player.MAX_SPEED;
-		var deccel = player.DECCEL_AIR * rate * .35;
-		label.text = "camera.y: " + str(player_speed);
-		label.text = \
-			"velocity.x: " + str("%.2f" % float(player.get_real_velocity().x))\
-			+ "\n" + \
-			"velocity.y: " + str("%.2f" % float(player.get_real_velocity().y))\
-			+ "\n" + \
-			"velocity.z: " + str("%.2f" % float(player.get_real_velocity().z))\
-			+ "\n" + \
-			"speed: " + str("%.2f" % float(Vector2(player.velocity.x, player.velocity.z).length()))\
-			+ "\n" + \
-			"gravity: " + str(player.gravity)\
-			+ "\n" + \
-			"accel: " + str(player.accel)\
-			+ "\n" + \
-			"deccel: " + str(player.deccel)\
-			+ "\n" + \
-			"input_dir: " + str(player.input_dir)\
-			+ "\n"
+	if Autoload.debug_mode:
+		if is_instance_valid(player):
+			var player_speed: float = Vector2(player.velocity.x, player.velocity.z).length();
+			var rate = player_speed / player.MAX_SPEED;
+			var deccel = player.DECCEL_AIR * rate * .35;
+			label.text = "camera.y: " + str(player_speed);
+			label.text = \
+				"velocity.x: " + str("%.2f" % float(player.get_real_velocity().x))\
+				+ "\n" + \
+				"velocity.y: " + str("%.2f" % float(player.get_real_velocity().y))\
+				+ "\n" + \
+				"velocity.z: " + str("%.2f" % float(player.get_real_velocity().z))\
+				+ "\n" + \
+				"speed: " + str("%.2f" % float(Vector2(player.velocity.x, player.velocity.z).length()))\
+				+ "\n" + \
+				"gravity: " + str(player.gravity)\
+				+ "\n" + \
+				"accel: " + str(player.accel)\
+				+ "\n" + \
+				"deccel: " + str(player.deccel)\
+				+ "\n" + \
+				"input_dir: " + str(player.input_dir)\
+				+ "\n"
