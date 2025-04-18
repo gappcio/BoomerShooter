@@ -125,6 +125,8 @@ func shoot():
 	is_shooting = true;
 	shooting_anim_finished = false;
 	shoot_timer.start();
+	
+	audio.pitch_scale = randf_range(0.9, 1.1);
 	audio.play();
 	
 	if is_instance_valid(player_instance):
@@ -233,7 +235,7 @@ func sprite_animation():
 		STATE.walk:
 			#var player_speed: float = Vector2(player_instance.velocity.x, player_instance.velocity.z).length();
 			
-			var anim_speed: float = clamp(player_instance.spd / 10.0, 0.0, 2.0);
+			var anim_speed: float = clamp(player_instance.spd / 10.0, 0.0, 1.5);
 			
 			#anim_weapon.play(anim_weapon_idle);
 			#anim_arms.play("walk");

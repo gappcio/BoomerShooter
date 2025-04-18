@@ -59,12 +59,12 @@ func camera_bobbing_reset() -> void:
 func camera_shoot_effect():
 	
 	var tween = create_tween().set_parallel();
-	var fov_change = 2.0;
-	var time = 0.01;
-	var rotation_amount = 0.05;
+	var fov_change = 5.0;
+	var time = 0.025;
+	#var rotation_amount = 0.05;
 
-	tween.tween_property(self, "rotation", Vector3(0, 0, time * Autoload.random_dir), rotation_amount).as_relative();
-	tween.chain().tween_property(self, "rotation", Vector3(0, 0, -time * Autoload.random_dir), rotation_amount).as_relative();
+	#tween.tween_property(self, "rotation", Vector3(0, 0, time * Autoload.random_dir), rotation_amount).as_relative();
+	#tween.chain().tween_property(self, "rotation", Vector3(0, 0, -time * Autoload.random_dir), rotation_amount).as_relative();
 	
 	if self.fov > 1.0 && self.fov < 179.0:
 		tween.tween_property(self, "fov", fov_change, time).as_relative();

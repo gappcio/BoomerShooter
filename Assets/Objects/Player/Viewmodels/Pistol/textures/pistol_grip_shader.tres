@@ -59,7 +59,6 @@ void fragment() {
 
 }
 "
-graph_offset = Vector2(-923.783, -114.907)
 modes/diffuse = 3
 modes/specular = 1
 nodes/fragment/2/node = SubResource("VisualShaderNodeFresnel_q86w1")

@@ -3315,7 +3315,7 @@ max_polyphony = 3
 [node name="ComponentWeapon" parent="." node_paths=PackedStringArray("shoot_timer", "audio", "anim_weapon", "anim_arms", "anim_tree_arms", "anim_tree_weapon", "anim_fx", "viewmodel_arms", "viewmodel_weapon", "viewmodel_anim", "model_node") instance=ExtResource("4_764sq")]
 accuracy = 1.0
 shooting_speed = 2.0
-shooting_interval = 0.35
+shooting_interval = 0.4
 bullet_amount = 1
 damage = 1.0
 shoot_timer = NodePath("../ShootTimer")

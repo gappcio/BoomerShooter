@@ -197,8 +197,8 @@ func _physics_process(delta: float) -> void:
 			
 			is_trimping = true;
 			
-			velocity.x *= 1.2;
-			velocity.z *= 1.2;
+			velocity.x *= 1.5;
+			velocity.z *= 1.5;
 			
 			#velocity.y = 0.0;
 			velocity.y = launch_vector.y
@@ -274,7 +274,7 @@ func handle_jumping(delta: float):
 			deccel = DECCEL_AIR * rate;
 	
 	if !jump_trigger:
-		jump_force = JUMP_VELOCITY * ((abs(velocity.x) * .0015) + 1);
+		jump_force = JUMP_VELOCITY * ((spd * .015) + 1);
 	
 	if Input.is_action_just_pressed("jump"):
 		jump_buffer = jump_buffer_max;
