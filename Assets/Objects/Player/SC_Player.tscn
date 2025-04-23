@@ -137,6 +137,7 @@ wait_time = 0.1
 one_shot = true
 
 [node name="VIEWMODEL_Fists" parent="Head/Camera/WeaponAttach/ViewmodelControl" instance=ExtResource("6_hbj6a")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.05, -0.05, 0.885)
 
 [node name="MuzzlePoint" type="Node3D" parent="Head/Camera/WeaponAttach"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0163806, 0.0672958, -0.770245)

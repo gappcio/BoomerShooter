@@ -95,6 +95,9 @@ var longjump_window_time_base: float = 0.3;
 var longjump_window_time: float = longjump_window_time_base;
 var can_longjump: float = false;
 
+var dash_head_dir: float;
+var dash_direction: Vector3;
+
 var coyote_time: float = 0.0;
 var coyote_max: float = 8.0;
 
@@ -121,6 +124,8 @@ var vault_body;
 var vault_visual_helper = [];
 
 var is_vaulting: bool = false;
+var vault_timer_max: float = 0.7;
+var vault_timer: float = vault_timer_max;
 
 var wish_dir;
 
@@ -152,6 +157,7 @@ func _physics_process(delta: float) -> void:
 		input_dir = Input.get_vector("left", "right", "forward", "back").normalized();
 	wish_dir = global_transform.basis * Vector3(input_dir.x, 0.0, input_dir.y);
 	
+	spd = Vector2(velocity.x, velocity.z).length();
 	
 	is_crouched = Input.is_action_pressed("crouch");
 	is_sprinting = Input.is_action_pressed("sprint");
@@ -194,9 +200,8 @@ func _physics_process(delta: float) -> void:
 		var can_trimp = false;
 		
 		if normal_angle > deg_to_rad(TRIMP_SLOPE_MAX_ANGLE)\
-		|| normal_angle < deg_to_rad(60.0):
+		&& normal_angle < deg_to_rad(60.0):
 			can_trimp = true;
-			#print(rad_to_deg(normal_angle))
 		
 		if can_trimp and spd > TRIMP_SPEED_THRESHOLD:
 			var slope_dir = (Vector3.UP - floor_normal).normalized();
@@ -219,6 +224,12 @@ func _physics_process(delta: float) -> void:
 	camera.tilt_camera(input_dir);
 	
 	look();
+	
+	if is_vaulting:
+		vault_timer -= delta;
+		if vault_timer <= 0.0:
+			vault_timer = vault_timer_max;
+			is_vaulting = false;
 	
 	if Autoload.debug_mode:
 		var pos = position + Vector3(0.0, -0.85, 0.0);
@@ -335,11 +346,6 @@ func movement(input_dir: Vector2, delta: float) -> void:
 	direction = direction.rotated(rot);
 	direction = Vector3(direction.x, 0.0, direction.y);
 	
-	print(rot)
-	print(direction)
-	
-	spd = Vector2(velocity.x, velocity.z).length();
-	
 	#region step up
 	
 	#step.rotation.y = direction.angle_to(Vector3.UP)
@@ -353,6 +359,8 @@ func movement(input_dir: Vector2, delta: float) -> void:
 	
 	if Input.is_action_just_pressed("sprint"):
 		dash_buffer = dash_buffer_max;
+		dash_head_dir = -head.rotation.y;
+		dash_direction = direction;
 		
 	if dash_buffer > 0.0:
 		dash_buffer -= 1.0;
@@ -385,12 +393,13 @@ func movement(input_dir: Vector2, delta: float) -> void:
 	
 	if is_dashing:
 			
+
 		if input_dir == Vector2(0.0, 0.0):
-			velocity.x = (DASH_POWER * cos(-head.global_rotation.y - PI/2));
-			velocity.z = (DASH_POWER * sin(-head.global_rotation.y - PI/2));
+			velocity.x = (DASH_POWER * cos(dash_head_dir - PI/2));
+			velocity.z = (DASH_POWER * sin(dash_head_dir - PI/2));
 		else:
-			velocity.x = (DASH_POWER * direction.x);
-			velocity.z = (DASH_POWER * direction.z);
+			velocity.x = (DASH_POWER * dash_direction.x);
+			velocity.z = (DASH_POWER * dash_direction.z);
 		
 		
 		if dash_time > dash_time_max:
@@ -418,13 +427,17 @@ func movement(input_dir: Vector2, delta: float) -> void:
 	
 	
 	if direction:
-
 		var vel: Vector3;
-		vel = accelerate(velocity, direction, delta);
-
-		velocity.x = lerp(vel[0], direction.x * BASE_SPEED, accel);
-		velocity.z = lerp(vel[2], direction.z * BASE_SPEED, accel);
 		
+		if is_dashing:
+			vel = accelerate(velocity, dash_direction, delta);
+			velocity.x = lerp(vel[0], dash_direction.x * BASE_SPEED, accel);
+			velocity.z = lerp(vel[2], dash_direction.z * BASE_SPEED, accel);
+		else:
+			vel = accelerate(velocity, direction, delta);
+			velocity.x = lerp(vel[0], direction.x * BASE_SPEED, accel);
+			velocity.z = lerp(vel[2], direction.z * BASE_SPEED, accel);
+			
 		camera.camera_bobbing(velocity, delta);
 		
 	else:

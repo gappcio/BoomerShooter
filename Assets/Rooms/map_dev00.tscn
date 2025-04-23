@@ -1,4 +1,4 @@
-[gd_scene load_steps=71 format=4 uid="uid://7itgyyfxj4ga"]
+[gd_scene load_steps=72 format=4 uid="uid://7itgyyfxj4ga"]
 
 [ext_resource type="Script" uid="uid://c11xq6o4831nj" path="res://addons/qodot/src/nodes/qodot_map.gd" id="1_5g4pq"]
 [ext_resource type="PackedScene" uid="uid://cwhxdl2jthine" path="res://Assets/Common/WeatherManager/WeatherManager.tscn" id="1_qdr34"]
@@ -235,8 +235,6 @@ shadow_mesh = SubResource("ArrayMesh_fnfg6")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_jp2mi"]
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_w70e7"]
-
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_232gy"]
 render_priority = 0
 shader = ExtResource("40_w70e7")
@@ -250,6 +248,11 @@ texture_filter = 0
 
 [sub_resource type="BoxMesh" id="BoxMesh_232gy"]
 material = SubResource("StandardMaterial3D_b3gpx")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_232gy"]
+size = Vector3(5, 1, 6.00684)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_w70e7"]
 
 [node name="UNIVERSE" type="Node3D"]
 
@@ -661,6 +664,18 @@ text = "21"
 
 [node name="Hurt" parent="Node3D2" instance=ExtResource("38_2dje4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 61.5, 1.5, 6.5)
+
+[node name="StaticBody3D2" type="StaticBody3D" parent="."]
+transform = Transform3D(11.05, 0, 0, 0, 1.51, 0, 0, 0, 10.53, 62.875, 1.52297, -8.515)
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="StaticBody3D2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+mesh = SubResource("BoxMesh_232gy")
+skeleton = NodePath("../../StaticBody3D")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D2"]
+transform = Transform3D(0.2, 0, 0, 0, 1, 0, 0, 0, 0.16666, 4.76837e-07, 0, 0.000393212)
+shape = SubResource("BoxShape3D_232gy")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="." groups=["wall"]]
 transform = Transform3D(2.21, 0, 0, 0, 1.51, 0, 0, 0, 1.755, 62.875, 1.52297, 0.485)

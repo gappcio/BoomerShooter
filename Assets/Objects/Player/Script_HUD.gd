@@ -83,4 +83,6 @@ func _process(delta):
 				"deccel: " + str(player.deccel)\
 				+ "\n" + \
 				"input_dir: " + str(player.input_dir)\
+				+ "\n" + \
+				"is_vaulting: " + str(player.is_vaulting)\
 				+ "\n"
