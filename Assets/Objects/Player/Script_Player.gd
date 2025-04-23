@@ -23,7 +23,7 @@ class_name Player
 var visual_helper = preload("res://Assets/Objects/Player/VisualHelper.tscn");
 var player_visual_helper = preload("res://Assets/Objects/Player/VisualHelperPlayer.tscn");
 
-const BASE_SPEED: float = 5.0;
+const BASE_SPEED: float = 5.5;
 const JUMP_VELOCITY: float = 6.5;
 var spd: float = 0.0;
 
@@ -95,6 +95,8 @@ var longjump_window_time_base: float = 0.3;
 var longjump_window_time: float = longjump_window_time_base;
 var can_longjump: float = false;
 
+var coyote_time: float = 0.0;
+var coyote_max: float = 8.0;
 
 var mesh_instance;
 var im_mesh;
@@ -138,7 +140,7 @@ func _process(delta):
 			Engine.time_scale = 1.0;
 	
 	if health.flux:
-		print(health.invis_frame)
+		#print(health.invis_frame)
 		if health.invis_frame == health.invis_seconds:
 			hurt(0.0, 0.0);
 			
@@ -146,7 +148,8 @@ func _process(delta):
 
 func _physics_process(delta: float) -> void:
 	
-	input_dir = Input.get_vector("left", "right", "forward", "back").normalized();
+	if !is_dashing:
+		input_dir = Input.get_vector("left", "right", "forward", "back").normalized();
 	wish_dir = global_transform.basis * Vector3(input_dir.x, 0.0, input_dir.y);
 	
 	
@@ -188,7 +191,12 @@ func _physics_process(delta: float) -> void:
 	if grounded:
 		var floor_normal = get_floor_normal();
 		var normal_angle = floor_normal.angle_to(Vector3.UP);
-		var can_trimp = normal_angle > deg_to_rad(TRIMP_SLOPE_MAX_ANGLE);
+		var can_trimp = false;
+		
+		if normal_angle > deg_to_rad(TRIMP_SLOPE_MAX_ANGLE)\
+		|| normal_angle < deg_to_rad(60.0):
+			can_trimp = true;
+			#print(rad_to_deg(normal_angle))
 		
 		if can_trimp and spd > TRIMP_SPEED_THRESHOLD:
 			var slope_dir = (Vector3.UP - floor_normal).normalized();
@@ -200,7 +208,6 @@ func _physics_process(delta: float) -> void:
 			velocity.x *= 1.5;
 			velocity.z *= 1.5;
 			
-			#velocity.y = 0.0;
 			velocity.y = launch_vector.y
 
 	#endregion
@@ -230,6 +237,7 @@ func grounded_state():
 			Autoload.player_landed.emit();
 		grounded = true;
 		is_trimping = false;
+		coyote_time = coyote_max;
 	else:
 		grounded = false;
 
@@ -293,6 +301,15 @@ func handle_jumping(delta: float):
 			jump_trigger = true;
 			jump_accel_time = jump_accel_max;
 	
+	if !grounded:
+		
+		if coyote_time > 0.0:
+			coyote_time -= 1.0;
+			
+			if Input.is_action_just_pressed("jump") && !jump_trigger:
+				jump_trigger = true;
+				jump_accel_time = jump_accel_max;
+	
 	if jump_trigger:
 		if jump_accel_time <= 0.0:
 			jump_accel_time = 0.0;
@@ -311,8 +328,15 @@ func handle_jumping(delta: float):
 
 func movement(input_dir: Vector2, delta: float) -> void:
 
-	var direction = input_dir.rotated(-head.rotation.y);
+	var rot = 0.0;
+	rot = -head.rotation.y;
+	
+	var direction = input_dir;
+	direction = direction.rotated(rot);
 	direction = Vector3(direction.x, 0.0, direction.y);
+	
+	print(rot)
+	print(direction)
 	
 	spd = Vector2(velocity.x, velocity.z).length();
 	
