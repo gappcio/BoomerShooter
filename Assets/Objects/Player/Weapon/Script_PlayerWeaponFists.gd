@@ -3,8 +3,14 @@ class_name player_weapon_fists
 
 @onready var player: CharacterBody3D = null;
 @onready var anim_hand: AnimationPlayer = $hand_viewmodel/AnimHand
-@onready var shoot_timer: Timer = $PunchTimer;
+@onready var punch_timer: Timer = $PunchTimer;
 @onready var area: Area3D = $"../../../FistsArea";
+@onready var camera: Camera3D;
+
+var punch_buffer_max: float = 12.0;
+var punch_buffer: float = 0.0;
+
+var is_punching: bool = false;
 
 enum STATE {
 	idle,
@@ -15,17 +21,19 @@ enum STATE {
 
 var state = STATE.idle;
 
-var shoot_period: float = 1.0;
+var punch_period: float = 0.7;
 
 
 func _ready():
 	player = get_tree().get_first_node_in_group("player");
+	camera = get_tree().get_first_node_in_group("camera");
 	area.monitoring = false;
+	punch_timer.wait_time = punch_period;
 
 
 func _process(delta):
 	
-	if shoot_timer.is_stopped():
+	if punch_timer.is_stopped():
 		if player.vault_raycast.is_colliding()\
 		&& !player.vault_raycast_top.is_colliding()\
 		&& !player.is_vaulting\
@@ -37,7 +45,13 @@ func _process(delta):
 			state = STATE.idle;
 	
 	if Input.is_action_pressed("punch") && (state == STATE.idle || state == STATE.vault_ready):
-		punch();
+		punch_buffer = punch_buffer_max;
+	
+	if punch_buffer > 0.0:
+		punch_buffer -= 1.0;
+		
+		if !is_punching:
+			punch();
 	
 	match(state):
 		STATE.idle:
@@ -49,22 +63,24 @@ func _process(delta):
 		STATE.vault_ready:
 			anim_hand.play("vault_ready");
 
-	print(state)
-func punch():
-	
-	state = STATE.attack;
-	shoot_timer.start();
-	area.monitoring = true;
 
+func punch():
+	is_punching = true;
+	state = STATE.attack;
+	punch_timer.start();
+	area.monitoring = true;
+	camera.camera_shake(0.1);
+	camera.camera_shoot_effect();
 
 func _on_anim_hand_animation_finished(anim_name: StringName) -> void:
-	if anim_name == "punch":
-		state = STATE.idle;
-		shoot_timer.stop();
-		shoot_timer.wait_time = shoot_period;
-		area.monitoring = false;
 	if anim_name == "vault":
 		state = STATE.idle;
+		anim_hand.seek(0);
 
 func _on_punch_timer_timeout() -> void:
-	pass
+	state = STATE.idle;
+	punch_timer.stop();
+	is_punching = false;
+	punch_timer.wait_time = punch_period;
+	area.monitoring = false;
+	anim_hand.seek(0);

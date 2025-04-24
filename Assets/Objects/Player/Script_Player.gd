@@ -124,7 +124,7 @@ var vault_body;
 var vault_visual_helper = [];
 
 var is_vaulting: bool = false;
-var vault_timer_max: float = 0.7;
+var vault_timer_max: float = 0.5;
 var vault_timer: float = vault_timer_max;
 
 var wish_dir;
@@ -293,7 +293,12 @@ func handle_jumping(delta: float):
 			deccel = DECCEL_AIR * rate;
 	
 	if !jump_trigger:
-		jump_force = JUMP_VELOCITY * ((spd * .015) + 1);
+		var add_force: float = 0.0;
+		if spd > MAX_SPEED:
+			add_force = 1.0;
+		jump_force = (JUMP_VELOCITY * ((spd * .015) + 1)) + add_force;
+	
+	print(jump_force)
 	
 	if Input.is_action_just_pressed("jump"):
 		jump_buffer = jump_buffer_max;
