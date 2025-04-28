@@ -1,4 +1,4 @@
-[gd_scene load_steps=72 format=4 uid="uid://7itgyyfxj4ga"]
+[gd_scene load_steps=79 format=4 uid="uid://7itgyyfxj4ga"]
 
 [ext_resource type="Script" uid="uid://c11xq6o4831nj" path="res://addons/qodot/src/nodes/qodot_map.gd" id="1_5g4pq"]
 [ext_resource type="PackedScene" uid="uid://cwhxdl2jthine" path="res://Assets/Common/WeatherManager/WeatherManager.tscn" id="1_qdr34"]
@@ -32,6 +32,8 @@
 [ext_resource type="Texture2D" uid="uid://d1exu8ly7vt8k" path="res://textures/new/asphalt_lines.png" id="24_43hds"]
 [ext_resource type="PackedScene" uid="uid://bdcrrhdm6vkv6" path="res://Assets/Objects/World/Vegetation/PineTree/SC_PineTree1.tscn" id="29_1m1fx"]
 [ext_resource type="MeshLibrary" uid="uid://bfpi54nhciyt8" path="res://Assets/Objects/_DEV/Walls/Res/mesh_lib.tres" id="30_e41io"]
+[ext_resource type="Shader" uid="uid://3lgr2mkb4bik" path="res://Assets/Shaders/src/outline.gdshader" id="31_232gy"]
+[ext_resource type="Shader" uid="uid://bctv1npkk6i7o" path="res://Assets/Shaders/src/cel-shader-base.gdshader" id="32_b3gpx"]
 [ext_resource type="PackedScene" uid="uid://p6w3l25xcjdh" path="res://Assets/Objects/Enemy/TestEnemy/SC_Enemy_Test.tscn" id="32_bx4fq"]
 [ext_resource type="PackedScene" uid="uid://dahqh5iltf71w" path="res://Assets/Objects/World/Vegetation/Grass/Grass1.tscn" id="33_l85pa"]
 [ext_resource type="PackedScene" uid="uid://6blvw1urbt6p" path="res://Assets/Objects/World/Vegetation/Fern/Fern1.tscn" id="34_pru3i"]
@@ -39,7 +41,6 @@
 [ext_resource type="PackedScene" uid="uid://drlnk7obsai4o" path="res://Assets/Objects/_DEV/Walls/Hurt.tscn" id="38_2dje4"]
 [ext_resource type="Texture2D" uid="uid://bg8i18iw4pxoa" path="res://Assets/Objects/_DEV/Walls/Res/wall1x1_wall.png" id="38_w70e7"]
 [ext_resource type="Texture2D" uid="uid://jts7wrvweol8" path="res://Assets/Objects/_DEV/Walls/Res/wall.png" id="39_232gy"]
-[ext_resource type="Shader" uid="uid://c17b8uo1g3ws" path="res://Assets/Objects/Player/hands_material.tres" id="40_w70e7"]
 
 [sub_resource type="Resource" id="Resource_ihmsf"]
 script = ExtResource("19_jnt08")
@@ -179,9 +180,12 @@ radiance_size = 0
 
 [sub_resource type="Environment" id="Environment_j55ur"]
 background_mode = 2
+background_energy_multiplier = 1.25
 sky = SubResource("Sky_vj82v")
+ambient_light_source = 3
 tonemap_mode = 2
-glow_enabled = true
+ssao_intensity = 1.16
+ssao_power = 6.65739
 fog_mode = 1
 fog_light_color = Color(0.324998, 0.35401, 0.399615, 1)
 fog_density = 1.0
@@ -192,6 +196,25 @@ volumetric_fog_density = 0.02
 volumetric_fog_anisotropy = 0.14
 volumetric_fog_length = 161.01
 volumetric_fog_sky_affect = 0.621
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_egasi"]
+render_priority = 0
+shader = ExtResource("31_232gy")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2iwdy"]
+render_priority = 0
+next_pass = SubResource("ShaderMaterial_egasi")
+shader = ExtResource("32_b3gpx")
+shader_parameter/color = Color(0, 0.650259, 0.925586, 1)
+shader_parameter/specular = Color(0.5, 0.5, 0.5, 0.501961)
+shader_parameter/fresnel = Color(0.381703, 0.381703, 0.381703, 0.3)
+shader_parameter/uv_scale = Vector2(1, 1)
+shader_parameter/uv_offset = Vector2(0, 0)
+
+[sub_resource type="SphereMesh" id="SphereMesh_l1vs0"]
+material = SubResource("ShaderMaterial_2iwdy")
+radial_segments = 16
+rings = 8
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_pdnst"]
 size = Vector3(1.1, 0.25, 1.1)
@@ -235,19 +258,43 @@ shadow_mesh = SubResource("ArrayMesh_fnfg6")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_jp2mi"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_232gy"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_6grxr"]
 render_priority = 0
-shader = ExtResource("40_w70e7")
+shader = ExtResource("31_232gy")
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_b3gpx"]
-next_pass = SubResource("ShaderMaterial_232gy")
-diffuse_mode = 3
-specular_mode = 1
-roughness = 0.0
-texture_filter = 0
+[sub_resource type="Gradient" id="Gradient_232gy"]
+offsets = PackedFloat32Array(0, 0.369515)
+colors = PackedColorArray(0.808998, 0.808998, 0.808997, 1, 1, 1, 1, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_b3gpx"]
+noise_type = 5
+frequency = 1.0
+fractal_type = 3
+fractal_octaves = 3
+domain_warp_frequency = 0.105
+domain_warp_fractal_type = 0
+domain_warp_fractal_octaves = 3
+domain_warp_fractal_gain = 0.805
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_egasi"]
+width = 256
+height = 256
+color_ramp = SubResource("Gradient_232gy")
+noise = SubResource("FastNoiseLite_b3gpx")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1ulw8"]
+render_priority = 0
+next_pass = SubResource("ShaderMaterial_6grxr")
+shader = ExtResource("32_b3gpx")
+shader_parameter/color = Color(0.368209, 0.38069, 0.384487, 1)
+shader_parameter/base_texture = SubResource("NoiseTexture2D_egasi")
+shader_parameter/specular = Color(0, 0, 0, 0.5)
+shader_parameter/fresnel = Color(0, 0, 0, 0.3)
+shader_parameter/uv_scale = Vector2(1, 1)
+shader_parameter/uv_offset = Vector2(0, 0)
 
 [sub_resource type="BoxMesh" id="BoxMesh_232gy"]
-material = SubResource("StandardMaterial3D_b3gpx")
+material = SubResource("ShaderMaterial_1ulw8")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_232gy"]
 size = Vector3(5, 1, 6.00684)
@@ -344,6 +391,10 @@ metadata/_editor_floor_ = Vector3(0, 2, 0)
 
 [node name="Player" parent="." instance=ExtResource("7_gqrsq")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 54.5086, 1.89687, -0.739392)
+
+[node name="ShaderTestMesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 69.0419, 1.40764, 0.299111)
+mesh = SubResource("SphereMesh_l1vs0")
 
 [node name="TestBlock" parent="." instance=ExtResource("6_jaj7b")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0.5, 1.5)
@@ -674,6 +725,7 @@ skeleton = NodePath("../../StaticBody3D")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D2"]
 transform = Transform3D(0.2, 0, 0, 0, 1, 0, 0, 0, 0.16666, 4.76837e-07, 0, 0.000393212)
+visible = false
 shape = SubResource("BoxShape3D_232gy")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="." groups=["wall"]]
@@ -682,6 +734,7 @@ transform = Transform3D(2.21, 0, 0, 0, 1.51, 0, 0, 0, 1.755, 62.875, 1.52297, 0.
 [node name="Area3D" type="Area3D" parent="StaticBody3D" groups=["wall"]]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D/Area3D"]
+visible = false
 shape = SubResource("BoxShape3D_w70e7")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]

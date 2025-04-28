@@ -162,6 +162,7 @@ debug_color = Color(0.996951, 0, 0.176392, 0.42)
 
 [node name="DashingFX" type="Node3D" parent="Head/Camera"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.136111)
+visible = false
 
 [node name="GPUParticles3D" type="GPUParticles3D" parent="Head/Camera/DashingFX"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.486835)

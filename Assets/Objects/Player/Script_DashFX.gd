@@ -33,3 +33,6 @@ func _process(delta: float) -> void:
 				dashing_fx.rotation.y = PI/2;
 			else:
 				dashing_fx.rotation.y = 0.0;
+				
+			dashing_fx.visible = true;
+			#dashing_fx.visible = player.spd > 11.0;

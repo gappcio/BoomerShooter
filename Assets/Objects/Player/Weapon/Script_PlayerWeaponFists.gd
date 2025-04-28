@@ -7,7 +7,7 @@ class_name player_weapon_fists
 @onready var area: Area3D = $"../../../FistsArea";
 @onready var camera: Camera3D;
 
-var punch_buffer_max: float = 12.0;
+var punch_buffer_max: float = 6.0;
 var punch_buffer: float = 0.0;
 
 var is_punching: bool = false;
@@ -44,7 +44,7 @@ func _process(delta):
 		else:
 			state = STATE.idle;
 	
-	if Input.is_action_pressed("punch") && (state == STATE.idle || state == STATE.vault_ready):
+	if Input.is_action_pressed("punch"):
 		punch_buffer = punch_buffer_max;
 	
 	if punch_buffer > 0.0:
