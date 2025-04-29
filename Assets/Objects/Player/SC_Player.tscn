@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://c0jd3cujvbmlc"]
+[gd_scene load_steps=28 format=3 uid="uid://c0jd3cujvbmlc"]
 
 [ext_resource type="Script" uid="uid://rrxtl6hrf7dr" path="res://Assets/Objects/Player/Script_Player.gd" id="1_5ffuh"]
 [ext_resource type="PackedScene" uid="uid://1hxrf7rm1jbt" path="res://Assets/Objects/Player/SC_Camera.tscn" id="1_xqu0b"]
@@ -25,6 +25,9 @@ height = 0.95
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_7iqpk"]
 size = Vector3(1, 1.77298, 0.821655)
+
+[sub_resource type="Compositor" id="Compositor_jc3lu"]
+compositor_effects = Array[CompositorEffect]([null])
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_vwhjx"]
 
@@ -114,6 +117,7 @@ invis_seconds = 1.0
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
 
 [node name="Camera" parent="Head" groups=["camera"] instance=ExtResource("1_xqu0b")]
+compositor = SubResource("Compositor_jc3lu")
 current = true
 script = ExtResource("5_vwhjx")
 noise = SubResource("FastNoiseLite_vwhjx")

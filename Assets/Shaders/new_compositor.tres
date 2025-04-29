@@ -1,0 +1,4 @@
+[gd_resource type="Compositor" format=3 uid="uid://b6wusxoxmh2w2"]
+
+[resource]
+compositor_effects = Array[CompositorEffect]([null])

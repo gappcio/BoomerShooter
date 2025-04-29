@@ -36,7 +36,6 @@ void fragment() {
 
 }
 "
-graph_offset = Vector2(-492.003, -80.8191)
 modes/cull = 2
 flags/unshaded = true
 preview_params/gradient_tex = "Object(GradientTexture1D,\"resource_local_to_scene\":false,\"resource_name\":\"\",\"gradient\":Object(Gradient,\"resource_local_to_scene\":false,\"resource_name\":\"\",\"interpolation_mode\":0,\"interpolation_color_space\":0,\"offsets\":PackedFloat32Array(0, 0.337292, 0.524941, 0.660333, 1),\"colors\":PackedColorArray(0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0),\"script\":null)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=79 format=4 uid="uid://7itgyyfxj4ga"]
+[gd_scene load_steps=94 format=4 uid="uid://7itgyyfxj4ga"]
 
 [ext_resource type="Script" uid="uid://c11xq6o4831nj" path="res://addons/qodot/src/nodes/qodot_map.gd" id="1_5g4pq"]
 [ext_resource type="PackedScene" uid="uid://cwhxdl2jthine" path="res://Assets/Common/WeatherManager/WeatherManager.tscn" id="1_qdr34"]
@@ -33,9 +33,12 @@
 [ext_resource type="PackedScene" uid="uid://bdcrrhdm6vkv6" path="res://Assets/Objects/World/Vegetation/PineTree/SC_PineTree1.tscn" id="29_1m1fx"]
 [ext_resource type="MeshLibrary" uid="uid://bfpi54nhciyt8" path="res://Assets/Objects/_DEV/Walls/Res/mesh_lib.tres" id="30_e41io"]
 [ext_resource type="Shader" uid="uid://3lgr2mkb4bik" path="res://Assets/Shaders/src/outline.gdshader" id="31_232gy"]
+[ext_resource type="Script" uid="uid://cy0k6viws4r4y" path="res://Assets/Scripts/rigid_body_3d.gd" id="31_egasi"]
 [ext_resource type="Shader" uid="uid://bctv1npkk6i7o" path="res://Assets/Shaders/src/cel-shader-base.gdshader" id="32_b3gpx"]
 [ext_resource type="PackedScene" uid="uid://p6w3l25xcjdh" path="res://Assets/Objects/Enemy/TestEnemy/SC_Enemy_Test.tscn" id="32_bx4fq"]
 [ext_resource type="PackedScene" uid="uid://dahqh5iltf71w" path="res://Assets/Objects/World/Vegetation/Grass/Grass1.tscn" id="33_l85pa"]
+[ext_resource type="Shader" uid="uid://cm4jpmfp1o2q1" path="res://Assets/Shaders/toonshader2.gdshader" id="34_2iwdy"]
+[ext_resource type="Shader" uid="uid://d0urpxi2hq5k3" path="res://Assets/Shaders/shadowshader.gdshader" id="34_egasi"]
 [ext_resource type="PackedScene" uid="uid://6blvw1urbt6p" path="res://Assets/Objects/World/Vegetation/Fern/Fern1.tscn" id="34_pru3i"]
 [ext_resource type="PackedScene" uid="uid://ding7i6p7m1fi" path="res://Assets/Objects/_DEV/Walls/Wall.tscn" id="37_2dje4"]
 [ext_resource type="PackedScene" uid="uid://drlnk7obsai4o" path="res://Assets/Objects/_DEV/Walls/Hurt.tscn" id="38_2dje4"]
@@ -180,7 +183,6 @@ radiance_size = 0
 
 [sub_resource type="Environment" id="Environment_j55ur"]
 background_mode = 2
-background_energy_multiplier = 1.25
 sky = SubResource("Sky_vj82v")
 ambient_light_source = 3
 tonemap_mode = 2
@@ -205,16 +207,93 @@ shader = ExtResource("31_232gy")
 render_priority = 0
 next_pass = SubResource("ShaderMaterial_egasi")
 shader = ExtResource("32_b3gpx")
-shader_parameter/color = Color(0, 0.650259, 0.925586, 1)
-shader_parameter/specular = Color(0.5, 0.5, 0.5, 0.501961)
-shader_parameter/fresnel = Color(0.381703, 0.381703, 0.381703, 0.3)
+shader_parameter/color = Color(0, 0.615774, 0.877637, 1)
+shader_parameter/specular = Color(1, 1, 1, 0.501961)
+shader_parameter/fresnel = Color(1, 1, 1, 0.3)
 shader_parameter/uv_scale = Vector2(1, 1)
 shader_parameter/uv_offset = Vector2(0, 0)
+
+[sub_resource type="BoxMesh" id="BoxMesh_l1vs0"]
+material = SubResource("ShaderMaterial_2iwdy")
+size = Vector3(2, 1, 2)
 
 [sub_resource type="SphereMesh" id="SphereMesh_l1vs0"]
 material = SubResource("ShaderMaterial_2iwdy")
 radial_segments = 16
 rings = 8
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_2iwdy"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_l1vs0"]
+render_priority = 0
+shader = ExtResource("31_232gy")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6grxr"]
+next_pass = SubResource("ShaderMaterial_l1vs0")
+diffuse_mode = 3
+specular_mode = 1
+albedo_color = Color(0, 0.615686, 0.878431, 1)
+roughness = 0.0
+rim_enabled = true
+clearcoat_roughness = 0.0
+
+[sub_resource type="SphereMesh" id="SphereMesh_6grxr"]
+material = SubResource("StandardMaterial3D_6grxr")
+radial_segments = 16
+rings = 8
+
+[sub_resource type="BoxMesh" id="BoxMesh_6grxr"]
+material = SubResource("StandardMaterial3D_6grxr")
+size = Vector3(2, 1, 2)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_mstx1"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_rgo25"]
+material = SubResource("ShaderMaterial_mstx1")
+radial_segments = 16
+rings = 8
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_kbsk8"]
+render_priority = 0
+shader = ExtResource("34_2iwdy")
+shader_parameter/albedo = Color(0, 0.615686, 0.878431, 1)
+shader_parameter/clamp_diffuse_to_max = false
+shader_parameter/cuts = 3
+shader_parameter/wrap = 0.0
+shader_parameter/steepness = 2.742
+shader_parameter/use_attenuation = true
+shader_parameter/use_specular = true
+shader_parameter/specular_strength = 1.0
+shader_parameter/specular_shininess = 16.0
+shader_parameter/use_rim = true
+shader_parameter/rim_width = 16.0
+shader_parameter/rim_color = Color(0, 0.615686, 0.878431, 1)
+shader_parameter/use_ramp = false
+shader_parameter/use_borders = false
+shader_parameter/border_width = 0.01
+
+[sub_resource type="BoxMesh" id="BoxMesh_577c2"]
+material = SubResource("ShaderMaterial_kbsk8")
+size = Vector3(2, 1, 2)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5moua"]
+render_priority = 0
+shader = ExtResource("34_egasi")
+shader_parameter/albedo = Color(1, 1, 1, 1)
+shader_parameter/cuts = 2
+shader_parameter/wrap = 0.0
+shader_parameter/steepness = 0.0
+shader_parameter/use_attenuation = true
+shader_parameter/use_rim = false
+shader_parameter/rim_width = 8.0
+shader_parameter/rim_color = Color(1, 1, 1, 1)
+shader_parameter/hatch_scale = 2.0
+shader_parameter/use_triplanar = true
+
+[sub_resource type="QuadMesh" id="QuadMesh_mstx1"]
+material = SubResource("ShaderMaterial_5moua")
+flip_faces = true
+size = Vector2(2, 2)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_pdnst"]
 size = Vector3(1.1, 0.25, 1.1)
@@ -373,9 +452,8 @@ size = Vector3(38, 1, 46)
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 0, 0)
-light_color = Color(0.666569, 0.666569, 0.666569, 1)
 shadow_enabled = true
-directional_shadow_mode = 1
+directional_shadow_blend_splits = true
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_j55ur")
@@ -392,9 +470,53 @@ metadata/_editor_floor_ = Vector3(0, 2, 0)
 [node name="Player" parent="." instance=ExtResource("7_gqrsq")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 54.5086, 1.89687, -0.739392)
 
-[node name="ShaderTestMesh" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 69.0419, 1.40764, 0.299111)
+[node name="ShaderTestMesh5" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 71.3173, 1.51909, 6.24749)
+mesh = SubResource("BoxMesh_l1vs0")
+
+[node name="ShaderTest1" type="RigidBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 71.3713, 2.63376, 5.64864)
+script = ExtResource("31_egasi")
+
+[node name="ShaderTestMesh" type="MeshInstance3D" parent="ShaderTest1"]
 mesh = SubResource("SphereMesh_l1vs0")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ShaderTest1"]
+shape = SubResource("SphereShape3D_2iwdy")
+
+[node name="ShaderTestMesh2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 71.4052, 2.7472, 1.65647)
+mesh = SubResource("SphereMesh_6grxr")
+
+[node name="ShaderTestMesh6" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 71.4277, 1.57602, 1.58788)
+mesh = SubResource("BoxMesh_6grxr")
+
+[node name="ShaderTestMesh3" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 70.9994, 2.77207, 4.01262)
+mesh = SubResource("SphereMesh_rgo25")
+
+[node name="ShaderTestMesh4" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 71.3824, 1.52818, 4.14758)
+mesh = SubResource("BoxMesh_577c2")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 54, 2, -4)
+extra_cull_margin = 16384.0
+mesh = SubResource("QuadMesh_mstx1")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 70.6919, 3.63807, 3.58778)
+shadow_enabled = true
+omni_range = 8.0
+
+[node name="OmniLight3D2" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 71.7715, 2.23875, 2.03688)
+visible = false
+light_color = Color(1, 0.245241, 0.187845, 1)
+shadow_enabled = true
+omni_range = 8.0
 
 [node name="TestBlock" parent="." instance=ExtResource("6_jaj7b")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0.5, 1.5)
@@ -619,6 +741,7 @@ collision_mask = 7
 script = ExtResource("21_uvjlx")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Node3D/Wall43/Wall"]
+visible = false
 shape = SubResource("BoxShape3D_jp2mi")
 
 [node name="Texture" parent="Node3D/Wall43/Wall" instance=ExtResource("23_sep45")]
@@ -741,4 +864,5 @@ shape = SubResource("BoxShape3D_w70e7")
 mesh = SubResource("BoxMesh_232gy")
 
 [node name="CollisionShape3D2" type="CollisionShape3D" parent="StaticBody3D"]
+visible = false
 shape = SubResource("BoxShape3D_w70e7")
