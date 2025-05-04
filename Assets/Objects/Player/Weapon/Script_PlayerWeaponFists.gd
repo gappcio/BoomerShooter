@@ -6,8 +6,9 @@ class_name player_weapon_fists
 @onready var punch_timer: Timer = $PunchTimer;
 @onready var area: Area3D = $"../../../FistsArea";
 @onready var camera: Camera3D;
+@onready var audio: AudioStreamPlayer3D = $Audio
 
-var punch_buffer_max: float = 6.0;
+var punch_buffer_max: float = 0.25;
 var punch_buffer: float = 0.0;
 
 var is_punching: bool = false;
@@ -44,11 +45,11 @@ func _process(delta):
 		else:
 			state = STATE.idle;
 	
-	if Input.is_action_pressed("punch"):
+	if Input.is_action_just_pressed("punch"):
 		punch_buffer = punch_buffer_max;
 	
 	if punch_buffer > 0.0:
-		punch_buffer -= 1.0;
+		punch_buffer -= delta;
 		
 		if !is_punching:
 			punch();
@@ -65,6 +66,8 @@ func _process(delta):
 
 
 func punch():
+	audio.pitch_scale = randf_range(0.9, 1.1);
+	audio.play();
 	is_punching = true;
 	state = STATE.attack;
 	punch_timer.start();

@@ -20,6 +20,8 @@ class_name Player
 @onready var step_below_raycast: RayCast3D = $Step/StepBelowRaycast
 @onready var step_ahead_raycast: RayCast3D = $Step/StepAheadRaycast
 
+@onready var audio_dash: AudioStreamPlayer3D = $AudioDash
+
 var visual_helper = preload("res://Assets/Objects/Player/VisualHelper.tscn");
 var player_visual_helper = preload("res://Assets/Objects/Player/VisualHelperPlayer.tscn");
 
@@ -298,7 +300,6 @@ func handle_jumping(delta: float):
 			add_force = 1.0;
 		jump_force = (JUMP_VELOCITY * ((spd * .015) + 1)) + add_force;
 	
-	print(jump_force)
 	
 	if Input.is_action_just_pressed("jump"):
 		jump_buffer = jump_buffer_max;
@@ -366,6 +367,9 @@ func movement(input_dir: Vector2, delta: float) -> void:
 		dash_buffer = dash_buffer_max;
 		dash_head_dir = -head.rotation.y;
 		dash_direction = direction;
+		
+		if dash_cooldown == 0.5:
+			audio_dash.play();
 		
 	if dash_buffer > 0.0:
 		dash_buffer -= 1.0;

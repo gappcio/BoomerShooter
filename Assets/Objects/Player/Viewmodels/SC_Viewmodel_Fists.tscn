@@ -1,8 +1,9 @@
-[gd_scene load_steps=16 format=4 uid="uid://04d8wgl8ry6b"]
+[gd_scene load_steps=17 format=4 uid="uid://04d8wgl8ry6b"]
 
 [ext_resource type="Script" uid="uid://c8uvcniqt4c00" path="res://Assets/Objects/Player/Weapon/Script_PlayerWeaponFists.gd" id="1_p00lp"]
 [ext_resource type="Texture2D" uid="uid://dvsddr0kx1mol" path="res://Assets/Objects/Player/Viewmodels/Pistol/textures/hand_texture _Sheet_.png" id="2_v5wxf"]
 [ext_resource type="Shader" uid="uid://c17b8uo1g3ws" path="res://Assets/Objects/Player/hands_material.tres" id="3_gxrw2"]
+[ext_resource type="AudioStream" uid="uid://dtbmpxc580ido" path="res://Assets/Audio/SFX/Weapons/Fist/fist_swing.wav" id="4_gxrw2"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_3435q"]
 render_priority = 0
@@ -2146,6 +2147,9 @@ libraries = {
 [node name="PunchTimer" type="Timer" parent="."]
 wait_time = 0.8
 one_shot = true
+
+[node name="Audio" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("4_gxrw2")
 
 [connection signal="animation_finished" from="hand_viewmodel/AnimHand" to="." method="_on_anim_hand_animation_finished"]
 [connection signal="timeout" from="PunchTimer" to="." method="_on_punch_timer_timeout"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://c0jd3cujvbmlc"]
+[gd_scene load_steps=29 format=3 uid="uid://c0jd3cujvbmlc"]
 
 [ext_resource type="Script" uid="uid://rrxtl6hrf7dr" path="res://Assets/Objects/Player/Script_Player.gd" id="1_5ffuh"]
 [ext_resource type="PackedScene" uid="uid://1hxrf7rm1jbt" path="res://Assets/Objects/Player/SC_Camera.tscn" id="1_xqu0b"]
@@ -12,6 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://04d8wgl8ry6b" path="res://Assets/Objects/Player/Viewmodels/SC_Viewmodel_Fists.tscn" id="6_hbj6a"]
 [ext_resource type="Shader" uid="uid://30jupcwsbqm1" path="res://Assets/Objects/Player/shader_dash_fx.tres" id="10_7iqpk"]
 [ext_resource type="Script" uid="uid://dhveyx1fvmyvb" path="res://Assets/Objects/Player/Script_DashFX.gd" id="11_jc3lu"]
+[ext_resource type="AudioStream" uid="uid://bhh8wld6vkkw0" path="res://Assets/Audio/SFX/Player/dash.wav" id="13_ahrm2"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_c23eb"]
 margin = 0.01
@@ -230,6 +231,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, -0.57106)
 target_position = Vector3(0, -0.3, 0)
 debug_shape_custom_color = Color(0.933333, 0, 1, 1)
 debug_shape_thickness = 4
+
+[node name="AudioDash" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("13_ahrm2")
+attenuation_model = 3
 
 [connection signal="area_entered" from="ComponentHitbox" to="." method="_on_component_hitbox_area_entered"]
 [connection signal="area_exited" from="ComponentHitbox" to="." method="_on_component_hitbox_area_exited"]

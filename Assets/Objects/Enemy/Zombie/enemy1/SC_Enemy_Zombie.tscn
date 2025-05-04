@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://bt2mjv47fumck"]
 
-[ext_resource type="Script" uid="uid://cpnukw6mvwwyo" path="res://Assets/Scripts/Enemy/TestEnemy/Script_TestEnemy.gd" id="1_why8m"]
+[ext_resource type="Script" uid="uid://cpnukw6mvwwyo" path="res://Assets/Objects/Enemy/BasicEnemy/Script_TestEnemy.gd" id="1_why8m"]
 [ext_resource type="PackedScene" uid="uid://b2pmo5llggqsa" path="res://Assets/Composition/ComponentHealth.tscn" id="2_llfh4"]
 [ext_resource type="PackedScene" uid="uid://cch1gmlni7xgu" path="res://Assets/Composition/ComponentHitbox.tscn" id="3_xde6q"]
 
