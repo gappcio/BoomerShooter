@@ -3,7 +3,7 @@ extends Node
 @export var max_health: float;
 @export var invis_seconds: float;
 
-var health: float;
+var health: float = 1.0;
 var flux: bool = false;
 var flux_damage: float;
 

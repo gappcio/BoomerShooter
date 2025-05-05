@@ -1,10 +1,9 @@
-[gd_scene load_steps=13 format=4 uid="uid://30klsayv4n42"]
+[gd_scene load_steps=12 format=4 uid="uid://30klsayv4n42"]
 
 [ext_resource type="Script" uid="uid://cpnukw6mvwwyo" path="res://Assets/Objects/Enemy/BasicEnemy/Script_TestEnemy.gd" id="1_y4fgr"]
 [ext_resource type="PackedScene" uid="uid://b2pmo5llggqsa" path="res://Assets/Composition/ComponentHealth.tscn" id="2_0goo5"]
 [ext_resource type="PackedScene" uid="uid://cch1gmlni7xgu" path="res://Assets/Composition/ComponentHitbox.tscn" id="3_bui7d"]
 [ext_resource type="Shader" uid="uid://3lgr2mkb4bik" path="res://Assets/Shaders/src/outline.gdshader" id="4_io0hc"]
-[ext_resource type="Shader" uid="uid://bctv1npkk6i7o" path="res://Assets/Shaders/src/cel-shader-base.gdshader" id="5_ixrgf"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ombrg"]
 radius = 0.231
@@ -14,19 +13,16 @@ height = 1.8
 radius = 0.3
 height = 1.6
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_65gsk"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2jo6d"]
 render_priority = 0
 shader = ExtResource("4_io0hc")
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_ffmsr"]
-render_priority = 0
-next_pass = SubResource("ShaderMaterial_65gsk")
-shader = ExtResource("5_ixrgf")
-shader_parameter/color = Color(0.736507, 0.684587, 0.653526, 1)
-shader_parameter/specular = Color(0.31802, 0.31802, 0.31802, 0.5)
-shader_parameter/fresnel = Color(0.0768358, 0.0768358, 0.0768358, 0.3)
-shader_parameter/uv_scale = Vector2(1, 1)
-shader_parameter/uv_offset = Vector2(0, 0)
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_y4fgr"]
+next_pass = SubResource("ShaderMaterial_2jo6d")
+diffuse_mode = 3
+specular_mode = 1
+roughness = 0.0
+rim_enabled = true
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rowvf"]
 resource_name = "Material.001"
@@ -736,9 +732,10 @@ shape = SubResource("CapsuleShape3D_ombrg")
 [node name="ComponentHealth" parent="." instance=ExtResource("2_0goo5")]
 max_health = 2.0
 
-[node name="ComponentHitbox" parent="." groups=["hitbox"] instance=ExtResource("3_bui7d")]
+[node name="ComponentHitbox" parent="." node_paths=PackedStringArray("health") groups=["hitbox"] instance=ExtResource("3_bui7d")]
 collision_layer = 4
 collision_mask = 0
+health = NodePath("../ComponentHealth")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="ComponentHitbox" groups=["hitbox"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.00512236, 0)
@@ -2317,6 +2314,8 @@ bones/221/rotation = Quaternion(0.0568805, 4.72159e-10, 0.155241, 0.986238)
 bones/221/scale = Vector3(1, 1, 1)
 
 [node name="model" type="MeshInstance3D" parent="Model/basic_enemy_model/rig/Skeleton3D"]
-material_override = SubResource("ShaderMaterial_ffmsr")
+material_override = SubResource("StandardMaterial3D_y4fgr")
 mesh = SubResource("ArrayMesh_fajw4")
 skin = SubResource("Skin_4bkwy")
+
+[connection signal="has_died" from="ComponentHealth" to="." method="_on_component_health_has_died"]

@@ -126,6 +126,11 @@ func shoot():
 	shooting_anim_finished = false;
 	shoot_timer.start();
 	
+	var tracer = Autoload.FX_BULLET_TRACER.instantiate();
+	get_tree().get_first_node_in_group("world").add_child(tracer);
+	tracer.global_transform = player_instance.muzzle_point.global_transform;
+	#tracer.endpoint = player_instance.raycast.target_position;
+	
 	audio.pitch_scale = randf_range(0.9, 1.1);
 	audio.play();
 	
@@ -199,19 +204,19 @@ func shoot():
 					if _target.is_in_group("wall") && _target.has_method("on_hit"):
 						target = _target;
 						target.on_hit(col_point_list[_i], col_normal_list[_i]);
+						tracer.endpoint = col_point_list[_i];
 						break;
 					if _target.is_in_group("hitbox") && _target.has_method("hurt"):
 						target = _target;
 						target.hurt(col_point_list[_i], col_normal_list[_i], damage);
+						tracer.endpoint = col_point_list[_i];
 						break;
-				
 				_i += 1;
 		
 			target_list.clear();
 			col_point_list.clear();
 			col_normal_list.clear();
 			
-		#random.free();
 		raycast.force_raycast_update();
 		
 	raycast.position = Vector3(0.0, 0.0, 0.0);

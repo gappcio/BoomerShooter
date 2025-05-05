@@ -205,7 +205,7 @@ size = Vector3(5, 1, 6.00684)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_w70e7"]
 
-[node name="WORLD" type="Node3D"]
+[node name="WORLD" type="Node3D" groups=["world"]]
 
 [node name="HUDControl" parent="." instance=ExtResource("1_ubt68")]
 
@@ -429,6 +429,22 @@ visible = false
 shape = SubResource("BoxShape3D_jp2mi")
 
 [node name="Texture" parent="Node3D/Wall43/Wall" instance=ExtResource("23_sep45")]
+texture = ExtResource("39_232gy")
+
+[node name="Wall57" type="MeshInstance3D" parent="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 2.43569, -6)
+mesh = SubResource("ArrayMesh_wfjuc")
+skeleton = NodePath("")
+
+[node name="Wall" type="StaticBody3D" parent="Node3D/Wall57" groups=["wall"]]
+collision_mask = 7
+script = ExtResource("21_uvjlx")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Node3D/Wall57/Wall"]
+visible = false
+shape = SubResource("BoxShape3D_jp2mi")
+
+[node name="Texture" parent="Node3D/Wall57/Wall" instance=ExtResource("23_sep45")]
 texture = ExtResource("39_232gy")
 
 [node name="Wall10" parent="Node3D" instance=ExtResource("37_2dje4")]

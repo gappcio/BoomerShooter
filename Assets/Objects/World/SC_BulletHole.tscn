@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://du12rfq3bg2p6" path="res://Assets/Composition/Texture.tscn" id="2_preab"]
 
 [node name="BulletHole" type="Decal"]
-size = Vector3(0.1, 1, 0.1)
+size = Vector3(0.1, 0.05, 0.1)
 texture_albedo = ExtResource("1_ff6sq")
 upper_fade = 0.0106011
 lower_fade = 83.3768
@@ -13,8 +13,3 @@ script = ExtResource("1_ufny3")
 
 [node name="Texture" parent="." instance=ExtResource("2_preab")]
 texture = ExtResource("1_ff6sq")
-
-[node name="Timer" type="Timer" parent="."]
-wait_time = 2.0
-one_shot = true
-autostart = true

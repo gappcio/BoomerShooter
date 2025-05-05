@@ -2,16 +2,15 @@ extends Decal
 class_name bullet_hole_decal
 
 @onready var tex = $Texture;
-@onready var timer = $Timer;
+var time = 1.0;
 
 func _ready():
-	
 	self.texture_albedo = tex.texture;
-	timer.start();
 	
 func _process(delta):
 	
-	if timer.is_stopped():
+	time -= delta;
+	if time <= 0.0:
 		self.albedo_mix -= delta;
 		
 		if albedo_mix <= 0.0:

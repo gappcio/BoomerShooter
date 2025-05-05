@@ -21,6 +21,7 @@ class_name Player
 @onready var step_ahead_raycast: RayCast3D = $Step/StepAheadRaycast
 
 @onready var audio_dash: AudioStreamPlayer3D = $AudioDash
+@onready var muzzle_point: Node3D = $Head/Camera/WeaponAttach/MuzzlePoint
 
 var visual_helper = preload("res://Assets/Objects/Player/VisualHelper.tscn");
 var player_visual_helper = preload("res://Assets/Objects/Player/VisualHelperPlayer.tscn");
