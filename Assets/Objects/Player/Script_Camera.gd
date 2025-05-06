@@ -20,13 +20,23 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	
+	var tilt_strength: float = player.input_dir.x / player.MAX_SPEED;
+	camera_tilt = lerp(camera_tilt, tilt_strength, 0.1);
+	
+	if abs(camera_tilt) < 0.001:
+		camera_tilt = 0.0;
+	
 	time += delta;
 	trauma = max(trauma - delta * 1.0, 0.0);
+	
+	var _rotation_z := 0.0;
 	
 	if trauma > 0.0:
 		rotation_degrees.x = (init_rotation.x + 10.0) * trauma * get_random_noise(123);
 		rotation_degrees.y = (init_rotation.y + 10.0) * trauma * get_random_noise(2137);
-		rotation_degrees.z = (init_rotation.z + 5.0) * trauma * get_random_noise(69);
+		_rotation_z = camera_tilt + (init_rotation.z + 5.0) * trauma * get_random_noise(69);
+		
+	rotation_degrees.z = rad_to_deg(camera_tilt) + _rotation_z;
 
 
 func get_random_noise(_seed: int) -> float:
@@ -61,22 +71,7 @@ func camera_shoot_effect():
 	var tween = create_tween().set_parallel();
 	var fov_change = 5.0;
 	var time = 0.025;
-	#var rotation_amount = 0.05;
-
-	#tween.tween_property(self, "rotation", Vector3(0, 0, time * Autoload.random_dir), rotation_amount).as_relative();
-	#tween.chain().tween_property(self, "rotation", Vector3(0, 0, -time * Autoload.random_dir), rotation_amount).as_relative();
 	
 	if self.fov > 1.0 && self.fov < 179.0:
 		tween.tween_property(self, "fov", fov_change, time).as_relative();
 		tween.chain().tween_property(self, "fov", -fov_change, time).as_relative();
-
-
-func tilt_camera(input_dir):
-	
-	var tilt_strength: float = input_dir.x / player.MAX_SPEED;
-	camera_tilt = lerp(camera_tilt, tilt_strength, 0.1);
-	
-	if abs(camera_tilt) < 0.001:
-		camera_tilt = 0.0;
-		
-	self.rotation.z = camera_tilt;

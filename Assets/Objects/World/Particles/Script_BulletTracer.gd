@@ -17,3 +17,7 @@ func _process(delta: float) -> void:
 	time -= delta;
 	if time <= 0.0:
 		queue_free();
+
+func set_lifetime(endpoint: Vector3) -> void:
+	var length = (endpoint - global_position).length();
+	time = length / 40.0;

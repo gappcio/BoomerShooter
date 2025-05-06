@@ -71,7 +71,7 @@ func _ready():
 	anim_tree_arms["parameters/playback"].travel("idle");
 	anim_tree_weapon["parameters/playback"].travel("idle");
 	anim_fx.play("none");
-
+	
 func _process(delta):
 	
 	sprite_animation();
@@ -79,7 +79,7 @@ func _process(delta):
 func _physics_process(delta: float) -> void:
 	
 	var player_speed: float = Vector2(player_instance.velocity.x, player_instance.velocity.z).length();
-	
+	#DebugDraw3D.draw_line(player_instance.muzzle_point.global_position, to_global(player_instance.raycast.target_position), Color(1.0, 0.0, 1.0));
 	if is_instance_valid(player_instance):
 		
 		if !is_shooting:
@@ -129,7 +129,7 @@ func shoot():
 	var tracer = Autoload.FX_BULLET_TRACER.instantiate();
 	get_tree().get_first_node_in_group("world").add_child(tracer);
 	tracer.global_transform = player_instance.muzzle_point.global_transform;
-	#tracer.endpoint = player_instance.raycast.target_position;
+	tracer.endpoint = to_global(player_instance.raycast.target_position);
 	
 	audio.pitch_scale = randf_range(0.9, 1.1);
 	audio.play();
@@ -221,7 +221,7 @@ func shoot():
 		
 	raycast.position = Vector3(0.0, 0.0, 0.0);
 	raycast.rotation = Vector3(0.0, 0.0, 0.0);
-
+	tracer.set_lifetime(tracer.endpoint);
 
 func sprite_animation():
 	

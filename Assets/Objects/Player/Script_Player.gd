@@ -224,8 +224,6 @@ func _physics_process(delta: float) -> void:
 	
 	move_and_slide();
 	
-	camera.tilt_camera(input_dir);
-	
 	look();
 	
 	if is_vaulting:

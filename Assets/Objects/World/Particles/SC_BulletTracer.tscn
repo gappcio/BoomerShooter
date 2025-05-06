@@ -1,17 +1,14 @@
-[gd_scene load_steps=4 format=3 uid="uid://0yduimqfdxcp"]
+[gd_scene load_steps=5 format=3 uid="uid://0yduimqfdxcp"]
 
 [ext_resource type="Script" uid="uid://b5a5os61vq2nt" path="res://Assets/Objects/World/Particles/Script_BulletTracer.gd" id="1_yp8mt"]
+[ext_resource type="Shader" uid="uid://sq82xoxe5gp8" path="res://Assets/Objects/World/Particles/SHADER_bullet_tracer.tres" id="2_iogqi"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_k007k"]
-diffuse_mode = 3
-specular_mode = 1
-albedo_color = Color(1, 1, 0, 1)
-roughness = 0.0
-emission_enabled = true
-emission = Color(1, 1, 0, 1)
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_xf3b2"]
+render_priority = 0
+shader = ExtResource("2_iogqi")
 
 [sub_resource type="RibbonTrailMesh" id="RibbonTrailMesh_yp8mt"]
-material = SubResource("StandardMaterial3D_k007k")
+material = SubResource("ShaderMaterial_xf3b2")
 size = 0.015
 sections = 2
 section_length = 0.5
@@ -22,4 +19,6 @@ script = ExtResource("1_yp8mt")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, -0.5)
+cast_shadow = 0
+gi_mode = 0
 mesh = SubResource("RibbonTrailMesh_yp8mt")

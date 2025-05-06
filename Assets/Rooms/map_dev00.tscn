@@ -1,9 +1,10 @@
-[gd_scene load_steps=45 format=4 uid="uid://7itgyyfxj4ga"]
+[gd_scene load_steps=46 format=4 uid="uid://7itgyyfxj4ga"]
 
 [ext_resource type="PackedScene" uid="uid://cwhxdl2jthine" path="res://Assets/Common/WeatherManager/WeatherManager.tscn" id="1_qdr34"]
 [ext_resource type="PackedScene" uid="uid://cyjskxhmr81rt" path="res://Assets/Common/GUI/hud.tscn" id="1_ubt68"]
 [ext_resource type="PackedScene" uid="uid://c0jd3cujvbmlc" path="res://Assets/Objects/Player/SC_Player.tscn" id="7_gqrsq"]
 [ext_resource type="PackedScene" uid="uid://30klsayv4n42" path="res://Assets/Objects/Enemy/BasicEnemy/SC_Enemy_Test.tscn" id="15_a5m4o"]
+[ext_resource type="Texture2D" uid="uid://cp3da808i7r1" path="res://Assets/Sprites/World/wall_part.png" id="15_nbtwj"]
 [ext_resource type="Script" uid="uid://bvx6lf5rp62m3" path="res://Assets/Scripts/Script_Wall.gd" id="21_uvjlx"]
 [ext_resource type="PackedScene" uid="uid://du12rfq3bg2p6" path="res://Assets/Composition/Texture.tscn" id="23_sep45"]
 [ext_resource type="MeshLibrary" uid="uid://bfpi54nhciyt8" path="res://Assets/Objects/_DEV/Walls/Res/mesh_lib.tres" id="30_e41io"]
@@ -210,6 +211,10 @@ size = Vector3(5, 1, 6.00684)
 [node name="HUDControl" parent="." instance=ExtResource("1_ubt68")]
 
 [node name="WeatherManager" parent="." instance=ExtResource("1_qdr34")]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0.0156889, 0, 0.00333452)
+shadow_enabled = true
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_wg2nu")
@@ -540,8 +545,9 @@ text = "21"
 [node name="Hurt" parent="Node3D2" instance=ExtResource("38_2dje4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 61.5, 1.5, 6.5)
 
-[node name="StaticBody3D2" type="StaticBody3D" parent="."]
+[node name="StaticBody3D2" type="StaticBody3D" parent="." groups=["wall"]]
 transform = Transform3D(11.05, 0, 0, 0, 1.51, 0, 0, 0, 10.53, -2.125, 1.52297, -8.515)
+script = ExtResource("21_uvjlx")
 
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="StaticBody3D2"]
 mesh = SubResource("BoxMesh_232gy")
@@ -551,6 +557,9 @@ skeleton = NodePath("../../StaticBody3D")
 transform = Transform3D(0.2, 0, 0, 0, 1, 0, 0, 0, 0.16666, 4.76837e-07, 0, 0.000393212)
 visible = false
 shape = SubResource("BoxShape3D_232gy")
+
+[node name="Texture" parent="StaticBody3D2" instance=ExtResource("23_sep45")]
+texture = ExtResource("15_nbtwj")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="." groups=["wall"]]
 transform = Transform3D(2.21, 0, 0, 0, 1.51, 0, 0, 0, 1.755, -2.125, 1.52297, 0.485)

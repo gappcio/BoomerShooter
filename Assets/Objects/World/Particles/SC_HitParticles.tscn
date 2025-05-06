@@ -47,7 +47,6 @@ material = SubResource("StandardMaterial3D_smqro")
 size = Vector2(0.1, 0.1)
 
 [node name="ScHitParticles" type="GPUParticles3D"]
-emitting = false
 lifetime = 2.0
 one_shot = true
 speed_scale = 1.2
