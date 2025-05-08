@@ -1,19 +1,13 @@
 {
 	"connections": [
 		{
-			"from": "bricks",
-			"from_port": 0,
-			"to": "blend2",
-			"to_port": 0
-		},
-		{
-			"from": "perlin",
+			"from": "fbm2",
 			"from_port": 0,
 			"to": "blend2",
 			"to_port": 1
 		},
 		{
-			"from": "blend2",
+			"from": "edge_detect",
 			"from_port": 0,
 			"to": "invert",
 			"to_port": 0
@@ -21,62 +15,158 @@
 		{
 			"from": "invert",
 			"from_port": 0,
-			"to": "Material",
-			"to_port": 6
+			"to": "gaussian_blur_2",
+			"to_port": 0
 		},
 		{
-			"from": "blend2",
+			"from": "gaussian_blur_2",
+			"from_port": 0,
+			"to": "blend2_2",
+			"to_port": 1
+		},
+		{
+			"from": "gaussian_blur",
 			"from_port": 0,
 			"to": "blend2_2",
 			"to_port": 0
 		},
 		{
 			"from": "bricks",
-			"from_port": 1,
-			"to": "fill_to_gradient",
+			"from_port": 0,
+			"to": "blend2",
 			"to_port": 0
 		},
 		{
-			"from": "fill_to_gradient",
+			"from": "blend2",
+			"from_port": 0,
+			"to": "gaussian_blur",
+			"to_port": 0
+		},
+		{
+			"from": "blend2",
+			"from_port": 0,
+			"to": "edge_detect",
+			"to_port": 0
+		},
+		{
+			"from": "blend2",
+			"from_port": 0,
+			"to": "blend2_3",
+			"to_port": 1
+		},
+		{
+			"from": "blend2_3",
 			"from_port": 0,
 			"to": "math",
 			"to_port": 0
 		},
 		{
-			"from": "uniform",
+			"from": "wavelet_noise2",
+			"from_port": 0,
+			"to": "blend2_4",
+			"to_port": 1
+		},
+		{
+			"from": "perlin",
+			"from_port": 0,
+			"to": "blend2_4",
+			"to_port": 0
+		},
+		{
+			"from": "blend2_4",
 			"from_port": 0,
 			"to": "blend2_3",
-			"to_port": 1
+			"to_port": 0
 		},
 		{
 			"from": "math",
 			"from_port": 0,
-			"to": "blend2_3",
+			"to": "gaussian_blur_3",
 			"to_port": 0
-		},
-		{
-			"from": "blend2_3",
-			"from_port": 0,
-			"to": "blend2_2",
-			"to_port": 1
 		},
 		{
 			"from": "blend2_2",
 			"from_port": 0,
-			"to": "multi_warp",
-			"to_port": 0
-		},
-		{
-			"from": "fbm2",
-			"from_port": 0,
-			"to": "multi_warp",
+			"to": "blend2_5",
 			"to_port": 1
 		},
 		{
-			"from": "multi_warp",
+			"from": "gaussian_blur_3",
+			"from_port": 0,
+			"to": "invert_2",
+			"to_port": 0
+		},
+		{
+			"from": "blend2_4",
+			"from_port": 0,
+			"to": "reroute",
+			"to_port": 0
+		},
+		{
+			"from": "invert_3",
+			"from_port": 0,
+			"to": "Material",
+			"to_port": 6
+		},
+		{
+			"from": "blend2_2",
+			"from_port": 0,
+			"to": "invert_3",
+			"to_port": 0
+		},
+		{
+			"from": "math_2",
+			"from_port": 0,
+			"to": "math_3",
+			"to_port": 0
+		},
+		{
+			"from": "math_3",
 			"from_port": 0,
 			"to": "normal_map2",
 			"to_port": 0
+		},
+		{
+			"from": "invert_2",
+			"from_port": 0,
+			"to": "colorize",
+			"to_port": 0
+		},
+		{
+			"from": "colorize",
+			"from_port": 0,
+			"to": "blend2_5",
+			"to_port": 0
+		},
+		{
+			"from": "blend2_5",
+			"from_port": 0,
+			"to": "blend2_6",
+			"to_port": 0
+		},
+		{
+			"from": "normal_map2",
+			"from_port": 0,
+			"to": "colorize_2",
+			"to_port": 0
+		},
+		{
+			"from": "gaussian_blur_4",
+			"from_port": 0,
+			"to": "blend2_6",
+			"to_port": 1
+		},
+		{
+			"from": "blend2_6",
+			"from_port": 0,
+			"to": "Material",
+			"to_port": 0
+		},
+		{
+			"from": "math_3",
+			"from_port": 0,
+			"to": "blend2_5",
+			"to_port": 3
 		},
 		{
 			"from": "normal_map2",
@@ -85,52 +175,47 @@
 			"to_port": 4
 		},
 		{
-			"from": "normal_map2",
+			"from": "colorize_2",
 			"from_port": 0,
-			"to": "colorize",
+			"to": "edge_detect_2",
 			"to_port": 0
 		},
 		{
-			"from": "colorize",
+			"from": "edge_detect_2",
 			"from_port": 0,
-			"to": "invert_2",
+			"to": "invert_4",
 			"to_port": 0
 		},
 		{
-			"from": "invert_2",
+			"from": "invert_4",
 			"from_port": 0,
-			"to": "blend2_4",
-			"to_port": 1
-		},
-		{
-			"from": "blend2_2",
-			"from_port": 0,
-			"to": "blend2_4",
+			"to": "gaussian_blur_4",
 			"to_port": 0
 		},
 		{
-			"from": "blend2_4",
+			"from": "fbm2_2",
 			"from_port": 0,
-			"to": "Material",
+			"to": "math_2",
 			"to_port": 0
 		}
 	],
 	"label": "Graph",
 	"longdesc": "",
-	"name": "@Node@491",
+	"name": "_Node_491",
 	"node_position": {
 		"x": 0.0,
 		"y": 0.0
 	},
 	"nodes": [
 		{
+			"export_last_target": "Blender",
 			"export_paths": {
-
+				"Blender": "C:/Users/SWMiT/Desktop/idk/godotprojects/BoomerShooter/Assets/Objects/World/Buildings/TownHouses/TownHouse1/materials/blender/big_white_brick"
 			},
 			"name": "Material",
 			"node_position": {
-				"x": 2040.77478027344,
-				"y": 68.7378463745117
+				"x": 2822.23315429688,
+				"y": -134.003677368164
 			},
 			"parameters": {
 				"albedo_color": {
@@ -141,59 +226,24 @@
 					"type": "Color"
 				},
 				"ao": 1.0,
-				"depth_scale": 0.07,
+				"depth_scale": 0.05,
 				"emission_energy": 0.0,
 				"flags_transparent": false,
 				"metallic": 0.0,
-				"normal": 0.67,
+				"normal": 0.0,
 				"roughness": 1.0,
-				"size": 7,
+				"size": 9,
 				"sss": 0.0
 			},
 			"seed_int": 0,
 			"type": "material"
 		},
 		{
-			"name": "bricks",
-			"node_position": {
-				"x": -385.591217041016,
-				"y": -226.299102783203
-			},
-			"parameters": {
-				"bevel": 0.15,
-				"columns": 1.0,
-				"corner": 0.19,
-				"mortar": 0.0,
-				"pattern": 0,
-				"repeat": 1.0,
-				"round": 0.0,
-				"row_offset": 0.5,
-				"rows": 4.0
-			},
-			"seed_int": 0,
-			"type": "bricks3"
-		},
-		{
-			"name": "perlin",
-			"node_position": {
-				"x": -389.215606689453,
-				"y": 69.7333526611328
-			},
-			"parameters": {
-				"iterations": 6.0,
-				"persistence": 0.9,
-				"scale_x": 3.0,
-				"scale_y": 2.0
-			},
-			"seed_int": 0,
-			"type": "perlin"
-		},
-		{
 			"generic_size": 1,
 			"name": "blend2",
 			"node_position": {
-				"x": -151.560394287109,
-				"y": -56.2558097839355
+				"x": -250.0771484375,
+				"y": -144.2333984375
 			},
 			"parameters": {
 				"amount1": 1.0,
@@ -203,10 +253,92 @@
 			"type": "blend2"
 		},
 		{
+			"name": "fbm2",
+			"node_position": {
+				"x": -528.143615722656,
+				"y": 28.8751354217529
+			},
+			"parameters": {
+				"folds": 0.0,
+				"iterations": 1.0,
+				"noise": 0,
+				"offset": 0.0,
+				"persistence": 0.0,
+				"scale_x": 7.0,
+				"scale_y": 7.0
+			},
+			"seed_int": 1414862592,
+			"type": "fbm2"
+		},
+		{
+			"name": "bricks",
+			"node_position": {
+				"x": -649.623962402344,
+				"y": -348.453430175781
+			},
+			"parameters": {
+				"bevel": 0.05,
+				"columns": 1.0,
+				"corner": 0.0,
+				"mortar": 0.03,
+				"pattern": 0,
+				"repeat": 1.0,
+				"round": 0.04,
+				"row_offset": 0.5,
+				"rows": 2.0
+			},
+			"seed_int": 0,
+			"type": "bricks3"
+		},
+		{
+			"name": "gaussian_blur",
+			"node_position": {
+				"x": 438.792083740234,
+				"y": -130.346908569336
+			},
+			"parameters": {
+				"param0": 9.0,
+				"param1": 2.0,
+				"param2": 0,
+				"param3": false
+			},
+			"seed_int": 0,
+			"type": "gaussian_blur"
+		},
+		{
+			"name": "edge_detect",
+			"node_position": {
+				"x": 207.21223449707,
+				"y": 275.839660644531
+			},
+			"parameters": {
+				"size": 9.0,
+				"threshold": 0.21,
+				"width": 1.0
+			},
+			"seed_int": 0,
+			"type": "edge_detect"
+		},
+		{
+			"name": "gaussian_blur_2",
+			"node_position": {
+				"x": 607.203063964844,
+				"y": 262.315307617188
+			},
+			"parameters": {
+				"param0": 9.0,
+				"param1": 8.4,
+				"param2": 0.0,
+				"param3": false
+			},
+			"seed_int": 0,
+			"type": "gaussian_blur"
+		},
+		{
 			"name": "invert",
 			"node_position": {
-				"x": 115.262748718262,
-				"y": 74.4273147583008
+				"x": 443.218475341797,
+				"y": 281.607635498047
 			},
 			"parameters": {
 
@@ -215,51 +347,47 @@
 			"type": "invert"
 		},
 		{
-			"name": "fill_to_gradient",
-			"node_position": {
-				"x": -144.801361083984,
-				"y": 334.238403320313
-			},
-			"parameters": {
-				"grad": {
-					"interpolation": 1,
-					"points": [
-						{
-							"a": 1.0,
-							"b": 0.0,
-							"g": 0.0,
-							"pos": 0.152303059895833,
-							"r": 0.0
-						},
-						{
-							"a": 1.0,
-							"b": 1.0,
-							"g": 1.0,
-							"pos": 1.0,
-							"r": 1.0
-						}
-					],
-					"type": "Gradient"
-				},
-				"layers": 4.0,
-				"mode": 1,
-				"r_offset": 0.2,
-				"r_rotate": 180.0,
-				"rotate": 0.0
-			},
-			"seed_int": 0,
-			"type": "fill_to_gradient2"
-		},
-		{
 			"generic_size": 1,
 			"name": "blend2_2",
 			"node_position": {
-				"x": 615.028686523438,
-				"y": -76.7317657470703
+				"x": 818.346618652344,
+				"y": -29.2128143310547
 			},
 			"parameters": {
-				"amount1": 0.55,
-				"blend_type1": 2
+				"amount1": 1.0,
+				"blend_type1": 8
+			},
+			"seed_int": 0,
+			"type": "blend2"
+		},
+		{
+			"name": "wavelet_noise2",
+			"node_position": {
+				"x": -203.055526733398,
+				"y": -559.543090820313
+			},
+			"parameters": {
+				"frequency": 2.0,
+				"iterations": 1.0,
+				"offset": 0.0,
+				"persistence": 0.0,
+				"scale_x": 1.0,
+				"scale_y": 19.0,
+				"type": 0
+			},
+			"seed_int": 380761792,
+			"type": "wavelet_noise2"
+		},
+		{
+			"generic_size": 1,
+			"name": "blend2_3",
+			"node_position": {
+				"x": 306.053283691406,
+				"y": -549.742431640625
+			},
+			"parameters": {
+				"amount1": 1.0,
+				"blend_type1": 8
 			},
 			"seed_int": 0,
 			"type": "blend2"
@@ -267,94 +395,174 @@
 		{
 			"name": "math",
 			"node_position": {
-				"x": 143.854675292969,
-				"y": 367.822235107422
+				"x": 629.092346191406,
+				"y": -562.711059570313
 			},
 			"parameters": {
 				"clamp": false,
 				"default_in1": 0.0,
-				"default_in2": 0.04,
-				"op": 32
+				"default_in2": 0.33,
+				"op": 15
 			},
 			"seed_int": 0,
 			"type": "math"
 		},
 		{
 			"generic_size": 1,
-			"name": "blend2_3",
+			"name": "blend2_4",
 			"node_position": {
-				"x": 527.182800292969,
-				"y": 527.542236328125
+				"x": 43.1420135498047,
+				"y": -680.608520507813
 			},
 			"parameters": {
-				"amount1": 0.6,
-				"blend_type1": 13
+				"amount1": 0.56,
+				"blend_type1": 2
 			},
 			"seed_int": 0,
 			"type": "blend2"
 		},
 		{
-			"name": "uniform",
+			"name": "perlin",
 			"node_position": {
-				"x": 193.101669311523,
-				"y": 630.029296875
+				"x": -231.559020996094,
+				"y": -803.221862792969
 			},
 			"parameters": {
-				"color": {
-					"a": 1.0,
-					"b": 1.0,
-					"g": 1.0,
-					"r": 1.0,
-					"type": "Color"
-				}
-			},
-			"seed_int": 0,
-			"type": "uniform"
-		},
-		{
-			"name": "multi_warp",
-			"node_position": {
-				"x": 941.123718261719,
-				"y": 475.633239746094
-			},
-			"parameters": {
-				"param0": 7,
-				"param1": 4.346,
-				"param2": 22.0,
-				"param3": 0
-			},
-			"seed_int": 0,
-			"type": "multi_warp"
-		},
-		{
-			"name": "fbm2",
-			"node_position": {
-				"x": 667.597473144531,
-				"y": 708.835388183594
-			},
-			"parameters": {
-				"folds": 0.0,
-				"iterations": 6.0,
-				"noise": 0,
-				"offset": 0.26,
-				"persistence": 0.53,
+				"iterations": 2.0,
+				"persistence": 0.5,
 				"scale_x": 4.0,
-				"scale_y": 4.0
+				"scale_y": 18.0
+			},
+			"seed_int": 4249468928,
+			"type": "perlin"
+		},
+		{
+			"name": "gaussian_blur_3",
+			"node_position": {
+				"x": 1051.07080078125,
+				"y": -546.146362304688
+			},
+			"parameters": {
+				"param0": 9.0,
+				"param1": 1.5,
+				"param2": 0,
+				"param3": false
 			},
 			"seed_int": 0,
+			"type": "gaussian_blur"
+		},
+		{
+			"generic_size": 2,
+			"name": "blend2_5",
+			"node_position": {
+				"x": 1740.83386230469,
+				"y": -201.969650268555
+			},
+			"parameters": {
+				"amount1": 0.52,
+				"amount2": 0.0,
+				"blend_type1": 12,
+				"blend_type2": 2
+			},
+			"seed_int": 0,
+			"type": "blend2"
+		},
+		{
+			"name": "invert_2",
+			"node_position": {
+				"x": 1288.0966796875,
+				"y": -532.468017578125
+			},
+			"parameters": {
+
+			},
+			"seed_int": 0,
+			"type": "invert"
+		},
+		{
+			"name": "reroute",
+			"node_position": {
+				"x": 1561.51098632813,
+				"y": -644.606994628906
+			},
+			"parameters": {
+				"preview": 0
+			},
+			"seed_int": 0,
+			"type": "reroute"
+		},
+		{
+			"name": "invert_3",
+			"node_position": {
+				"x": 1710.00927734375,
+				"y": 97.7068405151367
+			},
+			"parameters": {
+
+			},
+			"seed_int": 0,
+			"type": "invert"
+		},
+		{
+			"name": "fbm2_2",
+			"node_position": {
+				"x": 921.122131347656,
+				"y": 213.25813293457
+			},
+			"parameters": {
+				"folds": 2.0,
+				"iterations": 4.0,
+				"noise": 9,
+				"offset": 0.0,
+				"persistence": 0.64,
+				"scale_x": 1.0,
+				"scale_y": 2.0
+			},
+			"seed_int": 634526272,
 			"type": "fbm2"
+		},
+		{
+			"name": "math_2",
+			"node_position": {
+				"x": 1190.74169921875,
+				"y": 270.320495605469
+			},
+			"parameters": {
+				"clamp": false,
+				"default_in1": 0.0,
+				"default_in2": 0.17,
+				"op": 32
+			},
+			"seed_int": 0,
+			"type": "math"
+		},
+		{
+			"minimized": true,
+			"name": "math_3",
+			"node_position": {
+				"x": 1581.33435058594,
+				"y": 265.794158935547
+			},
+			"parameters": {
+				"clamp": false,
+				"default_in1": 0.0,
+				"default_in2": 0.5,
+				"op": 0
+			},
+			"seed_int": 0,
+			"type": "math"
 		},
 		{
 			"name": "normal_map2",
 			"node_position": {
-				"x": 1205.88513183594,
-				"y": 693.012023925781
+				"x": 1727.91723632813,
+				"y": 276.234832763672
 			},
 			"parameters": {
 				"buffer": 1,
-				"param2": 3,
-				"size": 7,
-				"strength": 0.6
+				"param2": 0,
+				"size": 9,
+				"strength": 0.59
 			},
 			"seed_int": 0,
 			"type": "normal_map2"
@@ -362,8 +570,8 @@
 		{
 			"name": "colorize",
 			"node_position": {
-				"x": 1451.92333984375,
-				"y": 818.625244140625
+				"x": 1565.82202148438,
+				"y": -424.968017578125
 			},
 			"parameters": {
 				"gradient": {
@@ -373,14 +581,71 @@
 							"a": 1.0,
 							"b": 0.0,
 							"g": 0.0,
-							"pos": 0.390983989220539,
+							"pos": 0.714296763179866,
+							"r": 0.0
+						},
+						{
+							"a": 1.0,
+							"b": 0.28125,
+							"g": 0.28125,
+							"pos": 1.0,
+							"r": 0.28125
+						}
+					],
+					"type": "Gradient"
+				}
+			},
+			"seed_int": 0,
+			"type": "colorize"
+		},
+		{
+			"generic_size": 1,
+			"name": "blend2_6",
+			"node_position": {
+				"x": 2518.56982421875,
+				"y": 239.843856811523
+			},
+			"parameters": {
+				"amount1": 0.19,
+				"blend_type1": 2
+			},
+			"seed_int": 0,
+			"type": "blend2"
+		},
+		{
+			"name": "invert_4",
+			"node_position": {
+				"x": 2255.009765625,
+				"y": 544.290466308594
+			},
+			"parameters": {
+
+			},
+			"seed_int": 0,
+			"type": "invert"
+		},
+		{
+			"name": "colorize_2",
+			"node_position": {
+				"x": 1976.57141113281,
+				"y": 515.240539550781
+			},
+			"parameters": {
+				"gradient": {
+					"interpolation": 1,
+					"points": [
+						{
+							"a": 1.0,
+							"b": 0.0,
+							"g": 0.0,
+							"pos": 0.341194058641975,
 							"r": 0.0
 						},
 						{
 							"a": 1.0,
 							"b": 1.0,
 							"g": 1.0,
-							"pos": 0.734495439602219,
+							"pos": 0.614896797839506,
 							"r": 1.0
 						}
 					],
@@ -391,30 +656,33 @@
 			"type": "colorize"
 		},
 		{
-			"name": "invert_2",
+			"name": "gaussian_blur_4",
 			"node_position": {
-				"x": 1711.06909179688,
-				"y": 831.802062988281
+				"x": 2419.18212890625,
+				"y": 510.97265625
 			},
 			"parameters": {
-
+				"param0": 9,
+				"param1": 1.2,
+				"param2": 0.0,
+				"param3": false
 			},
 			"seed_int": 0,
-			"type": "invert"
+			"type": "gaussian_blur"
 		},
 		{
-			"generic_size": 1,
-			"name": "blend2_4",
+			"name": "edge_detect_2",
 			"node_position": {
-				"x": 1671.53845214844,
-				"y": 25.0828990936279
+				"x": 2093.10229492188,
+				"y": 734.784851074219
 			},
 			"parameters": {
-				"amount1": 1.0,
-				"blend_type1": 2
+				"size": 9.0,
+				"threshold": 1.0,
+				"width": 2.0
 			},
 			"seed_int": 0,
-			"type": "blend2"
+			"type": "edge_detect"
 		}
 	],
 	"parameters": {
