@@ -31,60 +31,6 @@
 			"to_port": 0
 		},
 		{
-			"from": "normal_map2",
-			"from_port": 0,
-			"to": "Material",
-			"to_port": 4
-		},
-		{
-			"from": "normal_map2",
-			"from_port": 0,
-			"to": "colorize",
-			"to_port": 0
-		},
-		{
-			"from": "colorize",
-			"from_port": 0,
-			"to": "edge_detect",
-			"to_port": 0
-		},
-		{
-			"from": "edge_detect",
-			"from_port": 0,
-			"to": "gaussian_blur_2",
-			"to_port": 0
-		},
-		{
-			"from": "gaussian_blur",
-			"from_port": 0,
-			"to": "normal_map2",
-			"to_port": 0
-		},
-		{
-			"from": "gaussian_blur",
-			"from_port": 0,
-			"to": "blend2_3",
-			"to_port": 0
-		},
-		{
-			"from": "gaussian_blur_2",
-			"from_port": 0,
-			"to": "invert",
-			"to_port": 0
-		},
-		{
-			"from": "invert",
-			"from_port": 0,
-			"to": "blend2_3",
-			"to_port": 1
-		},
-		{
-			"from": "blend2_3",
-			"from_port": 0,
-			"to": "Material",
-			"to_port": 0
-		},
-		{
 			"from": "fbm2",
 			"from_port": 0,
 			"to": "make_tileable",
@@ -95,11 +41,23 @@
 			"from_port": 0,
 			"to": "blend2",
 			"to_port": 0
+		},
+		{
+			"from": "gaussian_blur",
+			"from_port": 0,
+			"to": "math_2",
+			"to_port": 0
+		},
+		{
+			"from": "math_2",
+			"from_port": 0,
+			"to": "Material",
+			"to_port": 0
 		}
 	],
 	"label": "Graph",
 	"longdesc": "",
-	"name": "@Node@394576",
+	"name": "_Node_394576",
 	"node_position": {
 		"x": 0.0,
 		"y": 0.0
@@ -111,8 +69,8 @@
 			},
 			"name": "Material",
 			"node_position": {
-				"x": 2028.83520507813,
-				"y": 15.8365535736084
+				"x": 948.929931640625,
+				"y": 109.989456176758
 			},
 			"parameters": {
 				"albedo_color": {
@@ -124,13 +82,13 @@
 				},
 				"ao": 1.0,
 				"depth_scale": 0.0,
-				"emission_energy": 1.0,
-				"flags_transparent": true,
+				"emission_energy": 0.0,
+				"flags_transparent": false,
 				"metallic": 0.0,
-				"normal": 1.44,
+				"normal": 0.0,
 				"roughness": 1.0,
 				"size": 8,
-				"sss": 1.0
+				"sss": 0.0
 			},
 			"seed_int": 0,
 			"type": "material"
@@ -144,13 +102,13 @@
 			"parameters": {
 				"folds": 0.0,
 				"iterations": 6.0,
-				"noise": 3,
+				"noise": 3.0,
 				"offset": 0.0,
 				"persistence": 0.94,
 				"scale_x": 3.0,
 				"scale_y": 3.0
 			},
-			"seed_int": 1589830528,
+			"seed_int": 3466288640,
 			"type": "fbm2"
 		},
 		{
@@ -214,8 +172,8 @@
 					"parameters": {
 						"iterations": 3.0,
 						"persistence": 0.5,
-						"scale_x": 1.0,
-						"scale_y": 5.0
+						"scale_x": 3.0,
+						"scale_y": 4.0
 					},
 					"seed": 1093.0,
 					"type": "perlin"
@@ -258,8 +216,8 @@
 						"y": -893.0
 					},
 					"parameters": {
-						"param0": 1.0,
-						"param1": 5.0,
+						"param0": 3.0,
+						"param1": 4.0,
 						"param2": 3.0,
 						"param3": 0.5,
 						"param4": 0.5,
@@ -338,14 +296,14 @@
 				}
 			],
 			"parameters": {
-				"param0": 1.0,
-				"param1": 5.0,
+				"param0": 3.0,
+				"param1": 4.0,
 				"param2": 3.0,
 				"param3": 0.5,
 				"param4": 0.5,
 				"param5": 0.5
 			},
-			"seed_int": 0,
+			"seed_int": 44827968,
 			"shortdesc": "",
 			"type": "graph"
 		},
@@ -353,13 +311,13 @@
 			"name": "math",
 			"node_position": {
 				"x": -683.0,
-				"y": 362.0
+				"y": 361.999969482422
 			},
 			"parameters": {
 				"clamp": false,
 				"default_in1": 0.0,
-				"default_in2": 0.13,
-				"op": 32
+				"default_in2": 0.21,
+				"op": 32.0
 			},
 			"seed_int": 0,
 			"type": "math"
@@ -372,8 +330,8 @@
 				"y": 177.0
 			},
 			"parameters": {
-				"amount1": 0.42,
-				"blend_type1": 18
+				"amount1": 0.31,
+				"blend_type1": 3
 			},
 			"seed_int": 0,
 			"type": "blend2"
@@ -387,7 +345,7 @@
 			},
 			"parameters": {
 				"amount1": 1.0,
-				"blend_type1": 2
+				"blend_type1": 2.0
 			},
 			"seed_int": 0,
 			"type": "blend2"
@@ -400,81 +358,6 @@
 			},
 			"parameters": {
 				"param0": 9.0,
-				"param1": 1.0,
-				"param2": 0.0,
-				"param3": false
-			},
-			"seed_int": 0,
-			"type": "gaussian_blur"
-		},
-		{
-			"name": "normal_map2",
-			"node_position": {
-				"x": 323.641693115234,
-				"y": 406.988128662109
-			},
-			"parameters": {
-				"buffer": 1.0,
-				"param2": 0.0,
-				"size": 9,
-				"strength": 0.6
-			},
-			"seed_int": 0,
-			"type": "normal_map2"
-		},
-		{
-			"name": "colorize",
-			"node_position": {
-				"x": 571.454406738281,
-				"y": 476.590393066406
-			},
-			"parameters": {
-				"gradient": {
-					"interpolation": 1,
-					"points": [
-						{
-							"a": 1.0,
-							"b": 0.0,
-							"g": 0.0,
-							"pos": 0.387922122154707,
-							"r": 0.0
-						},
-						{
-							"a": 1.0,
-							"b": 1.0,
-							"g": 1.0,
-							"pos": 0.529897430796682,
-							"r": 1.0
-						}
-					],
-					"type": "Gradient"
-				}
-			},
-			"seed_int": 0,
-			"type": "colorize"
-		},
-		{
-			"name": "edge_detect",
-			"node_position": {
-				"x": 678.418518066406,
-				"y": 633.730224609375
-			},
-			"parameters": {
-				"size": 9.0,
-				"threshold": 0.68,
-				"width": 1.0
-			},
-			"seed_int": 0,
-			"type": "edge_detect"
-		},
-		{
-			"name": "gaussian_blur_2",
-			"node_position": {
-				"x": 1014.43743896484,
-				"y": 608.941589355469
-			},
-			"parameters": {
-				"param0": 9.0,
 				"param1": 2.0,
 				"param2": 0.0,
 				"param3": false
@@ -483,42 +366,31 @@
 			"type": "gaussian_blur"
 		},
 		{
-			"generic_size": 1,
-			"name": "blend2_3",
-			"node_position": {
-				"x": 1266.89428710938,
-				"y": 25.8983554840088
-			},
-			"parameters": {
-				"amount1": 0.51,
-				"blend_type1": 2
-			},
-			"seed_int": 0,
-			"type": "blend2"
-		},
-		{
-			"name": "invert",
-			"node_position": {
-				"x": 1187.58959960938,
-				"y": 429.228485107422
-			},
-			"parameters": {
-
-			},
-			"seed_int": 0,
-			"type": "invert"
-		},
-		{
 			"name": "make_tileable",
 			"node_position": {
 				"x": -757.304992675781,
 				"y": -47.1390533447266
 			},
 			"parameters": {
-				"w": 0.21
+				"w": 0.16
 			},
 			"seed_int": 0,
 			"type": "make_tileable"
+		},
+		{
+			"name": "math_2",
+			"node_position": {
+				"x": 375.579010009766,
+				"y": 134.321151733398
+			},
+			"parameters": {
+				"clamp": false,
+				"default_in1": 0.0,
+				"default_in2": 0.08,
+				"op": 32
+			},
+			"seed_int": 0,
+			"type": "math"
 		}
 	],
 	"parameters": {
