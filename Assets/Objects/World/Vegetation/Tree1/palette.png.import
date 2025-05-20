@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bgpkjmy7j81ly"
-path.s3tc="res://.godot/imported/palette.PNG-c2eff01bca5e16970d1fc5d1256b181f.s3tc.ctex"
+uid="uid://d2p75qweb5dqu"
+path.s3tc="res://.godot/imported/palette.png-16db985fbfb946c75365df7c8836547a.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://Assets/Images/palette.PNG"
-dest_files=["res://.godot/imported/palette.PNG-c2eff01bca5e16970d1fc5d1256b181f.s3tc.ctex"]
+source_file="res://Assets/Objects/World/Vegetation/Tree1/palette.png"
+dest_files=["res://.godot/imported/palette.png-16db985fbfb946c75365df7c8836547a.s3tc.ctex"]
 
 [params]
 

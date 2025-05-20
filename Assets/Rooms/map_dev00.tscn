@@ -1,10 +1,11 @@
-[gd_scene load_steps=46 format=4 uid="uid://7itgyyfxj4ga"]
+[gd_scene load_steps=47 format=4 uid="uid://7itgyyfxj4ga"]
 
 [ext_resource type="PackedScene" uid="uid://cwhxdl2jthine" path="res://Assets/Common/WeatherManager/WeatherManager.tscn" id="1_qdr34"]
 [ext_resource type="PackedScene" uid="uid://cyjskxhmr81rt" path="res://Assets/Common/GUI/hud.tscn" id="1_ubt68"]
 [ext_resource type="PackedScene" uid="uid://c0jd3cujvbmlc" path="res://Assets/Objects/Player/SC_Player.tscn" id="7_gqrsq"]
 [ext_resource type="PackedScene" uid="uid://30klsayv4n42" path="res://Assets/Objects/Enemy/BasicEnemy/SC_Enemy_Test.tscn" id="15_a5m4o"]
 [ext_resource type="Texture2D" uid="uid://cp3da808i7r1" path="res://Assets/Sprites/World/wall_part.png" id="15_nbtwj"]
+[ext_resource type="PackedScene" uid="uid://eqr1kllxdbdl" path="res://Assets/Objects/World/Vegetation/Tree1/CityTree1.tscn" id="17_wg2nu"]
 [ext_resource type="Script" uid="uid://bvx6lf5rp62m3" path="res://Assets/Scripts/Script_Wall.gd" id="21_uvjlx"]
 [ext_resource type="PackedScene" uid="uid://du12rfq3bg2p6" path="res://Assets/Composition/Texture.tscn" id="23_sep45"]
 [ext_resource type="MeshLibrary" uid="uid://bfpi54nhciyt8" path="res://Assets/Objects/_DEV/Walls/Res/mesh_lib.tres" id="30_e41io"]
@@ -29,6 +30,9 @@ sky_material = SubResource("ProceduralSkyMaterial_a5m4o")
 [sub_resource type="Environment" id="Environment_wg2nu"]
 background_mode = 2
 sky = SubResource("Sky_nbtwj")
+ambient_light_source = 3
+reflected_light_source = 1
+tonemap_mode = 2
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_egasi"]
 render_priority = 0
@@ -61,6 +65,7 @@ shader = ExtResource("31_232gy")
 next_pass = SubResource("ShaderMaterial_l1vs0")
 diffuse_mode = 3
 specular_mode = 1
+disable_fog = true
 albedo_color = Color(0, 0.615686, 0.878431, 1)
 roughness = 0.0
 rim_enabled = true
@@ -214,6 +219,7 @@ size = Vector3(5, 1, 6.00684)
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0.0156889, 0, 0.00333452)
+light_energy = 1.5
 shadow_enabled = true
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
@@ -237,7 +243,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.3173, 1.51909, 6.24749)
 mesh = SubResource("BoxMesh_l1vs0")
 
 [node name="ShaderTestMesh" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.3713, 2.63376, 6.14864)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.3713, 2.22967, 6.24253)
 mesh = SubResource("SphereMesh_l1vs0")
 
 [node name="ShaderTestMesh2" type="MeshInstance3D" parent="."]
@@ -579,3 +585,6 @@ shape = SubResource("BoxShape3D_w70e7")
 
 [node name="EnemyBasic" parent="." instance=ExtResource("15_a5m4o")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 2, 3)
+
+[node name="CityTree1" parent="." instance=ExtResource("17_wg2nu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.57802, 1.1684, 7.95491)

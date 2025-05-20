@@ -1,0 +1,83 @@
+[gd_resource type="VisualShader" load_steps=9 format=3 uid="uid://cq8kk8p5g5tp8"]
+
+[sub_resource type="Gradient" id="Gradient_i1ejs"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0, 0.476091)
+colors = PackedColorArray(0.239216, 0.490196, 0.196078, 1, 0.384314, 0.788235, 0.313726, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_0phde"]
+gradient = SubResource("Gradient_i1ejs")
+width = 64
+
+[sub_resource type="VisualShaderNodeTexture" id="VisualShaderNodeTexture_dhi6e"]
+texture = SubResource("GradientTexture1D_0phde")
+
+[sub_resource type="VisualShaderNodeInput" id="VisualShaderNodeInput_i1ejs"]
+input_name = "color"
+
+[sub_resource type="VisualShaderNodeColorConstant" id="VisualShaderNodeColorConstant_0phde"]
+constant = Color(0.267, 0.6, 0.06, 1)
+
+[sub_resource type="VisualShaderNodeInput" id="VisualShaderNodeInput_dhi6e"]
+input_name = "albedo"
+
+[sub_resource type="VisualShaderNodeInput" id="VisualShaderNodeInput_j5j6r"]
+input_name = "attenuation"
+
+[sub_resource type="VisualShaderNodeVectorOp" id="VisualShaderNodeVectorOp_mssks"]
+operator = 2
+
+[resource]
+code = "shader_type spatial;
+render_mode blend_mix, depth_draw_opaque, cull_back, diffuse_toon, specular_toon;
+
+
+
+
+void fragment() {
+// ColorConstant:4
+	vec4 n_out4p0 = vec4(0.267000, 0.600000, 0.060000, 1.000000);
+
+
+// Output:0
+	ALBEDO = vec3(n_out4p0.xyz);
+
+
+}
+
+void light() {
+// Input:2
+	vec3 n_out2p0 = ALBEDO;
+
+
+// Input:3
+	float n_out3p0 = ATTENUATION;
+
+
+// VectorOp:4
+	vec3 n_out4p0 = n_out2p0 * vec3(n_out3p0);
+
+
+// Output:0
+	DIFFUSE_LIGHT = n_out4p0;
+
+
+}
+"
+graph_offset = Vector2(-416.553, 90.7798)
+modes/diffuse = 3
+modes/specular = 1
+nodes/fragment/2/node = SubResource("VisualShaderNodeTexture_dhi6e")
+nodes/fragment/2/position = Vector2(-140, 200)
+nodes/fragment/3/node = SubResource("VisualShaderNodeInput_i1ejs")
+nodes/fragment/3/position = Vector2(-520, 180)
+nodes/fragment/4/node = SubResource("VisualShaderNodeColorConstant_0phde")
+nodes/fragment/4/position = Vector2(100, 220)
+nodes/fragment/connections = PackedInt32Array(3, 0, 2, 0, 4, 0, 0, 0)
+nodes/light/2/node = SubResource("VisualShaderNodeInput_dhi6e")
+nodes/light/2/position = Vector2(-311, 307)
+nodes/light/3/node = SubResource("VisualShaderNodeInput_j5j6r")
+nodes/light/3/position = Vector2(-320, 160)
+nodes/light/4/node = SubResource("VisualShaderNodeVectorOp_mssks")
+nodes/light/4/position = Vector2(100, 200)
+nodes/light/connections = PackedInt32Array(2, 0, 4, 0, 3, 0, 4, 1, 4, 0, 0, 0)
