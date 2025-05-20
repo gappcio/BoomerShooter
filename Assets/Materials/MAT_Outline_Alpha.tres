@@ -1,0 +1,8 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://ssclqxpdfwo6"]
+
+[ext_resource type="Shader" uid="uid://c4f1r4dtfodf3" path="res://Assets/Shaders/src/outline_alpha.gdshader" id="1_bf26c"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_bf26c")
+shader_parameter/player_pos = Vector3(0, 0, 0)

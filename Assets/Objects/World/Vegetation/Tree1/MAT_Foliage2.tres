@@ -1,7 +1,0 @@
-[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://byj4pof83eav7"]
-
-[ext_resource type="Shader" uid="uid://cq8kk8p5g5tp8" path="res://Assets/Objects/World/Vegetation/Tree1/SHADER_Foliage2.tres" id="1_lvm6j"]
-
-[resource]
-render_priority = 0
-shader = ExtResource("1_lvm6j")
