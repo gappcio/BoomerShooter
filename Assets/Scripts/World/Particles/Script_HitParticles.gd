@@ -2,7 +2,6 @@ extends GPUParticles3D
 class_name hit_particles
 
 func _ready():
-	
 	emitting = true;
 
 func _on_finished():

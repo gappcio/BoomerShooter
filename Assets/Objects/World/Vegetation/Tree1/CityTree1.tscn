@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=4 uid="uid://eqr1kllxdbdl"]
 
 [ext_resource type="Material" uid="uid://c2q7tmg22qusl" path="res://Assets/Objects/World/Vegetation/Tree1/MAT_TreeBark1.tres" id="1_iolre"]
-[ext_resource type="Material" uid="uid://to38vncxgrd7" path="res://Assets/Objects/World/Vegetation/Tree1/MAT_Foliage.tres" id="2_iolre"]
+[ext_resource type="Material" uid="uid://ckexan35oerph" path="res://Assets/Objects/World/Vegetation/Tree1/MAT_Foliage1.tres" id="2_iolre"]
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_hja0t"]
 _surfaces = [{

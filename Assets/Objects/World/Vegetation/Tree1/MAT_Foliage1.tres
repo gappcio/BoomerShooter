@@ -5,9 +5,13 @@
 [resource]
 next_pass = ExtResource("1_rpqjp")
 diffuse_mode = 3
-specular_mode = 1
-albedo_color = Color(0.27452, 0.55966, 0.224967, 1)
+specular_mode = 2
+albedo_color = Color(0.1595, 0.55, 0.179025, 1)
 roughness = 0.0
+rim = 0.16
+rim_tint = 1.0
+clearcoat_roughness = 0.0
+anisotropy = 0.25
 texture_filter = 0
 distance_fade_mode = 2
 distance_fade_min_distance = 1.0

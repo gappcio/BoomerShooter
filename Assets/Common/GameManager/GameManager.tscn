@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3 uid="uid://uwbvg6hin1d"]
+
+[ext_resource type="Script" uid="uid://b520weogcbiab" path="res://Assets/Common/GameManager/GameManager.gd" id="1_esftp"]
+[ext_resource type="Texture2D" uid="uid://dtu8xrvombwqp" path="res://Assets/Objects/World/Particles/NOISE_Gore.tres" id="2_p2ema"]
+
+[node name="GameManager" type="Node3D"]
+script = ExtResource("1_esftp")
+gore_texture = ExtResource("2_p2ema")

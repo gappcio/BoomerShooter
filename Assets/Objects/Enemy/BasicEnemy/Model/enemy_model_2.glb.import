@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://d1mugy52udveg"
-path="res://.godot/imported/basic_enemy_model.glb-cb3404603a2b2b28e776c20dacb51832.scn"
+uid="uid://ljwceecxicyc"
+path="res://.godot/imported/enemy_model_2.glb-eb71135517b7d5b4847f7d60cadd56ff.scn"
 
 [deps]
 
-source_file="res://Assets/Objects/Enemy/BasicEnemy/Model/basic_enemy_model.glb"
-dest_files=["res://.godot/imported/basic_enemy_model.glb-cb3404603a2b2b28e776c20dacb51832.scn"]
+source_file="res://Assets/Objects/Enemy/BasicEnemy/Model/enemy_model_2.glb"
+dest_files=["res://.godot/imported/enemy_model_2.glb-eb71135517b7d5b4847f7d60cadd56ff.scn"]
 
 [params]
 
