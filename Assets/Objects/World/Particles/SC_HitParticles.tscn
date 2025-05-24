@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=3 uid="uid://c7vneg0tkuj6n"]
 
-[ext_resource type="Texture2D" uid="uid://yeyqiq3adxqj" path="res://Assets/Images/Textures/Block/block.png" id="1_2mxgs"]
+[ext_resource type="Texture2D" uid="uid://yeyqiq3adxqj" path="res://Assets/Images/textures/Block/block.png" id="1_2mxgs"]
 [ext_resource type="Script" uid="uid://dbfge28ghxm5e" path="res://Assets/Scripts/World/Particles/Script_HitParticles.gd" id="1_gvmef"]
 
 [sub_resource type="Curve" id="Curve_1hnpm"]
@@ -47,6 +47,7 @@ material = SubResource("StandardMaterial3D_smqro")
 size = Vector2(0.1, 0.1)
 
 [node name="ScHitParticles" type="GPUParticles3D"]
+emitting = false
 lifetime = 2.0
 one_shot = true
 speed_scale = 1.2

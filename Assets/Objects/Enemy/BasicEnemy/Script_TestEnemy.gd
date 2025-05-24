@@ -9,6 +9,21 @@ class_name BasicEnemy
 @onready var hurt_timer: Timer = $TimerHurt;
 @onready var ragdoll: PhysicalBoneSimulator3D = $Model/enemy_model_2/metarig/Skeleton3D/PhysicalBoneSimulator3D
 @onready var collision: CollisionShape3D = $Collision
+@onready var collision_shape_3d: CollisionShape3D = $ComponentHitbox/CollisionShape3D
+
+@export_group("Collision Bones")
+@export var bone_head: PhysicalBone3D;
+@export var bone_body: PhysicalBone3D;
+@export var bone_upper_arm_left: PhysicalBone3D;
+@export var bone_lower_arm_left: PhysicalBone3D;
+@export var bone_upper_arm_right: PhysicalBone3D;
+@export var bone_lower_arm_right: PhysicalBone3D;
+@export var bone_thigh_left: PhysicalBone3D;
+@export var bone_thigh_right: PhysicalBone3D;
+@export var bone_shin_left: PhysicalBone3D;
+@export var bone_shin_right: PhysicalBone3D;
+@export var bone_foot_left: PhysicalBone3D;
+@export var bone_foot_right: PhysicalBone3D;
 
 const BASE_SPEED: float = 3.0;
 const JUMP_VELOCITY: float = 4.5;
@@ -30,6 +45,8 @@ var deccel: float = 0.0;
 
 var player_node: Player;
 
+var force: bool = false;
+
 enum STATE {
 	idle,
 	chasing,
@@ -47,9 +64,6 @@ func _ready():
 
 func _process(delta):
 	label.text = str(health.health_get());
-	
-	if hurt_timer.is_stopped():
-		state = STATE.chasing;
 	
 	match(state):
 		STATE.idle:
@@ -75,6 +89,7 @@ func _process(delta):
 	gravity = GRAVITY_BASE;
 	velocity.y -= gravity * delta;
 	
+	
 	move_and_slide();
 
 func hurt(collision_point, collision_normal):
@@ -86,6 +101,8 @@ func hurt(collision_point, collision_normal):
 	
 	var dir = _player.head.rotation.y;
 	var knockback = Vector3(sin(dir), 0.0, cos(dir));
+	
+	
 	
 	if is_instance_valid(_player):
 		velocity = -knockback * 2;
@@ -110,10 +127,40 @@ func die():
 	state = STATE.dead;
 	ragdoll.active = true;
 	ragdoll.physical_bones_start_simulation();
-	collision.disabled = true;
+	
+	if !force:
+		var _player = get_tree().get_nodes_in_group("player")[0];
+		
+		var dir = _player.head.rotation.y;
+		var knockback = Vector3(sin(dir), 0.0, cos(dir));
+		
+		if is_instance_valid(_player):
+			bone_body.linear_velocity = -knockback * 6.0;
+			
+			force = true;
+	
+	#bone_body.linear_velocity.x = lerp(bone_body.linear_velocity.x, 0.0, 0.015);
+	#bone_body.linear_velocity.z = lerp(bone_body.linear_velocity.z, 0.0, 0.015);
+	
+	set_collision_layer_value(3, false);
+	set_collision_mask_value(2, false);
+	set_collision_mask_value(3, false);
+	
+	hitbox.set_collision_layer_value(3, false);
+	hitbox.set_collision_mask_value(2, false);
+	hitbox.set_collision_mask_value(3, false);
+
 
 func _on_component_health_has_died():
 	die();
 
 func _on_component_hitbox_been_hit(collision_point, collision_normal):
 	hurt(collision_point, collision_normal);
+
+
+func _on_timer_hurt_timeout() -> void:
+	state = STATE.chasing;
+	var blood_decal = Autoload.FX_BLOOD_DECAL.instantiate();
+	get_tree().current_scene.add_child(blood_decal);
+	
+	blood_decal.global_position = bone_foot_left.global_position + Vector3(randf_range(-0.5, 0.5), -0.1, randf_range(-0.5, 0.5));

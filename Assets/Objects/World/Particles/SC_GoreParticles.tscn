@@ -12,22 +12,23 @@ point_count = 2
 curve = SubResource("Curve_hl2x6")
 
 [sub_resource type="Curve" id="Curve_qh588"]
-_data = [Vector2(0, 1), 0.0, 0.194911, 0, 0, Vector2(1, 0), -3.4162, 0.0, 0, 0]
-point_count = 2
+_limits = [0.0, 2.0, 0.0, 1.0]
+_data = [Vector2(0, 2), 0.0, 0.194911, 0, 0, Vector2(0.496104, 2), 0.0, 0.0, 0, 0, Vector2(1, 0), -3.4162, 0.0, 0, 0]
+point_count = 3
 
 [sub_resource type="CurveTexture" id="CurveTexture_hl2x6"]
 curve = SubResource("Curve_qh588")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_3tf0o"]
-lifetime_randomness = 0.39
+lifetime_randomness = 1.0
 emission_shape_scale = Vector3(0.5, 0.5, 0.5)
 emission_shape = 1
-emission_sphere_radius = 0.04
+emission_sphere_radius = 0.44
 angle_min = -45.0
 angle_max = 45.0
 angle_curve = SubResource("CurveTexture_xf3bt")
-direction = Vector3(0, 0, 1)
-spread = 25.39
+direction = Vector3(0, 1, 0)
+spread = 83.261
 initial_velocity_min = 0.01
 initial_velocity_max = 0.15
 gravity = Vector3(0, -0.01, 0)
@@ -45,11 +46,11 @@ size = Vector2(0.2, 0.2)
 
 [node name="ScGoreParticles" type="GPUParticles3D"]
 emitting = false
-amount = 4
+amount = 12
+amount_ratio = 0.8603
 one_shot = true
-speed_scale = 2.0
-explosiveness = 0.97
-randomness = 0.54
+explosiveness = 1.0
+randomness = 0.19
 process_material = SubResource("ParticleProcessMaterial_3tf0o")
 draw_pass_1 = SubResource("QuadMesh_6kfxs")
 script = ExtResource("2_5haq3")

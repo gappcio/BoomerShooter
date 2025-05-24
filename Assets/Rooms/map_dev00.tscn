@@ -1,9 +1,10 @@
-[gd_scene load_steps=49 format=4 uid="uid://7itgyyfxj4ga"]
+[gd_scene load_steps=60 format=4 uid="uid://7itgyyfxj4ga"]
 
 [ext_resource type="PackedScene" uid="uid://cwhxdl2jthine" path="res://Assets/Common/WeatherManager/WeatherManager.tscn" id="1_qdr34"]
 [ext_resource type="PackedScene" uid="uid://cyjskxhmr81rt" path="res://Assets/Common/GUI/hud.tscn" id="1_ubt68"]
 [ext_resource type="PackedScene" uid="uid://c0jd3cujvbmlc" path="res://Assets/Objects/Player/SC_Player.tscn" id="7_gqrsq"]
 [ext_resource type="Texture2D" uid="uid://cp3da808i7r1" path="res://Assets/Sprites/World/wall_part.png" id="15_nbtwj"]
+[ext_resource type="Material" uid="uid://bcosqlgxxde86" path="res://Assets/Materials/MAT_Outline.tres" id="16_8xq8d"]
 [ext_resource type="PackedScene" uid="uid://eqr1kllxdbdl" path="res://Assets/Objects/World/Vegetation/Tree1/CityTree1.tscn" id="17_wg2nu"]
 [ext_resource type="PackedScene" uid="uid://btrm582efxbbh" path="res://Assets/Objects/Enemy/BasicEnemy/SC_Enemy_Basic.tscn" id="17_yd3e0"]
 [ext_resource type="PackedScene" uid="uid://uwbvg6hin1d" path="res://Assets/Common/GameManager/GameManager.tscn" id="18_yd3e0"]
@@ -176,48 +177,110 @@ shadow_mesh = SubResource("ArrayMesh_fnfg6")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_jp2mi"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_6grxr"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_w70e7"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_tmdly"]
 render_priority = 0
 shader = ExtResource("31_232gy")
 
-[sub_resource type="Gradient" id="Gradient_232gy"]
-offsets = PackedFloat32Array(0, 0.369515)
-colors = PackedColorArray(0.808998, 0.808998, 0.808997, 1, 1, 1, 1, 1)
+[sub_resource type="Gradient" id="Gradient_77wrc"]
+colors = PackedColorArray(0.95158, 0.95158, 0.951579, 1, 1, 1, 1, 1)
 
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_b3gpx"]
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_rmv2p"]
 noise_type = 5
-frequency = 1.0
-fractal_type = 3
+frequency = 0.03
 fractal_octaves = 3
+fractal_lacunarity = 1.465
+fractal_gain = 1.05
 domain_warp_frequency = 0.105
 domain_warp_fractal_type = 0
 domain_warp_fractal_octaves = 3
 domain_warp_fractal_gain = 0.805
 
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_egasi"]
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_o3slm"]
 width = 256
 height = 256
-color_ramp = SubResource("Gradient_232gy")
-noise = SubResource("FastNoiseLite_b3gpx")
+seamless = true
+color_ramp = SubResource("Gradient_77wrc")
+noise = SubResource("FastNoiseLite_rmv2p")
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_1ulw8"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_wjg03"]
 render_priority = 0
-next_pass = SubResource("ShaderMaterial_6grxr")
+next_pass = SubResource("ShaderMaterial_tmdly")
 shader = ExtResource("32_b3gpx")
 shader_parameter/color = Color(0.368209, 0.38069, 0.384487, 1)
-shader_parameter/base_texture = SubResource("NoiseTexture2D_egasi")
+shader_parameter/base_texture = SubResource("NoiseTexture2D_o3slm")
 shader_parameter/specular = Color(0, 0, 0, 0.5)
 shader_parameter/fresnel = Color(0, 0, 0, 0.3)
-shader_parameter/uv_scale = Vector2(1, 1)
+shader_parameter/uv_scale = Vector2(10, 3)
 shader_parameter/uv_offset = Vector2(0, 0)
 
 [sub_resource type="BoxMesh" id="BoxMesh_232gy"]
-material = SubResource("ShaderMaterial_1ulw8")
+material = SubResource("ShaderMaterial_wjg03")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_232gy"]
-size = Vector3(5, 1, 6.00684)
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_w70e7"]
+[sub_resource type="Gradient" id="Gradient_8xq8d"]
+offsets = PackedFloat32Array(0.0693333, 0.234667, 0.682667)
+colors = PackedColorArray(0.118581, 0.118581, 0.118581, 1, 0.3317, 0.338981, 0.37125, 1, 0.43287, 0.441358, 0.478849, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_tmdly"]
+noise_type = 2
+frequency = 0.0508
+offset = Vector3(0, -10.32, 0)
+fractal_type = 0
+cellular_distance_function = 1
+cellular_jitter = 0.1
+cellular_return_type = 4
+domain_warp_enabled = true
+domain_warp_type = 1
+domain_warp_amplitude = 2.795
+domain_warp_frequency = 0.03
+domain_warp_fractal_octaves = 3
+domain_warp_fractal_lacunarity = 2.0
+domain_warp_fractal_gain = 1.285
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_77wrc"]
+seamless = true
+color_ramp = SubResource("Gradient_8xq8d")
+noise = SubResource("FastNoiseLite_tmdly")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rmv2p"]
+diffuse_mode = 3
+specular_mode = 1
+albedo_texture = SubResource("NoiseTexture2D_77wrc")
+uv1_scale = Vector3(5, 1, 1)
+uv1_offset = Vector3(0, 0.041, 0)
+
+[sub_resource type="BoxMesh" id="BoxMesh_wjg03"]
+material = SubResource("StandardMaterial3D_rmv2p")
+
+[sub_resource type="Gradient" id="Gradient_nrq68"]
+colors = PackedColorArray(0.650128, 0.650128, 0.650128, 1, 1, 1, 1, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_v7aw4"]
+frequency = 0.2416
+fractal_octaves = 6
+fractal_lacunarity = 3.215
+fractal_gain = 0.9
+fractal_ping_pong_strength = 2.39
+cellular_jitter = -0.365
+cellular_return_type = 6
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_5epn2"]
+color_ramp = SubResource("Gradient_nrq68")
+noise = SubResource("FastNoiseLite_v7aw4")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_x1cvm"]
+next_pass = ExtResource("16_8xq8d")
+diffuse_mode = 3
+specular_mode = 1
+albedo_color = Color(0.281175, 0.69, 0.1449, 1)
+albedo_texture = SubResource("NoiseTexture2D_5epn2")
+roughness = 0.0
+
+[sub_resource type="BoxMesh" id="BoxMesh_lfnai"]
+material = SubResource("StandardMaterial3D_x1cvm")
 
 [node name="WORLD" type="Node3D" groups=["world"]]
 
@@ -475,7 +538,7 @@ shape = SubResource("BoxShape3D_jp2mi")
 texture = ExtResource("39_232gy")
 
 [node name="Wall10" parent="Map/NavigationRegion3D/Node3D" instance=ExtResource("37_2dje4")]
-transform = Transform3D(1, 0, 0, 0, 0.707107, -0.707107, 0, 0.707107, 0.707107, 24, -0.5, 0)
+transform = Transform3D(1, 0, 0, 0, 0.707107, -0.707107, 0, 0.707107, 0.707107, 21, -0.5, 0)
 
 [node name="Node3D2" type="Node3D" parent="Map/NavigationRegion3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -65, 0, 0)
@@ -567,22 +630,6 @@ text = "21"
 [node name="Hurt" parent="Map/NavigationRegion3D/Node3D2" instance=ExtResource("38_2dje4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 61.5, 1.5, 6.5)
 
-[node name="StaticBody3D2" type="StaticBody3D" parent="Map/NavigationRegion3D" groups=["wall"]]
-transform = Transform3D(11.05, 0, 0, 0, 1.51, 0, 0, 0, 10.53, -2.125, 1.52297, -8.515)
-script = ExtResource("21_uvjlx")
-
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="Map/NavigationRegion3D/StaticBody3D2"]
-mesh = SubResource("BoxMesh_232gy")
-skeleton = NodePath("../../StaticBody3D")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Map/NavigationRegion3D/StaticBody3D2"]
-transform = Transform3D(0.2, 0, 0, 0, 1, 0, 0, 0, 0.16666, 4.76837e-07, 0, 0.000393212)
-visible = false
-shape = SubResource("BoxShape3D_232gy")
-
-[node name="Texture" parent="Map/NavigationRegion3D/StaticBody3D2" instance=ExtResource("23_sep45")]
-texture = ExtResource("15_nbtwj")
-
 [node name="StaticBody3D" type="StaticBody3D" parent="Map/NavigationRegion3D" groups=["wall"]]
 transform = Transform3D(2.21, 0, 0, 0, 1.51, 0, 0, 0, 1.755, -2.125, 1.52297, 0.485)
 
@@ -605,8 +652,69 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 2, 2)
 [node name="CityTree1" parent="Map/NavigationRegion3D" instance=ExtResource("17_wg2nu")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.57802, 1.1684, 7.95491)
 
+[node name="StaticBody3D2" type="StaticBody3D" parent="Map/NavigationRegion3D" groups=["wall"]]
+transform = Transform3D(50, 0, 0, 0, 24, 0, 0, 0, 14, 46.875, -11.8, 4.485)
+script = ExtResource("21_uvjlx")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Map/NavigationRegion3D/StaticBody3D2"]
+mesh = SubResource("BoxMesh_232gy")
+skeleton = NodePath("../../StaticBody3D")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Map/NavigationRegion3D/StaticBody3D2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.76837e-07, 0, 0.000393212)
+visible = false
+shape = SubResource("BoxShape3D_232gy")
+
+[node name="Texture" parent="Map/NavigationRegion3D/StaticBody3D2" instance=ExtResource("23_sep45")]
+texture = ExtResource("15_nbtwj")
+
+[node name="StaticBody3D4" type="StaticBody3D" parent="Map/NavigationRegion3D" groups=["wall"]]
+transform = Transform3D(50, 0, 0, 0, 24, 0, 0, 0, 14, 46.875, -11.8, 22.485)
+script = ExtResource("21_uvjlx")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Map/NavigationRegion3D/StaticBody3D4"]
+mesh = SubResource("BoxMesh_wjg03")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Map/NavigationRegion3D/StaticBody3D4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.76837e-07, 0, 0.000393212)
+visible = false
+shape = SubResource("BoxShape3D_232gy")
+
+[node name="Texture" parent="Map/NavigationRegion3D/StaticBody3D4" instance=ExtResource("23_sep45")]
+texture = ExtResource("15_nbtwj")
+
+[node name="StaticBody3D3" type="StaticBody3D" parent="Map/NavigationRegion3D" groups=["wall"]]
+transform = Transform3D(50, 0, 0, 0, 50, 0, 0, 0, 60, 46.875, -24.9, 4.485)
+script = ExtResource("21_uvjlx")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Map/NavigationRegion3D/StaticBody3D3"]
+mesh = SubResource("BoxMesh_lfnai")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Map/NavigationRegion3D/StaticBody3D3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.76837e-07, 0, 0.000393212)
+visible = false
+shape = SubResource("BoxShape3D_232gy")
+
+[node name="Texture" parent="Map/NavigationRegion3D/StaticBody3D3" instance=ExtResource("23_sep45")]
+texture = ExtResource("15_nbtwj")
+
+[node name="CityTree2" parent="Map/NavigationRegion3D" instance=ExtResource("17_wg2nu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 56, 0, 12.8)
+
+[node name="CityTree3" parent="Map/NavigationRegion3D" instance=ExtResource("17_wg2nu")]
+transform = Transform3D(-0.5, 0, 0.866025, 0, 1, 0, -0.866025, 0, -0.5, 49, 0, 13.6)
+
+[node name="CityTree4" parent="Map/NavigationRegion3D" instance=ExtResource("17_wg2nu")]
+transform = Transform3D(0.5, 0, -0.866025, 0, 1, 0, 0.866025, 0, 0.5, 41, 0, 12.9)
+
+[node name="CityTree5" parent="Map/NavigationRegion3D" instance=ExtResource("17_wg2nu")]
+transform = Transform3D(-0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, -0.866025, 65, 0, 12.4)
+
 [node name="HUDControl" parent="." instance=ExtResource("1_ubt68")]
 
 [node name="WeatherManager" parent="." instance=ExtResource("1_qdr34")]
 
 [node name="GameManager" parent="." instance=ExtResource("18_yd3e0")]
+
+[node name="EnemyTest" parent="." instance=ExtResource("17_yd3e0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 2, -9)

@@ -1,7 +1,10 @@
-[gd_scene load_steps=7 format=4 uid="uid://eqr1kllxdbdl"]
+[gd_scene load_steps=13 format=4 uid="uid://eqr1kllxdbdl"]
 
 [ext_resource type="Material" uid="uid://c2q7tmg22qusl" path="res://Assets/Objects/World/Vegetation/Tree1/MAT_TreeBark1.tres" id="1_iolre"]
 [ext_resource type="Material" uid="uid://ckexan35oerph" path="res://Assets/Objects/World/Vegetation/Tree1/MAT_Foliage1.tres" id="2_iolre"]
+[ext_resource type="Script" uid="uid://bvx6lf5rp62m3" path="res://Assets/Scripts/Script_Wall.gd" id="3_gkd44"]
+[ext_resource type="PackedScene" uid="uid://du12rfq3bg2p6" path="res://Assets/Composition/Texture.tscn" id="3_uabdm"]
+[ext_resource type="Texture2D" uid="uid://dryuuwk6vlsu5" path="res://Assets/Objects/World/Vegetation/PineTree/bark.png" id="4_gkd44"]
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_hja0t"]
 _surfaces = [{
@@ -70,6 +73,18 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_7ikrh")
 
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_iolre"]
+radius = 0.282
+height = 3.585
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_86jn6"]
+radius = 0.199
+height = 1.36
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_uabdm"]
+radius = 0.199
+height = 2.05
+
 [node name="CityTree1" type="Node3D"]
 
 [node name="tree1" type="Node3D" parent="."]
@@ -84,3 +99,21 @@ skeleton = NodePath("")
 transform = Transform3D(-0.489553, 0, -0.802306, 0, 0.939871, 0, 0.802306, 0, -0.489553, -0.0117203, 5.7563, 0.254528)
 mesh = SubResource("ArrayMesh_gkd44")
 skeleton = NodePath("")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="." groups=["wall"]]
+script = ExtResource("3_gkd44")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3, 0)
+shape = SubResource("CapsuleShape3D_iolre")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(0.821183, -0.215433, -0.528438, 0.253758, 0.967268, 0, 0.511141, -0.134095, 0.848972, -0.231, 3.3, -0.125)
+shape = SubResource("CapsuleShape3D_86jn6")
+
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(-0.664308, 0.719904, 0.201078, 0.734915, 0.67816, 0, -0.136363, 0.147775, -0.979575, 0.674, 3.367, 0.14)
+shape = SubResource("CapsuleShape3D_uabdm")
+
+[node name="Texture" parent="StaticBody3D" instance=ExtResource("3_uabdm")]
+texture = ExtResource("4_gkd44")

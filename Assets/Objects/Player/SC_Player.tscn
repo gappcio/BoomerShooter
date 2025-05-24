@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://c0jd3cujvbmlc"]
+[gd_scene load_steps=28 format=3 uid="uid://c0jd3cujvbmlc"]
 
 [ext_resource type="Script" uid="uid://rrxtl6hrf7dr" path="res://Assets/Objects/Player/Script_Player.gd" id="1_5ffuh"]
 [ext_resource type="PackedScene" uid="uid://1hxrf7rm1jbt" path="res://Assets/Objects/Player/SC_Camera.tscn" id="1_xqu0b"]
@@ -31,9 +31,6 @@ size = Vector3(1, 1.77298, 0.821655)
 compositor_effects = Array[CompositorEffect]([null])
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_vwhjx"]
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_xd2rw"]
-size = Vector3(1.4, 0.75, 1.5)
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_jc3lu"]
 lifetime_randomness = 0.24
@@ -153,17 +150,6 @@ collision_mask = 5
 collide_with_areas = true
 debug_shape_custom_color = Color(1, 0, 0, 1)
 debug_shape_thickness = 1
-
-[node name="FistsArea" type="Area3D" parent="Head/Camera"]
-collision_layer = 2
-collision_mask = 5
-monitoring = false
-monitorable = false
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Head/Camera/FistsArea"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.75)
-shape = SubResource("BoxShape3D_xd2rw")
-debug_color = Color(0.996951, 0, 0.176392, 0.42)
 
 [node name="DashingFX" type="Node3D" parent="Head/Camera"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.136111)

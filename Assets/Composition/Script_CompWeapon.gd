@@ -136,7 +136,7 @@ func shoot():
 	
 	if is_instance_valid(player_instance):
 		camera.camera_shoot_effect();
-		camera.camera_shake(0.2);
+		camera.camera_shake(0.1);
 	
 	for i in bullet_amount:
 	

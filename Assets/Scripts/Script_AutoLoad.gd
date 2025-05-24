@@ -10,6 +10,7 @@ var FX_BULLET_HIT_PARTICLE = preload("res://Assets/Objects/World/Particles/SC_Bu
 
 var FX_GORE1 = preload("res://Assets/Objects/World/Particles/SC_GoreParticles.tscn");
 var FX_BLOOD1 = preload("res://Assets/Objects/World/Particles/SC_BloodParticles.tscn");
+var FX_BLOOD_DECAL = preload("res://Assets/Objects/World/Particles/SC_BloodDecal.tscn");
 
 var random = RandomNumberGenerator.new();
 var random_texture_offset: float = 0.0;

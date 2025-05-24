@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=4 uid="uid://04d8wgl8ry6b"]
+[gd_scene load_steps=18 format=4 uid="uid://04d8wgl8ry6b"]
 
 [ext_resource type="Script" uid="uid://c8uvcniqt4c00" path="res://Assets/Objects/Player/Weapon/Script_PlayerWeaponFists.gd" id="1_p00lp"]
 [ext_resource type="Texture2D" uid="uid://dvsddr0kx1mol" path="res://Assets/Objects/Player/Viewmodels/Pistol/textures/hand_texture _Sheet_.png" id="2_v5wxf"]
@@ -1831,6 +1831,9 @@ _data = {
 &"vault_ready": SubResource("Animation_r4fuq")
 }
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_gxrw2"]
+size = Vector3(1.4, 0.75, 1.7334)
+
 [node name="VIEWMODEL_Fists" type="Node3D"]
 script = ExtResource("1_p00lp")
 
@@ -2151,5 +2154,18 @@ one_shot = true
 [node name="Audio" type="AudioStreamPlayer3D" parent="."]
 stream = ExtResource("4_gxrw2")
 
+[node name="FistsArea" type="Area3D" parent="."]
+collision_layer = 2
+collision_mask = 13
+monitoring = false
+monitorable = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="FistsArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.866699)
+shape = SubResource("BoxShape3D_gxrw2")
+debug_color = Color(0.996951, 0, 0.176392, 0.42)
+
 [connection signal="animation_finished" from="hand_viewmodel/AnimHand" to="." method="_on_anim_hand_animation_finished"]
 [connection signal="timeout" from="PunchTimer" to="." method="_on_punch_timer_timeout"]
+[connection signal="body_entered" from="FistsArea" to="." method="_on_fists_area_body_entered"]
+[connection signal="body_exited" from="FistsArea" to="." method="_on_fists_area_body_exited"]

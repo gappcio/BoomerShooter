@@ -20,7 +20,7 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	
-	var tilt_strength: float = player.input_dir.x / player.MAX_SPEED;
+	var tilt_strength: float = player.input_dir.x / player.MAX_SPEED * 0.75;
 	camera_tilt = lerp(camera_tilt, tilt_strength, 0.1);
 	
 	if abs(camera_tilt) < 0.001:
@@ -52,7 +52,7 @@ func camera_bobbing(velocity, delta) -> void:
 	
 	camera_bob_time += delta * player.spd * float(player.grounded);
 	
-	self.position.y = lerp(self.position.y, 0.05 * -sin(camera_bob_time * 1.2), 0.1);
+	self.position.y = lerp(self.position.y, 0.025 * -sin(camera_bob_time * 1.2), 0.2);
 
 
 func camera_bobbing_reset() -> void:

@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://cy3sr7l3yyhor"]
+
+[ext_resource type="Texture2D" uid="uid://ddp2s7qolat1f" path="res://Assets/Objects/World/Particles/blood.png" id="1_fl3po"]
+[ext_resource type="Script" uid="uid://dovh0f40n6a78" path="res://Assets/Objects/World/Particles/Script_BloodDecal.gd" id="2_n2kt1"]
+
+[node name="ScBloodDecal" type="Decal"]
+size = Vector3(1, 0.2, 1)
+texture_albedo = ExtResource("1_fl3po")
+distance_fade_enabled = true
+script = ExtResource("2_n2kt1")

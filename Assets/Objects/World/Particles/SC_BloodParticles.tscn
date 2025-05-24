@@ -1,6 +1,5 @@
-[gd_scene load_steps=11 format=3 uid="uid://cruierhdnvkmm"]
+[gd_scene load_steps=8 format=3 uid="uid://cruierhdnvkmm"]
 
-[ext_resource type="Shader" uid="uid://bitqxx4yt1pwg" path="res://Assets/Objects/World/Particles/VSHADER_Blood.tres" id="1_8didn"]
 [ext_resource type="Script" uid="uid://dbfge28ghxm5e" path="res://Assets/Scripts/World/Particles/Script_HitParticles.gd" id="1_21uot"]
 
 [sub_resource type="Curve" id="Curve_8didn"]
@@ -46,13 +45,6 @@ sections = 4
 section_segments = 4
 curve = SubResource("Curve_vv34v")
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_8didn"]
-render_priority = 0
-shader = ExtResource("1_8didn")
-
-[sub_resource type="QuadMesh" id="QuadMesh_21uot"]
-material = SubResource("ShaderMaterial_8didn")
-
 [node name="ScBloodParticles" type="GPUParticles3D"]
 emitting = false
 amount = 12
@@ -66,9 +58,5 @@ trail_lifetime = 0.2
 process_material = SubResource("ParticleProcessMaterial_21uot")
 draw_pass_1 = SubResource("RibbonTrailMesh_g1mii")
 script = ExtResource("1_21uot")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-visible = false
-mesh = SubResource("QuadMesh_21uot")
 
 [connection signal="finished" from="." to="." method="_on_finished"]

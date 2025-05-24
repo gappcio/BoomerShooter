@@ -509,7 +509,7 @@ func vault() -> void:
 		if body == vault_body:
 			
 			if vault_raycast_top.get_collider() == null:
-				
+				pass
 				# disable movement
 				
 				# play animation
@@ -518,27 +518,27 @@ func vault() -> void:
 				# enable movement
 				
 				
-				for i in range(0, 2, 0.25):
-					var offset = Vector3(0.0, i, 0.0);
-					test_move(transform, velocity + offset)
-			
-			if !is_instance_valid(vault_visual_helper[0]):
-				vault_visual_helper[0] = visual_helper.instantiate();
-				self.add_child(vault_visual_helper[0]);
-				vault_visual_helper[0].global_position = vault_raycast.get_collision_point();
-			else:
-				vault_visual_helper[0].global_position = vault_raycast.get_collision_point();
-				
-			if !is_instance_valid(vault_visual_helper[1]):
-				vault_visual_helper[1] = visual_helper.instantiate();
-				self.add_child(vault_visual_helper[1]);
-				vault_visual_helper[1].global_position = vault_raycast_top.get_collision_point();
-			else:
-				vault_visual_helper[1].global_position = vault_raycast_top.get_collision_point();
-				
-		else:
-			if is_instance_valid(vault_visual_helper[0]):
-				vault_visual_helper[0].queue_free();
+				#for i in range(0, 2, 0.25):
+					#var offset = Vector3(0.0, i, 0.0);
+					#test_move(transform, velocity + offset)
+			#
+			#if !is_instance_valid(vault_visual_helper[0]):
+				#vault_visual_helper[0] = visual_helper.instantiate();
+				#self.add_child(vault_visual_helper[0]);
+				#vault_visual_helper[0].global_position = vault_raycast.get_collision_point();
+			#else:
+				#vault_visual_helper[0].global_position = vault_raycast.get_collision_point();
+				#
+			#if !is_instance_valid(vault_visual_helper[1]):
+				#vault_visual_helper[1] = visual_helper.instantiate();
+				#self.add_child(vault_visual_helper[1]);
+				#vault_visual_helper[1].global_position = vault_raycast_top.get_collision_point();
+			#else:
+				#vault_visual_helper[1].global_position = vault_raycast_top.get_collision_point();
+				#
+		#else:
+			#if is_instance_valid(vault_visual_helper[0]):
+				#vault_visual_helper[0].queue_free();
 
 
 func land_anim() -> void:
