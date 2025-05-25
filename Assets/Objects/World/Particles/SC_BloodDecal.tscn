@@ -1,10 +1,32 @@
-[gd_scene load_steps=3 format=3 uid="uid://cy3sr7l3yyhor"]
+[gd_scene load_steps=7 format=3 uid="uid://cy3sr7l3yyhor"]
 
-[ext_resource type="Texture2D" uid="uid://ddp2s7qolat1f" path="res://Assets/Objects/World/Particles/blood.png" id="1_fl3po"]
+[ext_resource type="Shader" uid="uid://d3nexslyxhngr" path="res://Assets/Objects/World/Particles/SHADER_BloodSpray.gdshader" id="2_7y68l"]
 [ext_resource type="Script" uid="uid://dovh0f40n6a78" path="res://Assets/Objects/World/Particles/Script_BloodDecal.gd" id="2_n2kt1"]
+[ext_resource type="Texture2D" uid="uid://dtu8xrvombwqp" path="res://Assets/Objects/World/Particles/NOISE_Gore.tres" id="3_7y68l"]
 
-[node name="ScBloodDecal" type="Decal"]
-size = Vector3(1, 0.2, 1)
-texture_albedo = ExtResource("1_fl3po")
-distance_fade_enabled = true
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_o8sb7"]
+render_priority = 0
+shader = ExtResource("2_7y68l")
+shader_parameter/albedo = Color(1, 1, 1, 1)
+shader_parameter/texture_albedo = ExtResource("3_7y68l")
+shader_parameter/cube_half_size = 1.0
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_5afh8"]
+material = SubResource("ShaderMaterial_o8sb7")
+height = 0.1
+radial_segments = 16
+rings = 0
+cap_bottom = false
+
+[sub_resource type="BoxMesh" id="BoxMesh_o8sb7"]
+
+[node name="ScBloodDecal" type="Node3D"]
 script = ExtResource("2_n2kt1")
+
+[node name="Decal" type="MeshInstance3D" parent="."]
+mesh = SubResource("CylinderMesh_5afh8")
+skeleton = NodePath("../MeshInstance3D")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+mesh = SubResource("BoxMesh_o8sb7")

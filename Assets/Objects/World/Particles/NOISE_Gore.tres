@@ -1,7 +1,9 @@
 [gd_resource type="NoiseTexture2D" load_steps=3 format=3 uid="uid://dtu8xrvombwqp"]
 
-[sub_resource type="Gradient" id="Gradient_ls6k6"]
-offsets = PackedFloat32Array(0.208038, 1)
+[sub_resource type="Gradient" id="Gradient_2gksc"]
+interpolation_mode = 2
+offsets = PackedFloat32Array(0.466667, 0.610667)
+colors = PackedColorArray(0, 0, 0, 1, 1, 0, 0, 1)
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_2gksc"]
 noise_type = 3
@@ -12,5 +14,5 @@ fractal_lacunarity = 1.75
 fractal_gain = 0.925
 
 [resource]
-color_ramp = SubResource("Gradient_ls6k6")
+color_ramp = SubResource("Gradient_2gksc")
 noise = SubResource("FastNoiseLite_2gksc")
