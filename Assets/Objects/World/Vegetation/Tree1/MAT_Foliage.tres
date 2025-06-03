@@ -1,9 +1,9 @@
 [gd_resource type="ShaderMaterial" load_steps=3 format=3 uid="uid://to38vncxgrd7"]
 
-[ext_resource type="Material" uid="uid://ssclqxpdfwo6" path="res://Assets/Materials/MAT_Outline_Alpha.tres" id="1_81e2v"]
 [ext_resource type="Shader" uid="uid://bjbyeqhv5nhk1" path="res://Assets/Objects/World/Vegetation/Tree1/WavingFoliage.tres" id="1_is41e"]
+[ext_resource type="Texture2D" uid="uid://cnyyc480gjos2" path="res://Assets/Common/WeatherManager/grass_wind_noise.tres" id="2_81e2v"]
 
 [resource]
 render_priority = 0
-next_pass = ExtResource("1_81e2v")
 shader = ExtResource("1_is41e")
+shader_parameter/noise_texture = ExtResource("2_81e2v")

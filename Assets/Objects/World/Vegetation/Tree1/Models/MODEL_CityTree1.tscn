@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://c7oqhs6hpgn2v"]
+
+[ext_resource type="PackedScene" uid="uid://dsxpmh2pf8b8m" path="res://Assets/Objects/World/Vegetation/Tree1/Models/tree1.glb" id="1_12bdm"]
+[ext_resource type="Material" uid="uid://to38vncxgrd7" path="res://Assets/Objects/World/Vegetation/Tree1/MAT_Foliage.tres" id="2_uslyn"]
+
+[node name="tree1" instance=ExtResource("1_12bdm")]
+
+[node name="Icosphere_003" parent="." index="1"]
+material_override = ExtResource("2_uslyn")

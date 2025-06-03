@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://dfy7ys7lergrd"
-path="res://.godot/imported/tree1.blend-5ec75b7dd8e2a5193aee8a8e6a9b4615.scn"
+uid="uid://1nkl1d35qc3v"
+path="res://.godot/imported/tree3.blend-87748a135b25073b383f6d34c6f95ef8.scn"
 
 [deps]
 
-source_file="res://Assets/Objects/World/Vegetation/Tree1/tree1.blend"
-dest_files=["res://.godot/imported/tree1.blend-5ec75b7dd8e2a5193aee8a8e6a9b4615.scn"]
+source_file="res://Assets/Objects/World/Vegetation/Tree1/Models/tree3.blend"
+dest_files=["res://.godot/imported/tree3.blend-87748a135b25073b383f6d34c6f95ef8.scn"]
 
 [params]
 
