@@ -2,20 +2,22 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dvkqtr307j4ig"
-path="res://.godot/imported/player_texture.png-7a85fc1259d0f8b05aee3c27e765d426.ctex"
+uid="uid://bc62blpmkdhso"
+path.s3tc="res://.godot/imported/hand_texture _Sheet_.001.png-4c1ab3b7e290e10006b3849f71fc682b.s3tc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
+generator_parameters={}
 
 [deps]
 
-source_file="res://Assets/Objects/Player/Model/player_texture.png"
-dest_files=["res://.godot/imported/player_texture.png-7a85fc1259d0f8b05aee3c27e765d426.ctex"]
+source_file="res://Assets/Objects/Player/Model/textures/hand_texture _Sheet_.001.png"
+dest_files=["res://.godot/imported/hand_texture _Sheet_.001.png-4c1ab3b7e290e10006b3849f71fc682b.s3tc.ctex"]
 
 [params]
 
-compress/mode=0
+compress/mode=2
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1

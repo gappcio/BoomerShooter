@@ -64,7 +64,6 @@ void light() {
 
 }
 "
-graph_offset = Vector2(-647.935, -43.027)
 modes/diffuse = 3
 modes/specular = 1
 nodes/fragment/2/node = SubResource("VisualShaderNodeTexture_dhi6e")
