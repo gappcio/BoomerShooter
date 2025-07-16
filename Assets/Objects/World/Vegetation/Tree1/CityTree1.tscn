@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://bvx6lf5rp62m3" path="res://Assets/Scripts/Script_Wall.gd" id="3_gkd44"]
 [ext_resource type="PackedScene" uid="uid://du12rfq3bg2p6" path="res://Assets/Composition/Texture.tscn" id="3_uabdm"]
 [ext_resource type="Texture2D" uid="uid://dryuuwk6vlsu5" path="res://Assets/Objects/World/Vegetation/PineTree/bark.png" id="4_gkd44"]
-[ext_resource type="PackedScene" uid="uid://cwokqw1pxrolr" path="res://Assets/Objects/World/Vegetation/Tree1/Models/MODEL_CityTree1.tscn" id="4_uabdm"]
+[ext_resource type="PackedScene" uid="uid://c7oqhs6hpgn2v" path="res://Assets/Objects/World/Vegetation/Tree1/Models/MODEL_CityTree1.tscn" id="4_uabdm"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_iolre"]
 radius = 0.282
