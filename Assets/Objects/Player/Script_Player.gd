@@ -206,7 +206,7 @@ func _physics_process(delta: float) -> void:
 		&& normal_angle < deg_to_rad(60.0):
 			can_trimp = true;
 		
-		if can_trimp and spd > TRIMP_SPEED_THRESHOLD:
+		if can_trimp && spd > TRIMP_SPEED_THRESHOLD:
 			var slope_dir = (Vector3.UP - floor_normal).normalized();
 			var trimp_force = velocity.length() * TRIMP_FORCE_MULTIPLIER;
 			var launch_vector = slope_dir * trimp_force;
