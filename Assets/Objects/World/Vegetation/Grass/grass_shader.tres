@@ -35,8 +35,8 @@ frequency = 0.0506
 fractal_type = 0
 
 [sub_resource type="NoiseTexture2D" id="NoiseTexture2D_cogj3"]
-color_ramp = SubResource("Gradient_qms6n")
 noise = SubResource("FastNoiseLite_6niix")
+color_ramp = SubResource("Gradient_qms6n")
 
 [sub_resource type="VisualShaderNodeTexture" id="VisualShaderNodeTexture_1bbeu"]
 source = 5
@@ -64,7 +64,7 @@ color_default = 1
 
 [resource]
 code = "shader_type spatial;
-render_mode blend_mix, depth_draw_opaque, cull_disabled, diffuse_lambert, specular_schlick_ggx, depth_prepass_alpha, vertex_lighting;
+render_mode blend_mix, depth_draw_opaque, depth_test_default, cull_disabled, diffuse_lambert, specular_schlick_ggx, depth_prepass_alpha, vertex_lighting;
 
 uniform sampler2D noise_texture : hint_default_black;
 uniform sampler2D tex_vtx_6;

@@ -14,5 +14,5 @@ fractal_lacunarity = 1.75
 fractal_gain = 0.925
 
 [resource]
-color_ramp = SubResource("Gradient_2gksc")
 noise = SubResource("FastNoiseLite_2gksc")
+color_ramp = SubResource("Gradient_2gksc")

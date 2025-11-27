@@ -29,7 +29,7 @@ constant = Color(0.57, 0.38817, 0.0741, 1)
 
 [resource]
 code = "shader_type spatial;
-render_mode blend_mix, depth_draw_opaque, cull_disabled, diffuse_toon, specular_toon;
+render_mode blend_mix, depth_draw_opaque, depth_test_default, cull_disabled, diffuse_toon, specular_toon;
 
 uniform sampler2D tex_frg_4;
 uniform sampler2D tex_frg_3;

@@ -20,8 +20,8 @@ domain_warp_fractal_octaves = 10
 
 [sub_resource type="NoiseTexture2D" id="NoiseTexture2D_2xfgb"]
 generate_mipmaps = false
-color_ramp = SubResource("Gradient_a622q")
 noise = SubResource("FastNoiseLite_p72ns")
+color_ramp = SubResource("Gradient_a622q")
 
 [sub_resource type="VisualShaderNodeTexture" id="VisualShaderNodeTexture_sa0io"]
 output_port_for_preview = 0
@@ -57,7 +57,7 @@ input_name = "vertex"
 
 [resource]
 code = "shader_type spatial;
-render_mode blend_mix, depth_draw_opaque, cull_front, diffuse_toon, specular_toon;
+render_mode blend_mix, depth_draw_opaque, depth_test_default, cull_front, diffuse_toon, specular_toon;
 
 uniform sampler2D tex_frg_9 : source_color;
 
