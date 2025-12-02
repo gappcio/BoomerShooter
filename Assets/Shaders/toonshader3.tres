@@ -1,4 +1,4 @@
-[gd_resource type="VisualShader" load_steps=35 format=3 uid="uid://cq1mq7r6b0uom"]
+[gd_resource type="VisualShader" load_steps=37 format=3 uid="uid://cq1mq7r6b0uom"]
 
 [ext_resource type="Texture2D" uid="uid://dnia7u812k7ec" path="res://Assets/Shaders/halftone.png" id="1_04s2y"]
 [ext_resource type="Script" uid="uid://dvqqyorauadbw" path="res://addons/ShaderLib_v2_2_4/Procedural/Shapes/RoundedPolygon.gd" id="2_iqp7k"]
@@ -112,6 +112,12 @@ input_name = "screen_uv"
 
 [sub_resource type="VisualShaderNodeInput" id="VisualShaderNodeInput_dn1ey"]
 input_name = "uv"
+
+[sub_resource type="VisualShaderNodeInput" id="VisualShaderNodeInput_04s2y"]
+input_name = "diffuse"
+
+[sub_resource type="VisualShaderNodeTexture" id="VisualShaderNodeTexture_iqp7k"]
+output_port_for_preview = 0
 
 [resource]
 code = "shader_type spatial;
@@ -274,3 +280,8 @@ nodes/fragment/34/position = Vector2(1240, 40)
 nodes/fragment/41/node = SubResource("VisualShaderNodeTexture_kydhw")
 nodes/fragment/41/position = Vector2(2280, 380)
 nodes/fragment/connections = PackedInt32Array(5, 0, 6, 0, 10, 0, 12, 0, 11, 0, 12, 1, 12, 0, 5, 0, 6, 0, 14, 0, 15, 0, 18, 0, 16, 0, 19, 0, 18, 0, 21, 0, 19, 0, 21, 1, 21, 0, 20, 0, 19, 1, 22, 1, 18, 1, 22, 0, 22, 0, 20, 1, 19, 2, 23, 1, 18, 2, 23, 0, 23, 0, 20, 2, 20, 0, 24, 0, 24, 0, 25, 0, 7, 0, 26, 0, 26, 0, 27, 0, 28, 0, 29, 0, 25, 0, 29, 1, 29, 0, 30, 0, 31, 0, 32, 0, 30, 0, 33, 0, 32, 0, 34, 0, 32, 1, 34, 1, 33, 0, 41, 0, 41, 0, 0, 0, 34, 0, 33, 1, 24, 1, 25, 1, 24, 3, 28, 1, 7, 0, 28, 0)
+nodes/light/2/node = SubResource("VisualShaderNodeInput_04s2y")
+nodes/light/2/position = Vector2(-1340, 0)
+nodes/light/3/node = SubResource("VisualShaderNodeTexture_iqp7k")
+nodes/light/3/position = Vector2(-660, -40)
+nodes/light/connections = PackedInt32Array(2, 0, 3, 0)

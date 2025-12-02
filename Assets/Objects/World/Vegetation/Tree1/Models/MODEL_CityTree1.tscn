@@ -1,9 +1,15 @@
-[gd_scene load_steps=3 format=3 uid="uid://c7oqhs6hpgn2v"]
+[gd_scene load_steps=5 format=3 uid="uid://c7oqhs6hpgn2v"]
 
 [ext_resource type="PackedScene" uid="uid://dsxpmh2pf8b8m" path="res://Assets/Objects/World/Vegetation/Tree1/Models/tree1.glb" id="1_12bdm"]
-[ext_resource type="Material" uid="uid://to38vncxgrd7" path="res://Assets/Objects/World/Vegetation/Tree1/MAT_Foliage.tres" id="2_uslyn"]
+[ext_resource type="Shader" uid="uid://ddl4d1mo8m2t" path="res://Assets/Objects/World/Vegetation/Grass/grass_shader.tres" id="2_nk1is"]
+[ext_resource type="Texture2D" uid="uid://cnyyc480gjos2" path="res://Assets/Common/WeatherManager/grass_wind_noise.tres" id="3_gqaai"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_f78co"]
+render_priority = 0
+shader = ExtResource("2_nk1is")
+shader_parameter/noise_texture = ExtResource("3_gqaai")
 
 [node name="tree1" instance=ExtResource("1_12bdm")]
 
 [node name="Icosphere_003" parent="." index="1"]
-material_override = ExtResource("2_uslyn")
+surface_material_override/0 = SubResource("ShaderMaterial_f78co")

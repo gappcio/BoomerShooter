@@ -1,16 +1,14 @@
 [gd_resource type="NoiseTexture2D" load_steps=3 format=3 uid="uid://cnyyc480gjos2"]
 
 [sub_resource type="Gradient" id="Gradient_tvocf"]
-offsets = PackedFloat32Array(0, 0.526316, 1)
-colors = PackedColorArray(0.313726, 0.341176, 0.133333, 1, 0.111966, 0.000118137, 0.326028, 1, 0.55916, 0.301153, 0.10637, 1)
+offsets = PackedFloat32Array(0, 0.4964029, 1)
+colors = PackedColorArray(0.2627451, 0, 0, 1, 0, 0.21568628, 0, 1, 0, 0, 0.3529412, 1)
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_bs6xa"]
-frequency = 0.0335
+frequency = 0.0214
 fractal_type = 0
 
 [resource]
-width = 128
-height = 128
 generate_mipmaps = false
 noise = SubResource("FastNoiseLite_bs6xa")
 color_ramp = SubResource("Gradient_tvocf")
