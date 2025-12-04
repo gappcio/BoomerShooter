@@ -1,0 +1,13 @@
+[gd_resource type="ShaderMaterial" load_steps=5 format=3 uid="uid://bl27252uob3e7"]
+
+[ext_resource type="Material" uid="uid://bcosqlgxxde86" path="res://Assets/Materials/MAT_Outline.tres" id="1_e5mpq"]
+[ext_resource type="Shader" uid="uid://dtiafdemrxytn" path="res://Assets/Shaders/testshader3.gdshader" id="2_hmfrf"]
+[ext_resource type="Texture2D" uid="uid://dnia7u812k7ec" path="res://Assets/Shaders/halftone.png" id="3_karxm"]
+[ext_resource type="Texture2D" uid="uid://cjc1xk085llel" path="res://Assets/Objects/Player/Weapon/Revolver/revolver_model_Ucupaint revolver Color.png" id="4_hmfrf"]
+
+[resource]
+render_priority = 0
+next_pass = ExtResource("1_e5mpq")
+shader = ExtResource("2_hmfrf")
+shader_parameter/dot_tex = ExtResource("3_karxm")
+shader_parameter/tex = ExtResource("4_hmfrf")

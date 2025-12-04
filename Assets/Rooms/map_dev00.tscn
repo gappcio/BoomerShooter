@@ -1,9 +1,11 @@
-[gd_scene load_steps=80 format=4 uid="uid://7itgyyfxj4ga"]
+[gd_scene load_steps=82 format=4 uid="uid://7itgyyfxj4ga"]
 
 [ext_resource type="PackedScene" uid="uid://cwhxdl2jthine" path="res://Assets/Common/WeatherManager/WeatherManager.tscn" id="1_qdr34"]
 [ext_resource type="PackedScene" uid="uid://cyjskxhmr81rt" path="res://Assets/Common/GUI/hud.tscn" id="1_ubt68"]
+[ext_resource type="Material" uid="uid://bl27252uob3e7" path="res://Assets/Materials/MAT_Test.tres" id="5_v7aw4"]
 [ext_resource type="Shader" uid="uid://dtiafdemrxytn" path="res://Assets/Shaders/testshader3.gdshader" id="6_wjg03"]
 [ext_resource type="PackedScene" uid="uid://c0jd3cujvbmlc" path="res://Assets/Objects/Player/SC_Player.tscn" id="7_gqrsq"]
+[ext_resource type="Texture2D" uid="uid://dnia7u812k7ec" path="res://Assets/Shaders/halftone.png" id="7_nrq68"]
 [ext_resource type="Texture2D" uid="uid://cp3da808i7r1" path="res://Assets/Sprites/World/wall_part.png" id="15_nbtwj"]
 [ext_resource type="Material" uid="uid://bcosqlgxxde86" path="res://Assets/Materials/MAT_Outline.tres" id="16_8xq8d"]
 [ext_resource type="PackedScene" uid="uid://eqr1kllxdbdl" path="res://Assets/Objects/World/Vegetation/Tree1/CityTree1.tscn" id="17_wg2nu"]
@@ -94,22 +96,24 @@ rings = 8
 material = SubResource("StandardMaterial3D_6grxr")
 size = Vector3(2, 1, 2)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_v7aw4"]
-render_priority = 0
-next_pass = ExtResource("16_8xq8d")
-shader = ExtResource("6_wjg03")
-
 [sub_resource type="SphereMesh" id="SphereMesh_rgo25"]
-material = SubResource("ShaderMaterial_v7aw4")
+material = ExtResource("5_v7aw4")
 radial_segments = 16
 rings = 8
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_x1cvm"]
 render_priority = 0
+next_pass = ExtResource("16_8xq8d")
 shader = ExtResource("6_wjg03")
+shader_parameter/dot_tex = ExtResource("7_nrq68")
 
 [sub_resource type="BoxMesh" id="BoxMesh_8eaqj"]
 material = SubResource("ShaderMaterial_x1cvm")
+size = Vector3(4.33, 1, 3.53)
+
+[sub_resource type="PrismMesh" id="PrismMesh_lfnai"]
+material = ExtResource("5_v7aw4")
+left_to_right = 1.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_kbsk8"]
 render_priority = 0
@@ -1693,11 +1697,11 @@ light_energy = 1.5
 shadow_enabled = true
 
 [node name="OmniLight3D" type="OmniLight3D" parent="Map"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.9851227, 3.63807, 7.246551)
-visible = false
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.3212982, 2.3624406, 8.86214)
+light_energy = 0.09
 shadow_enabled = true
 omni_range = 4.811
-omni_attenuation = -0.135
+omni_attenuation = 5.2
 
 [node name="OmniLight3D2" type="OmniLight3D" parent="Map"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.1722007, 3.2378614, 6.7256274)
@@ -1745,13 +1749,18 @@ mesh = SubResource("SphereMesh_rgo25")
 skeleton = NodePath("../../..")
 
 [node name="ShaderTestMesh7" type="MeshInstance3D" parent="Map/NavigationRegion3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.1010966, 2.77207, 7.1596904)
+transform = Transform3D(0.7224726, 0, 0.6913996, 0, 1, 0, -0.6913996, 0, 0.7224726, 3.1010966, 3.2582996, 8.744051)
 mesh = SubResource("BoxMesh_8eaqj")
 skeleton = NodePath("../../..")
 
 [node name="ShaderTestMesh8" type="MeshInstance3D" parent="Map/NavigationRegion3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.1010966, 4.249193, 7.337188)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.007072, 2.01925, 8.314894)
 mesh = SubResource("SphereMesh_rgo25")
+skeleton = NodePath("../../..")
+
+[node name="ShaderTestMesh8" type="MeshInstance3D" parent="Map/NavigationRegion3D/ShaderTestMesh8"]
+transform = Transform3D(0.81072676, 0, 0.5854247, 0, 1, 0, -0.5854247, 0, 0.81072676, 0.4390998, 0.22047615, 1.5245075)
+mesh = SubResource("PrismMesh_lfnai")
 skeleton = NodePath("../../..")
 
 [node name="ShaderTestMesh4" type="MeshInstance3D" parent="Map/NavigationRegion3D"]
@@ -4827,7 +4836,7 @@ omni_attenuation = 0.9
 [node name="LightmapProbe" type="LightmapProbe" parent="."]
 
 [node name="revolver_model" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.27792695, 2.1841974, 7.5132318)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.7575217, 4.15598, 9.159418)
 
 [node name="armature_revolver" type="Node3D" parent="revolver_model"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.012716427, -0.0050825975, -0.0010863543)
@@ -4912,6 +4921,7 @@ bones/10/rotation = Quaternion(-1.2534662e-07, 7.196155e-08, -0.70710677, 0.7071
 bones/10/scale = Vector3(1, 1, 1)
 
 [node name="revolver" type="MeshInstance3D" parent="revolver_model/armature_revolver/Skeleton3D"]
-material_overlay = ExtResource("16_8xq8d")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00031399727, 0.001970768, -0.0005121231)
 mesh = SubResource("ArrayMesh_mom0c")
 skin = SubResource("Skin_acdkl")
+surface_material_override/0 = ExtResource("5_v7aw4")
