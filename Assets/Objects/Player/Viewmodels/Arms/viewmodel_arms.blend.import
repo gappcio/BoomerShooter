@@ -4,12 +4,11 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://dej42bucat762"
-path="res://.godot/imported/viewmodel_arms.blend-8e3056ee07355059ac4110f7e9216805.scn"
+valid=false
 
 [deps]
 
 source_file="res://Assets/Objects/Player/Viewmodels/Arms/viewmodel_arms.blend"
-dest_files=["res://.godot/imported/viewmodel_arms.blend-8e3056ee07355059ac4110f7e9216805.scn"]
 
 [params]
 
