@@ -11,13 +11,14 @@ vec3 linear_light(vec3 A, vec3 B) {
 
 void fragment() {
 	
-	dot_uv = SCREEN_UV * 40.0;
+	vec4 albedo = texture(tex, UV);
+	ALBEDO = albedo.rgb;
+	
+	dot_uv = SCREEN_UV * 50.0;
 	
 	float aspect_ratio = VIEWPORT_SIZE.x / VIEWPORT_SIZE.y;
 	dot_uv.x *= aspect_ratio;
 	
-	vec4 albedo = texture(tex, UV);
-	ALBEDO = albedo.rgb;
 }
 
 void light() {
@@ -25,14 +26,17 @@ void light() {
 	float specular = pow(dot(NORMAL, normalize(LIGHT + VIEW)), 5.0);
 	float rim = pow(1.0 - clamp(dot(NORMAL, VIEW), 0.0, 1.0), 3.0);
 	
-	//diffuse = smoothstep(0.4, 0.45, diffuse);
+	diffuse = smoothstep(0.1, 0.45, diffuse);
+	//diffuse = smoothstep(0.1, 0.5, diffuse);
 	specular = smoothstep(0.85, 0.9, specular);
-	rim = step(0.5, rim);
+	rim = smoothstep(0.4, 0.5, rim);
 	
 	float light_value = step(texture(dot_tex, dot_uv).r, diffuse);
+	//float specular_value = step(texture(dot_tex, dot_uv).r, specular);
+	float rim_value = step(texture(dot_tex, dot_uv).r, rim);
 	
-	DIFFUSE_LIGHT += ((light_value + (rim * 0.5)) * LIGHT_COLOR * ATTENUATION) / PI;
-	SPECULAR_LIGHT += specular;
+	DIFFUSE_LIGHT += ((light_value + (specular * .75) + (rim_value * 0.5)) * LIGHT_COLOR * ATTENUATION) / (PI * 1.0);
+	SPECULAR_LIGHT += specular * .01;
 
 	//DIFFUSE_LIGHT += light_value;
 }

@@ -33,7 +33,7 @@ texture_filter = 1
 
 [resource]
 code = "shader_type spatial;
-render_mode blend_mix, depth_draw_opaque, cull_back, diffuse_toon, specular_toon;
+render_mode blend_mix, depth_draw_opaque, depth_test_default, cull_back, diffuse_toon, specular_toon;
 
 uniform sampler2D texture_slide : filter_nearest;
 uniform sampler2D tex_frg_3 : source_color;
