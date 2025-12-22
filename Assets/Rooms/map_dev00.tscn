@@ -54,6 +54,7 @@ agent_max_slope = 60.0
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_egasi"]
 render_priority = 0
 shader = ExtResource("31_232gy")
+shader_parameter/outline_depth = 0.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_2iwdy"]
 render_priority = 0
@@ -77,6 +78,7 @@ rings = 8
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_l1vs0"]
 render_priority = 0
 shader = ExtResource("31_232gy")
+shader_parameter/outline_depth = 0.0
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6grxr"]
 next_pass = SubResource("ShaderMaterial_l1vs0")
@@ -202,6 +204,7 @@ shadow_mesh = SubResource("ArrayMesh_fnfg6")
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_tmdly"]
 render_priority = 0
 shader = ExtResource("31_232gy")
+shader_parameter/outline_depth = 0.0
 
 [sub_resource type="Gradient" id="Gradient_77wrc"]
 colors = PackedColorArray(0.95158, 0.95158, 0.951579, 1, 1, 1, 1, 1)
