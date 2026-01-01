@@ -13,7 +13,7 @@ texture_filter = 1
 
 [resource]
 code = "shader_type spatial;
-render_mode blend_mix, depth_draw_opaque, depth_test_default, cull_disabled, diffuse_lambert, specular_schlick_ggx, unshaded;
+render_mode blend_mix, depth_draw_never, depth_test_default, cull_disabled, diffuse_lambert, specular_schlick_ggx, unshaded;
 
 uniform sampler2D gradient_tex : source_color, filter_nearest;
 
@@ -36,6 +36,7 @@ void fragment() {
 
 }
 "
+modes/depth_draw = 2
 modes/cull = 2
 flags/unshaded = true
 preview_params/gradient_tex = "Object(GradientTexture1D,\"resource_local_to_scene\":false,\"resource_name\":\"\",\"gradient\":Object(Gradient,\"resource_local_to_scene\":false,\"resource_name\":\"\",\"interpolation_mode\":0,\"interpolation_color_space\":0,\"offsets\":PackedFloat32Array(0, 0.337292, 0.524941, 0.660333, 1),\"colors\":PackedColorArray(0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0),\"script\":null)

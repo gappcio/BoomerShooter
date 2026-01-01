@@ -13,10 +13,11 @@
 [ext_resource type="Texture2D" uid="uid://cjc1xk085llel" path="res://Assets/Objects/Player/Weapon/Revolver/revolver_model_Ucupaint revolver Color.png" id="18_wjg03"]
 [ext_resource type="PackedScene" uid="uid://uwbvg6hin1d" path="res://Assets/Common/GameManager/GameManager.tscn" id="18_yd3e0"]
 [ext_resource type="Texture2D" uid="uid://dvkqtr307j4ig" path="res://Assets/Objects/Player/Model/player_texture.png" id="20_tmdly"]
-[ext_resource type="Shader" uid="uid://cxa1w7sh0x53x" path="res://Assets/Rooms/map_dev00.gdshader" id="21_77wrc"]
 [ext_resource type="Script" uid="uid://bvx6lf5rp62m3" path="res://Assets/Scripts/Script_Wall.gd" id="21_uvjlx"]
 [ext_resource type="PackedScene" uid="uid://du12rfq3bg2p6" path="res://Assets/Composition/Texture.tscn" id="23_sep45"]
+[ext_resource type="Shader" uid="uid://ds7wqqiecs42w" path="res://Assets/Shaders/posterize.gdshader" id="24_5epn2"]
 [ext_resource type="Texture2D" uid="uid://kgxgepmsu0vo" path="res://Assets/Objects/Player/Weapon/Revolver/revolver_model_bullet Color.png" id="24_wjg03"]
+[ext_resource type="PackedScene" uid="uid://b3iegjml1ctnm" path="res://Assets/Objects/World/Vegetation/Grass/MultiMeshGrass.tscn" id="27_x1cvm"]
 [ext_resource type="MeshLibrary" uid="uid://bfpi54nhciyt8" path="res://Assets/Objects/_DEV/Walls/Res/mesh_lib.tres" id="30_e41io"]
 [ext_resource type="Shader" uid="uid://3lgr2mkb4bik" path="res://Assets/Shaders/src/outline.gdshader" id="31_232gy"]
 [ext_resource type="Shader" uid="uid://bctv1npkk6i7o" path="res://Assets/Shaders/src/cel-shader-base.gdshader" id="32_b3gpx"]
@@ -75,17 +76,12 @@ material = SubResource("ShaderMaterial_2iwdy")
 radial_segments = 16
 rings = 8
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_l1vs0"]
-render_priority = 0
-shader = ExtResource("31_232gy")
-shader_parameter/outline_depth = 0.0
-
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6grxr"]
-next_pass = SubResource("ShaderMaterial_l1vs0")
+next_pass = ExtResource("16_8xq8d")
 diffuse_mode = 3
 specular_mode = 1
 disable_fog = true
-albedo_color = Color(0, 0.615686, 0.878431, 1)
+albedo_color = Color(0, 0.6156863, 0.8784314, 0.3254902)
 roughness = 0.0
 rim_enabled = true
 clearcoat_roughness = 0.0
@@ -1584,20 +1580,14 @@ size = Vector3(5.485, 1, 5.97)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_5epn2"]
 render_priority = 0
-shader = ExtResource("21_77wrc")
-shader_parameter/rim = 0.5
-shader_parameter/rim_threshold = 0.5
-shader_parameter/emission = 0.0
-shader_parameter/specular = 0.5
-shader_parameter/specular_color = Color(0.5, 0.5, 0.5, 1)
-shader_parameter/roughness = 1.0
-shader_parameter/is_normal_symmetric = false
-shader_parameter/normal_scale = 1.0
-shader_parameter/albedo_color = Color(1, 1, 1, 1)
-shader_parameter/albedo_color2 = Color(0, 0, 0, 1)
+shader = ExtResource("24_5epn2")
+shader_parameter/depth_level = 0.0999999977648
+shader_parameter/posterize_level = 8.0000001192096
+shader_parameter/gamma = Vector2(9.81, 0.185)
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_x1cvm"]
 material = SubResource("ShaderMaterial_5epn2")
+flip_faces = true
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_v0kgj"]
 resource_name = "revolver"
@@ -1716,6 +1706,7 @@ omni_range = 8.0
 
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="Map"]
 navigation_mesh = SubResource("NavigationMesh_wg2nu")
+enabled = false
 
 [node name="GridMap" type="GridMap" parent="Map/NavigationRegion3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -65, 0, 0)
@@ -4814,10 +4805,6 @@ metadata/extras = {
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 50.5151, 5.04064, -4.28431)
 mesh = SubResource("BoxMesh_rmv2p")
 
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 43.3326, 3.27064, -0.191157)
-mesh = SubResource("PlaneMesh_x1cvm")
-
 [node name="OmniLight3D" type="OmniLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 51.2099, 1.95161, -0.539139)
 visible = false
@@ -4825,6 +4812,19 @@ light_energy = 1.49
 shadow_enabled = true
 omni_range = 21.3
 omni_attenuation = 0.9
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -1, 8.742278e-08, 0, -8.742278e-08, -1, 46.414543, 7.5528865, 1.8849373)
+cast_shadow = 0
+extra_cull_margin = 16384.0
+mesh = SubResource("PlaneMesh_x1cvm")
+skeleton = NodePath("../MeshInstance3D2")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.9408808, 0.33873796, -1.4806706e-08, 0, -4.371139e-08, -1, -0.33873796, 0.9408808, -4.1127205e-08, 1.9764018, 4.0855093, 8.575709)
+cast_shadow = 0
+extra_cull_margin = 16384.0
+mesh = SubResource("PlaneMesh_x1cvm")
 
 [node name="OmniLight3D2" type="OmniLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 45.5549, 3.10103, 1.26616)
@@ -4840,7 +4840,7 @@ omni_attenuation = 0.9
 [node name="LightmapProbe" type="LightmapProbe" parent="."]
 
 [node name="revolver_model" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.7575217, 4.15598, 9.159418)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.0364738, 4.15598, 9.139175)
 
 [node name="armature_revolver" type="Node3D" parent="revolver_model"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.012716427, -0.0050825975, -0.0010863543)
@@ -4929,3 +4929,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00031399727, 0.001970768, -
 mesh = SubResource("ArrayMesh_mom0c")
 skin = SubResource("Skin_acdkl")
 surface_material_override/0 = ExtResource("5_v7aw4")
+
+[node name="MeshInstance3D3" parent="." instance=ExtResource("27_x1cvm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.2906036, 3.6760197, 9.446392)

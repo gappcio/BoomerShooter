@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://c0jd3cujvbmlc"]
+[gd_scene load_steps=31 format=3 uid="uid://c0jd3cujvbmlc"]
 
 [ext_resource type="Script" uid="uid://rrxtl6hrf7dr" path="res://Assets/Objects/Player/Script_Player.gd" id="1_5ffuh"]
 [ext_resource type="PackedScene" uid="uid://1hxrf7rm1jbt" path="res://Assets/Objects/Player/SC_Camera.tscn" id="1_xqu0b"]
@@ -12,6 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://04d8wgl8ry6b" path="res://Assets/Objects/Player/Viewmodels/SC_Viewmodel_Fists.tscn" id="6_hbj6a"]
 [ext_resource type="Shader" uid="uid://30jupcwsbqm1" path="res://Assets/Objects/Player/shader_dash_fx.tres" id="10_7iqpk"]
 [ext_resource type="Script" uid="uid://dhveyx1fvmyvb" path="res://Assets/Objects/Player/Script_DashFX.gd" id="11_jc3lu"]
+[ext_resource type="Shader" uid="uid://ds7wqqiecs42w" path="res://Assets/Shaders/posterize.gdshader" id="12_xn4hj"]
 [ext_resource type="AudioStream" uid="uid://bhh8wld6vkkw0" path="res://Assets/Audio/SFX/Player/dash.wav" id="13_ahrm2"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_c23eb"]
@@ -73,6 +74,17 @@ size = Vector2(0.02, 2)
 _limits = [0.0, 0.8, 0.0, 20.0]
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 1, Vector2(9, 0), 0.0, 0.4, 1, 1, Vector2(11, 0.8), 0.4, 0.0, 1, 0]
 point_count = 3
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_lfnai"]
+render_priority = 0
+shader = ExtResource("12_xn4hj")
+shader_parameter/depth_level = 0.03999999910592
+shader_parameter/posterize_level = 16.0000002384192
+shader_parameter/gamma = Vector2(9.81, 0.185)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_cjdk2"]
+material = SubResource("ShaderMaterial_lfnai")
+size = Vector2(3, 3)
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_qsvxe"]
 radius = 0.4
@@ -165,6 +177,12 @@ process_material = SubResource("ParticleProcessMaterial_jc3lu")
 draw_pass_1 = SubResource("PlaneMesh_ojp02")
 script = ExtResource("11_jc3lu")
 alpha_curve = SubResource("Curve_jc3lu")
+
+[node name="ShaderMesh" type="MeshInstance3D" parent="Head/Camera"]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, -0.2332469)
+cast_shadow = 0
+extra_cull_margin = 16384.0
+mesh = SubResource("PlaneMesh_cjdk2")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 visible = false

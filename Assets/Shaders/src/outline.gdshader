@@ -1,6 +1,6 @@
 shader_type spatial;
 
-render_mode cull_front, unshaded, depth_draw_never;
+render_mode cull_front, unshaded;
 
 global uniform vec4 outline_color;
 global uniform float outline_width;
@@ -29,7 +29,7 @@ void vertex() {
 }
 
 void fragment() {
-	depth = texture(depth_texture, SCREEN_UV).r;
-	depth = PROJECTION_MATRIX[3][2] / (depth + PROJECTION_MATRIX[2][2]);
+	//depth = texture(depth_texture, SCREEN_UV).r;
+	//depth = PROJECTION_MATRIX[3][2] / (depth + PROJECTION_MATRIX[2][2]);
 	ALBEDO = outline_color.rgb;
 }

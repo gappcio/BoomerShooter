@@ -1,13 +1,14 @@
 [gd_scene load_steps=18 format=4 uid="uid://04d8wgl8ry6b"]
 
 [ext_resource type="Script" uid="uid://c8uvcniqt4c00" path="res://Assets/Objects/Player/Weapon/Script_PlayerWeaponFists.gd" id="1_p00lp"]
-[ext_resource type="Texture2D" uid="uid://dvsddr0kx1mol" path="res://Assets/Objects/Player/Viewmodels/Pistol/textures/hand_texture _Sheet_.png" id="2_v5wxf"]
-[ext_resource type="Shader" uid="uid://c17b8uo1g3ws" path="res://Assets/Objects/Player/hands_material.tres" id="3_gxrw2"]
+[ext_resource type="Texture2D" uid="uid://dus3x6fp3typu" path="res://Assets/Objects/Player/Viewmodels/Pistol/textures/hand_texture _Sheet_.png" id="2_v5wxf"]
+[ext_resource type="Shader" uid="uid://3lgr2mkb4bik" path="res://Assets/Shaders/src/outline.gdshader" id="3_gxrw2"]
 [ext_resource type="AudioStream" uid="uid://dtbmpxc580ido" path="res://Assets/Audio/SFX/Weapons/Fist/fist_swing.wav" id="4_gxrw2"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_3435q"]
 render_priority = 0
 shader = ExtResource("3_gxrw2")
+shader_parameter/outline_depth = 0.0
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ykwcf"]
 next_pass = SubResource("ShaderMaterial_3435q")
@@ -22,6 +23,7 @@ texture_filter = 0
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_tdven"]
 render_priority = 0
 shader = ExtResource("3_gxrw2")
+shader_parameter/outline_depth = 0.0
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_66nh0"]
 next_pass = SubResource("ShaderMaterial_tdven")
