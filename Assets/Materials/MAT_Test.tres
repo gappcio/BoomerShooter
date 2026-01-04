@@ -1,7 +1,7 @@
 [gd_resource type="ShaderMaterial" load_steps=5 format=3 uid="uid://bl27252uob3e7"]
 
 [ext_resource type="Material" uid="uid://bcosqlgxxde86" path="res://Assets/Materials/MAT_Outline.tres" id="1_e5mpq"]
-[ext_resource type="Shader" uid="uid://dtiafdemrxytn" path="res://Assets/Shaders/testshader3.gdshader" id="2_hmfrf"]
+[ext_resource type="Shader" uid="uid://bi4sunagumkmb" path="res://Assets/Shaders/shader_main.gdshader" id="2_hmfrf"]
 [ext_resource type="Texture2D" uid="uid://dnia7u812k7ec" path="res://Assets/Shaders/halftone.png" id="3_karxm"]
 [ext_resource type="Texture2D" uid="uid://fymnlw7m8eix" path="res://Assets/Objects/Player/Weapon/Revolver/textures/revolver.png" id="4_hmfrf"]
 
@@ -11,3 +11,6 @@ next_pass = ExtResource("1_e5mpq")
 shader = ExtResource("2_hmfrf")
 shader_parameter/dot_tex = ExtResource("3_karxm")
 shader_parameter/tex = ExtResource("4_hmfrf")
+shader_parameter/max_distance = 25.0
+shader_parameter/enable_rim = true
+shader_parameter/dot_size = 6.000000074506

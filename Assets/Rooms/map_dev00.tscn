@@ -1,11 +1,13 @@
-[gd_scene load_steps=82 format=4 uid="uid://7itgyyfxj4ga"]
+[gd_scene load_steps=89 format=4 uid="uid://7itgyyfxj4ga"]
 
 [ext_resource type="PackedScene" uid="uid://cwhxdl2jthine" path="res://Assets/Common/WeatherManager/WeatherManager.tscn" id="1_qdr34"]
 [ext_resource type="PackedScene" uid="uid://cyjskxhmr81rt" path="res://Assets/Common/GUI/hud.tscn" id="1_ubt68"]
+[ext_resource type="CompressedTexture3D" uid="uid://dwh6t6fvlvyyv" path="res://Assets/Shaders/lut2.png" id="2_8eaqj"]
+[ext_resource type="Script" uid="uid://bieruyh1pjs1h" path="res://Assets/Common/Camera/Camera.gd" id="2_u0127"]
 [ext_resource type="Material" uid="uid://bl27252uob3e7" path="res://Assets/Materials/MAT_Test.tres" id="5_v7aw4"]
-[ext_resource type="Shader" uid="uid://dtiafdemrxytn" path="res://Assets/Shaders/testshader3.gdshader" id="6_wjg03"]
 [ext_resource type="PackedScene" uid="uid://c0jd3cujvbmlc" path="res://Assets/Objects/Player/SC_Player.tscn" id="7_gqrsq"]
 [ext_resource type="Texture2D" uid="uid://dnia7u812k7ec" path="res://Assets/Shaders/halftone.png" id="7_nrq68"]
+[ext_resource type="Shader" uid="uid://bi4sunagumkmb" path="res://Assets/Shaders/shader_main.gdshader" id="10_8eaqj"]
 [ext_resource type="Texture2D" uid="uid://cp3da808i7r1" path="res://Assets/Sprites/World/wall_part.png" id="15_nbtwj"]
 [ext_resource type="Material" uid="uid://bcosqlgxxde86" path="res://Assets/Materials/MAT_Outline.tres" id="16_8xq8d"]
 [ext_resource type="PackedScene" uid="uid://eqr1kllxdbdl" path="res://Assets/Objects/World/Vegetation/Tree1/CityTree1.tscn" id="17_wg2nu"]
@@ -44,6 +46,7 @@ ambient_light_source = 2
 ambient_light_color = Color(0.608, 0.68399996, 0.76, 1)
 reflected_light_source = 1
 tonemap_mode = 1
+adjustment_color_correction = ExtResource("2_8eaqj")
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_wg2nu"]
 vertices = PackedVector3Array(-27.7452, 2.45815, -31.503, -30.4952, 2.95815, -26.503, -28.4952, 2.95815, -25.503, -25.7452, 2.95815, -31.003, -15.9952, 2.95815, -25.753, -23.4952, 2.95815, -33.253, -34.2452, 2.95815, -20.753, -34.2452, 2.95815, -20.003, -28.7452, 2.95815, -20.003, -35.2452, 2.95815, -21.753, -27.7452, 7.95815, 29.497, -27.2452, 7.95815, 29.497, -27.2452, 7.95815, -24.253, -27.7452, 7.95815, -24.503, 30.0048, 7.95815, -24.253, 30.5048, 7.95815, -24.503, 30.0048, 7.95815, 29.497, 30.5048, 7.95815, 29.497, -8.7452, 1.95815, -9.50304, -8.4952, 1.95815, -7.25304, -8.2452, 1.95815, -7.25304, -8.2452, 1.95815, -14.253, -26.4952, 2.45815, -8.00304, -11.7452, 1.95815, -7.75304, -11.4952, 1.95815, -9.50304, -6.4952, 1.95815, -14.503, -6.7452, 1.95815, -23.253, -26.4952, 2.95815, -23.253, 2.2548, 1.95815, -14.503, 2.5048, 1.95815, -23.253, 12.2548, 2.45815, -9.50304, 12.5048, 4.95815, -6.25304, 12.5048, 2.45815, -9.50304, 4.0048, 1.95815, -8.00304, 11.2548, 1.95815, -8.00304, 11.2548, 1.95815, -9.50304, 4.0048, 1.95815, -14.253, 13.5048, 1.95815, -9.25304, 14.0048, 1.95815, -23.253, 13.5048, 1.95815, -8.00304, 29.2548, 1.95815, -8.25304, 29.2548, 1.95815, -23.253, -39.7452, 2.45815, -10.503, -28.9952, 2.45815, -4.25304, -7.2452, 2.95815, -13.503, -7.2452, 2.95815, -3.50304, 3.0048, 2.95815, -3.50304, 3.0048, 2.95815, -13.503, -10.2452, 2.45815, -4.50304, -9.7452, 1.95815, -5.25304, -10.2452, 2.45815, -5.25304, -11.7452, 1.95815, -5.50304, -12.4952, 1.95815, -4.50304, -10.7452, 2.45815, -5.50304, -10.2452, 2.95815, -6.25304, -9.4952, 2.95815, -6.25304, -9.4952, 2.95815, -8.50304, -10.7452, 2.95815, -8.50304, -12.7452, 1.95815, -3.75304, -26.4952, 2.45815, -3.75304, 28.2548, 1.95815, -1.25304, 29.2548, 1.95815, -1.50304, 20.5048, 1.95815, -0.50304, 20.5048, 2.45815, 0.24696, 28.2548, 1.95815, 0.49696, 13.5048, 1.95815, -6.75304, 17.7548, 1.95815, -0.50304, 3.7548, 1.95815, 1.24696, 4.0048, 1.95815, 1.99696, 4.7548, 1.95815, 1.99696, 2.7548, 1.95815, 0.24696, 3.0048, 1.95815, 1.24696, 5.0048, 1.95815, -0.00304031, 7.7548, 1.95815, -0.00304031, 8.0048, 1.95815, 0.49696, 11.7548, 1.95815, -6.25304, 11.2548, 1.95815, -6.50304, 1.7548, 1.95815, -2.50304, 1.7548, 1.95815, 0.24696, 4.0048, 1.95815, -2.75304, -4.7452, 2.45815, 3.24696, -4.7452, 2.95815, 3.74696, -4.4952, 2.95815, 3.74696, -4.4952, 2.45815, 3.24696, -0.745201, 1.95815, -1.00304, -0.495201, 1.95815, 0.24696, -6.7452, 2.45815, 2.99696, -6.7452, 2.95815, 3.74696, -6.4952, 2.95815, 3.74696, -6.4952, 2.45815, 2.99696, -10.2452, 2.45815, -3.25304, -9.9952, 1.95815, 2.49696, -7.7452, 1.95815, 2.49696, -7.9952, 1.95815, -2.50304, -9.4952, 1.95815, -3.50304, -9.4952, 1.95815, -4.25304, -8.4952, 1.95815, -5.50304, -7.4952, 1.95815, 2.99696, -3.7452, 1.95815, 3.24696, -3.2452, 1.95815, 1.99696, -3.7452, 1.95815, 1.74696, -3.4952, 1.95815, -1.00304, 13.5048, 1.95815, 6.49696, 14.2548, 1.95815, 6.49696, 14.2548, 1.95815, 4.74696, 13.2548, 1.95815, 4.49696, 13.2548, 1.95815, -6.25304, 17.2548, 1.95815, -0.25304, 16.0048, 1.95815, 4.49696, 17.2548, 1.95815, 1.49696, 8.0048, 1.95815, 7.74696, 7.0048, 1.95815, 7.99696, 7.0048, 1.95815, 10.497, 9.5048, 1.95815, 10.747, 17.7548, 1.95815, 1.74696, 11.5048, 1.95815, 4.49696, 11.5048, 1.95815, 7.49696, 16.7548, 7.95815, -5.50304, 16.2548, 7.95815, -6.50304, 16.2548, 7.95815, 0.74696, 17.5048, 7.95815, 0.74696, 17.5048, 7.95815, -5.50304, -11.4952, 1.95815, 2.49696, -12.4952, 1.95815, -3.25304, -26.4952, 1.95815, 3.74696, -11.7452, 1.95815, 3.74696, -2.7452, 2.95815, -0.00304031, -2.7452, 2.95815, 0.99696, -1.4952, 2.95815, 0.99696, -1.4952, 2.95815, -0.00304031, 17.5048, 4.95815, 0.24696, 17.5048, 4.95815, 0.99696, 20.5048, 2.45815, 0.74696, 16.5048, 1.95815, 4.74696, 20.5048, 1.95815, 1.74696, 16.5048, 1.95815, 6.99696, 28.2548, 1.95815, 7.24696, 12.2548, 3.95815, 6.24696, 12.5048, 3.95815, 6.24696, 12.7548, 4.95815, 4.74696, 12.0048, 4.95815, 4.74696, 7.2548, 4.95815, 1.49696, 7.2548, 4.95815, 4.74696, 15.0048, 4.95815, 4.74696, 15.2548, 4.95815, 5.74696, 17.5048, 4.95815, 5.74696, 17.5048, 4.95815, 1.49696, 4.0048, 1.95815, 6.99696, 4.5048, 1.95815, 7.74696, 4.7548, 1.95815, 7.74696, 3.7548, 1.95815, 2.74696, 2.2548, 1.95815, 2.74696, 2.0048, 1.95815, 1.74696, -2.4952, 1.95815, 5.74696, 2.7548, 1.95815, 7.49696, 3.0048, 1.95815, 6.99696, -3.4952, 1.95815, 4.24696, -4.2452, 2.45815, 4.24696, -3.9952, 1.95815, 5.49696, -2.4952, 1.95815, 7.24696, -4.7452, 2.45815, 4.24696, -2.7452, 1.95815, 7.74696, 3.0048, 1.95815, 8.74696, -6.4952, 2.45815, 4.49696, -6.7452, 2.45815, 4.49696, 6.2548, 1.95815, 10.747, 4.2548, 1.95815, 8.74696, 3.2548, 1.95815, 13.747, 5.2548, 1.95815, 13.497, -7.4952, 1.95815, 4.49696, -7.7452, 1.95815, 4.99696, 5.5048, 1.95815, 14.497, 6.2548, 1.95815, 14.497, -4.7452, 1.95815, 5.74696, 4.7548, 1.95815, 28.497, 5.0048, 1.95815, 18.747, 3.2548, 1.95815, 18.497, -11.4952, 1.95815, 4.74696, -4.7452, 1.95815, 7.49696, -9.4952, 1.95815, 4.99696, -26.4952, 1.95815, 28.497, 5.7548, 2.95815, 6.99696, 7.0048, 2.95815, 6.99696, 7.0048, 2.95815, 5.74696, 5.7548, 2.95815, 4.99696, 2.2548, 8.95815, 6.49696, 2.2548, 8.95815, 6.99696, 4.2548, 7.95815, 6.99696, 4.2548, 7.95815, 6.24696, 13.5048, 1.95815, 7.49696, 14.5048, 1.95815, 8.74696, 12.5048, 2.45815, 7.49696, 12.2548, 2.45815, 7.49696, 9.5048, 1.95815, 18.747, 8.2548, 1.95815, 28.497, 28.2548, 1.95815, 28.497, 16.2548, 1.95815, 8.74696, 9.5048, 2.45815, 13.747, 9.5048, 2.45815, 15.497, 9.5048, 2.45815, 11.497, 7.7548, 4.45815, 11.497, 7.7548, 4.45815, 13.747, 9.5048, 2.45815, 17.747, 7.7548, 3.95815, 15.497, 7.7548, 3.95815, 17.747, 8.0048, 1.95815, 18.747, 5.0048, 7.95815, 7.99696, 5.0048, 7.95815, 8.74696, 5.5048, 7.95815, 8.74696, 5.5048, 7.95815, 7.99696, 2.2548, 8.95815, 8.74696, 2.0048, 8.45815, 9.49696, 2.5048, 8.45815, 10.247, 3.5048, 8.45815, 10.497, 4.2548, 8.95815, 9.99696, 4.0048, 8.95815, 8.24696, 4.1298, 9.45815, 9.12196, 4.7548, 3.95815, 15.497, 4.2548, 3.95815, 17.747, 4.5048, 4.95815, 13.997, 4.2548, 4.95815, 11.497, 6.67147, 4.95815, 13.8303, 6.58813, 4.95815, 11.497, 4.42147, 3.95815, 15.247)
@@ -95,24 +98,63 @@ rings = 8
 material = SubResource("StandardMaterial3D_6grxr")
 size = Vector3(2, 1, 2)
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_pru3i"]
+render_priority = 0
+shader = ExtResource("31_232gy")
+shader_parameter/outline_depth = 8.0
+
+[sub_resource type="Gradient" id="Gradient_qdr34"]
+offsets = PackedFloat32Array(0, 0.24115756, 0.2636656, 0.28938907, 0.4726688, 0.68488747, 0.7942122, 0.94212216)
+colors = PackedColorArray(0.48716667, 0.79, 0, 1, 0.007486281, 0.700886, 5.7756904e-07, 1, 0.48733336, 0.68, 0, 1, 0, 0.29999995, 1, 1, 0.10710001, 0.26397, 0.63, 1, 0.28444445, 0.4991111, 1, 1, 0.28444445, 0.4991111, 1, 1, 0.89, 0.923, 1, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_ubt68"]
+noise_type = 2
+frequency = 0.013
+fractal_type = 0
+fractal_octaves = 10
+fractal_lacunarity = 1.645
+fractal_gain = -0.02
+cellular_jitter = 1.775
+domain_warp_enabled = true
+domain_warp_amplitude = 31.19
+domain_warp_frequency = 0.043
+domain_warp_fractal_lacunarity = 2.28
+domain_warp_fractal_gain = 0.397
+metadata/_preview_in_3d_space_ = true
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_e41io"]
+noise = SubResource("FastNoiseLite_ubt68")
+color_ramp = SubResource("Gradient_qdr34")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8eaqj"]
+render_priority = 0
+next_pass = SubResource("ShaderMaterial_pru3i")
+shader = ExtResource("10_8eaqj")
+shader_parameter/dot_tex = ExtResource("7_nrq68")
+shader_parameter/tex = SubResource("NoiseTexture2D_e41io")
+shader_parameter/max_distance = 5.0
+shader_parameter/enable_rim = true
+shader_parameter/dot_size = 6.0
+
 [sub_resource type="SphereMesh" id="SphereMesh_rgo25"]
-material = ExtResource("5_v7aw4")
+material = SubResource("ShaderMaterial_8eaqj")
+radius = 0.14
+height = 0.263
 radial_segments = 16
 rings = 8
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_x1cvm"]
 render_priority = 0
 next_pass = ExtResource("16_8xq8d")
-shader = ExtResource("6_wjg03")
+shader = ExtResource("10_8eaqj")
 shader_parameter/dot_tex = ExtResource("7_nrq68")
+shader_parameter/max_distance = 50.0
+shader_parameter/enable_rim = true
+shader_parameter/dot_size = 6.0
 
 [sub_resource type="BoxMesh" id="BoxMesh_8eaqj"]
 material = SubResource("ShaderMaterial_x1cvm")
 size = Vector3(4.33, 1, 3.53)
-
-[sub_resource type="PrismMesh" id="PrismMesh_lfnai"]
-material = ExtResource("5_v7aw4")
-left_to_right = 1.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_kbsk8"]
 render_priority = 0
@@ -275,7 +317,7 @@ uv1_offset = Vector3(0, 0.041, 0)
 material = SubResource("StandardMaterial3D_rmv2p")
 
 [sub_resource type="Gradient" id="Gradient_nrq68"]
-colors = PackedColorArray(0.650128, 0.650128, 0.650128, 1, 1, 1, 1, 1)
+colors = PackedColorArray(0, 0.5176471, 0, 1, 0, 0.8745098, 0, 1)
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_v7aw4"]
 frequency = 0.2416
@@ -290,16 +332,17 @@ cellular_return_type = 6
 noise = SubResource("FastNoiseLite_v7aw4")
 color_ramp = SubResource("Gradient_nrq68")
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_x1cvm"]
-next_pass = ExtResource("16_8xq8d")
-diffuse_mode = 3
-specular_mode = 1
-albedo_color = Color(0.281175, 0.69, 0.1449, 1)
-albedo_texture = SubResource("NoiseTexture2D_5epn2")
-roughness = 0.0
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_pdnst"]
+render_priority = 0
+shader = ExtResource("10_8eaqj")
+shader_parameter/dot_tex = ExtResource("7_nrq68")
+shader_parameter/tex = SubResource("NoiseTexture2D_5epn2")
+shader_parameter/max_distance = 50.0
+shader_parameter/enable_rim = false
+shader_parameter/dot_size = 6.0
 
 [sub_resource type="BoxMesh" id="BoxMesh_lfnai"]
-material = SubResource("StandardMaterial3D_x1cvm")
+material = SubResource("ShaderMaterial_pdnst")
 
 [sub_resource type="Shader" id="Shader_77wrc"]
 code = "shader_type spatial;
@@ -1583,7 +1626,6 @@ render_priority = 0
 shader = ExtResource("24_5epn2")
 shader_parameter/depth_level = 0.0999999977648
 shader_parameter/posterize_level = 8.0000001192096
-shader_parameter/gamma = Vector2(9.81, 0.185)
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_x1cvm"]
 material = SubResource("ShaderMaterial_5epn2")
@@ -1675,7 +1717,47 @@ bind/10/name = &"shell"
 bind/10/bone = -1
 bind/10/pose = Transform3D(2.106662e-14, -1, 7.5497894e-08, 1, -7.786102e-14, -2.7903587e-07, 2.7903587e-07, 7.5497894e-08, 1, 0.050043058, 0.05045195, 0.00045313925)
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_l85pa"]
+render_priority = 0
+shader = ExtResource("10_8eaqj")
+shader_parameter/dot_tex = ExtResource("7_nrq68")
+shader_parameter/tex = ExtResource("24_wjg03")
+shader_parameter/max_distance = 25.0
+shader_parameter/enable_rim = true
+shader_parameter/dot_size = 6.0
+
 [node name="WORLD" type="Node3D" groups=["world"]]
+
+[node name="Node2D" type="Node2D" parent="."]
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="Node2D"]
+offset_right = 1920.0
+offset_bottom = 1080.0
+mouse_filter = 2
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="Node2D/SubViewportContainer"]
+handle_input_locally = false
+size = Vector2i(1920, 1080)
+render_target_update_mode = 4
+
+[node name="Camera3D" type="Camera3D" parent="Node2D/SubViewportContainer/SubViewport" node_paths=PackedStringArray("viewport", "viewport_container")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.4054375, 4.429722)
+current = true
+fov = 90.0
+script = ExtResource("2_u0127")
+viewport = NodePath("..")
+viewport_container = NodePath("../..")
+
+[node name="HUDControl" parent="." instance=ExtResource("1_ubt68")]
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_right = 480.0
+offset_bottom = 270.0
+grow_horizontal = 1
+grow_vertical = 1
+scale = Vector2(4, 4)
 
 [node name="Player" parent="." instance=ExtResource("7_gqrsq")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5086, 1.89687, 5.26061)
@@ -1749,13 +1831,9 @@ mesh = SubResource("BoxMesh_8eaqj")
 skeleton = NodePath("../../..")
 
 [node name="ShaderTestMesh8" type="MeshInstance3D" parent="Map/NavigationRegion3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.007072, 2.01925, 8.314894)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.999922, 2.01925, 7.0399904)
+cast_shadow = 0
 mesh = SubResource("SphereMesh_rgo25")
-skeleton = NodePath("../../..")
-
-[node name="ShaderTestMesh8" type="MeshInstance3D" parent="Map/NavigationRegion3D/ShaderTestMesh8"]
-transform = Transform3D(0.81072676, 0, 0.5854247, 0, 1, 0, -0.5854247, 0, 0.81072676, 0.4390998, 0.22047615, 1.5245075)
-mesh = SubResource("PrismMesh_lfnai")
 skeleton = NodePath("../../..")
 
 [node name="ShaderTestMesh4" type="MeshInstance3D" parent="Map/NavigationRegion3D"]
@@ -2113,15 +2191,13 @@ texture = ExtResource("15_nbtwj")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 56, 0, 12.8)
 
 [node name="CityTree3" parent="Map/NavigationRegion3D" instance=ExtResource("17_wg2nu")]
-transform = Transform3D(-0.5, 0, 0.866025, 0, 1, 0, -0.866025, 0, -0.5, 49, 0, 13.6)
+transform = Transform3D(-0.5, 0, 0.866025, 0, 1, 0, -0.866025, 0, -0.5, 1.0825148, 0.0020108223, 7.448185)
 
 [node name="CityTree4" parent="Map/NavigationRegion3D" instance=ExtResource("17_wg2nu")]
 transform = Transform3D(0.5, 0, -0.866025, 0, 1, 0, 0.866025, 0, 0.5, 41, 0, 12.9)
 
 [node name="CityTree5" parent="Map/NavigationRegion3D" instance=ExtResource("17_wg2nu")]
 transform = Transform3D(-0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, -0.866025, 65, 0, 12.4)
-
-[node name="HUDControl" parent="." instance=ExtResource("1_ubt68")]
 
 [node name="WeatherManager" parent="." instance=ExtResource("1_qdr34")]
 
@@ -4821,7 +4897,8 @@ mesh = SubResource("PlaneMesh_x1cvm")
 skeleton = NodePath("../MeshInstance3D2")
 
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.9408808, 0.33873796, -1.4806706e-08, 0, -4.371139e-08, -1, -0.33873796, 0.9408808, -4.1127205e-08, 1.9764018, 4.0855093, 8.575709)
+transform = Transform3D(0.9408808, 0.33873796, -1.4806706e-08, 0, -4.371139e-08, -1, -0.33873796, 0.9408808, -4.1127205e-08, 1.9764353, 4.089871, 8.576009)
+visible = false
 cast_shadow = 0
 extra_cull_margin = 16384.0
 mesh = SubResource("PlaneMesh_x1cvm")
@@ -4840,7 +4917,7 @@ omni_attenuation = 0.9
 [node name="LightmapProbe" type="LightmapProbe" parent="."]
 
 [node name="revolver_model" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.0364738, 4.15598, 9.139175)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.0364738, 2.086771, 6.350168)
 
 [node name="armature_revolver" type="Node3D" parent="revolver_model"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.012716427, -0.0050825975, -0.0010863543)
@@ -4925,10 +5002,11 @@ bones/10/rotation = Quaternion(-1.2534662e-07, 7.196155e-08, -0.70710677, 0.7071
 bones/10/scale = Vector3(1, 1, 1)
 
 [node name="revolver" type="MeshInstance3D" parent="revolver_model/armature_revolver/Skeleton3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00031399727, 0.001970768, -0.0005121231)
+cast_shadow = 0
 mesh = SubResource("ArrayMesh_mom0c")
 skin = SubResource("Skin_acdkl")
 surface_material_override/0 = ExtResource("5_v7aw4")
+surface_material_override/1 = SubResource("ShaderMaterial_l85pa")
 
 [node name="MeshInstance3D3" parent="." instance=ExtResource("27_x1cvm")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.2906036, 3.6760197, 9.446392)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.2906036, 0.96761274, 9.446392)

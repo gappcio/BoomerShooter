@@ -51,12 +51,12 @@ gravity = Vector3(0, 0, 0)
 attractor_interaction_enabled = false
 scale_min = 0.4
 
-[sub_resource type="Gradient" id="Gradient_ahrm2"]
+[sub_resource type="Gradient" id="Gradient_xn4hj"]
 offsets = PackedFloat32Array(0, 0.548694, 1)
 colors = PackedColorArray(0, 0, 0, 1, 0.497474, 0.497474, 0.497474, 1, 0, 0, 0, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_xn4hj"]
-gradient = SubResource("Gradient_ahrm2")
+gradient = SubResource("Gradient_xn4hj")
 width = 32
 height = 256
 fill_to = Vector2(0, 1)
@@ -180,6 +180,7 @@ alpha_curve = SubResource("Curve_jc3lu")
 
 [node name="ShaderMesh" type="MeshInstance3D" parent="Head/Camera"]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, -0.2332469)
+visible = false
 cast_shadow = 0
 extra_cull_margin = 16384.0
 mesh = SubResource("PlaneMesh_cjdk2")
